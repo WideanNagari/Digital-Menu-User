@@ -1,10 +1,13 @@
 package com.example.userapplication;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -13,6 +16,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.userapplication.Fragments.ProfileFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,10 +29,30 @@ import java.util.Map;
 
 public class HomeActivity extends AppCompatActivity {
 
+    BottomNavigationView navbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        navbar = findViewById(R.id.nav_home);
+
+        navbar.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Fragment frag;
+                switch (item.getItemId()){
+                    default:
+                        frag = ProfileFragment.newInstance("param1", "param2");
+                        break;
+                }
+                try {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fr_home,frag).commit();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return true;
+            }
+        });
 
     }
     private void GetAllMahasiswaProcess(){

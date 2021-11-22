@@ -24,7 +24,7 @@
         android:id="@+id/btn_navhistory"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_attach_money_24"
-        android:title="Item"
+        android:title="History"
         app:showAsAction="always" />
     <item
         android:id="@+id/btn_navprofile"
