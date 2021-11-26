@@ -1,9 +1,12 @@
 package com.example.userapplication.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,8 +22,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.userapplication.HomeActivity;
+import com.example.userapplication.MainActivity;
+import com.example.userapplication.MenuAdapter;
 import com.example.userapplication.R;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -63,6 +70,9 @@ public class SearchFragment extends Fragment {
     }
     EditText edtSearch;
     Button btn_src;
+    RecyclerView rv;
+    MenuAdapter itemadapter;
+    JSONArray dataMenu;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -70,6 +80,8 @@ public class SearchFragment extends Fragment {
         View v=inflater.inflate(R.layout.fragment_search, container, false);
         btn_src = v.findViewById(R.id.btn_search);
         edtSearch=v.findViewById(R.id.edt_SearchBar);
+        rv=v.findViewById(R.id.rec_menu);
+
         btn_src.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -86,12 +98,16 @@ public class SearchFragment extends Fragment {
                                 try {
                                     JSONObject jsonObject = new JSONObject(response);
                                     int kode = jsonObject.getInt("code");
-                                    JSONObject dataMenu  = jsonObject.getJSONObject("dataMenu");
+                                    dataMenu  = jsonObject.getJSONArray("dataMenu");
                                     System.out.println(dataMenu.length()+" INI HASILNYA");
                                     Toast.makeText(getActivity(), dataMenu.length()+" datamenu", Toast.LENGTH_SHORT).show();
                                     if (kode == 1){
 //                                berhasil get all menu
                                         Toast.makeText(getActivity(), dataMenu.length()+"", Toast.LENGTH_SHORT).show();
+                                        rv.setLayoutManager(new LinearLayoutManager(v.getContext()));
+                                        itemadapter = new MenuAdapter(dataMenu);
+                                        rv.setAdapter(itemadapter);
+                                        itemadapter.notifyDataSetChanged();
                                     }else if(kode == -3){
 //                                tidak ada data
                                         Toast.makeText(getActivity(), "No Menu Yet", Toast.LENGTH_SHORT).show();
@@ -135,7 +151,12 @@ public class SearchFragment extends Fragment {
 
         return v;
     }
-
+    private void showRecycler() {
+        rv.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        itemadapter = new MenuAdapter(dataMenu);
+        rv.setAdapter(itemadapter);
+        itemadapter.notifyDataSetChanged();
+    }
     public void btn_Search(View v){
 
     }
