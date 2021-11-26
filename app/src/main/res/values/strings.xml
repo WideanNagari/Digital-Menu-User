@@ -3,7 +3,9 @@
     <!--ini connection punya widean,-->
     <!--yang lain kalo beda jangan ngehapus ini, remark trus bikin baru dibawah aja-->
     <!--    <string name="url">http://192.168.0.9/MDPService/master.php</string>-->
-    <string name="url">http://192.168.0.9:8000/api/</string>
+
+<!--    marvella-->
+    <string name="url">http://http://192.168.0.16:8000/api/</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

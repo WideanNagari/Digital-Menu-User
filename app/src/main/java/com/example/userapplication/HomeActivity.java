@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -16,7 +17,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.userapplication.Fragments.HomeFragment;
 import com.example.userapplication.Fragments.ProfileFragment;
+import com.example.userapplication.Fragments.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -42,6 +45,15 @@ public class HomeActivity extends AppCompatActivity {
                 Fragment frag;
                 switch (item.getItemId()){
                     default:
+                        frag= HomeFragment.newInstance("param1", "param2");
+                        break;
+                    case R.id.btn_navhome:
+                        frag= HomeFragment.newInstance("param1", "param2");
+                        break;
+                    case R.id.btn_navsearch:
+                        frag= SearchFragment.newInstance();
+                        break;
+                    case R.id.btn_navprofile:
                         frag = ProfileFragment.newInstance("param1", "param2");
                         break;
                 }
