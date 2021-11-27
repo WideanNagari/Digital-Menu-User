@@ -4,10 +4,15 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/AndroidStudioProjects/ProyekMobile/Digital-Menu-User/app/src/main/res/drawable/border_bg.xml" value="0.2703125" />
+        <entry key="..\:/AndroidStudioProjects/ProyekMobile/Digital-Menu-User/app/src/main/res/drawable/btn_rounded.xml" value="0.2703125" />
         <entry key="..\:/AndroidStudioProjects/ProyekMobile/Digital-Menu-User/app/src/main/res/drawable/ic_square_corner_round.xml" value="0.4" />
         <entry key="..\:/AndroidStudioProjects/ProyekMobile/Digital-Menu-User/app/src/main/res/drawable/round_bg.xml" value="0.2703125" />
+        <entry key="..\:/AndroidStudioProjects/ProyekMobile/Digital-Menu-User/app/src/main/res/drawable/shape_bg.xml" value="0.2703125" />
         <entry key="..\:/AndroidStudioProjects/ProyekMobile/Digital-Menu-User/app/src/main/res/layout/activity_home.xml" value="0.264" />
+        <entry key="..\:/AndroidStudioProjects/ProyekMobile/Digital-Menu-User/app/src/main/res/layout/activity_login.xml" value="0.4" />
         <entry key="..\:/AndroidStudioProjects/ProyekMobile/Digital-Menu-User/app/src/main/res/layout/fragment_profile.xml" value="0.264" />
+        <entry key="..\:/AndroidStudioProjects/ProyekMobile/Digital-Menu-User/app/src/main/res/layout/fragment_search.xml" value="0.25416666666666665" />
+        <entry key="..\:/AndroidStudioProjects/ProyekMobile/Digital-Menu-User/app/src/main/res/layout/recycler_menu.xml" value="0.536" />
         <entry key="..\:/AndroidStudioProjects/ProyekMobile/Digital-Menu-User/app/src/main/res/menu/navbar_home.xml" value="0.24010416666666667" />
         <entry key="..\:/Digital-Menu-User/app/src/main/res/layout/activity_home.xml" value="0.34057971014492755" />
         <entry key="..\:/Digital-Menu-User/app/src/main/res/layout/fragment_home.xml" value="0.34057971014492755" />

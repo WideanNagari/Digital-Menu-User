@@ -3,6 +3,7 @@ package com.example.userapplication;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -47,9 +48,11 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder>{
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        ImageView img;
         TextView tvNama, tvHarga, tvDesc;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            img=itemView.findViewById(R.id.imgDispMenu);
             tvNama=itemView.findViewById(R.id.txtNamaMenu);
             tvHarga=itemView.findViewById(R.id.txtHargaMenu);
             tvDesc=itemView.findViewById(R.id.txtDescMenu);
