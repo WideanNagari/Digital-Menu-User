@@ -82,35 +82,83 @@ public class SearchFragment extends Fragment {
         edtSearch=v.findViewById(R.id.edt_SearchBar);
         rv=v.findViewById(R.id.rec_menu);
 
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.POST,
+                getResources().getString(R.string.url)+"menu",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                                System.out.println("MASUK LALALA "+response);
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            int kode = jsonObject.getInt("code");
+                            dataMenu  = jsonObject.getJSONArray("dataMenu");
+
+                            if (kode == 1){
+//                                berhasil get all menu
+                                Toast.makeText(getActivity(), dataMenu.length()+" Menu Fetched", Toast.LENGTH_SHORT).show();
+                                System.out.println(dataMenu.length()+" INI HASILNYA");
+                                showRecycler();
+                            }else if(kode == -3){
+//                                tidak ada data
+                                Toast.makeText(getActivity(), "No Menu", Toast.LENGTH_SHORT).show();
+                            }
+//                            Toast.makeText(LoginActivity.this, pesan, Toast.LENGTH_SHORT).show();
+                        } catch (JSONException e) {
+//                            Toast.makeText(getActivity(), "Masuk catch", Toast.LENGTH_SHORT).show();
+                            e.printStackTrace();
+                        }
+                    }
+                },
+
+                //untuk handle error
+                new Response.ErrorListener() {
+                    private VolleyError error;
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        this.error = error;
+                        System.out.println(error.getMessage());
+                    }
+                }
+        ){
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(v.getContext());
+        requestQueue.add(stringRequest);
+
         btn_src.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
+                Toast.makeText(getActivity(), edtSearch.getText().toString(), Toast.LENGTH_SHORT).show();
                 // do something
                 StringRequest stringRequest = new StringRequest(
                         Request.Method.POST,
-                        getResources().getString(R.string.url)+"menu",
+                        getResources().getString(R.string.url)+"menu/byQuery",
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-                                System.out.println("MASUK LALALA "+response);
                                 try {
+                                    System.out.println("WOY");
                                     JSONObject jsonObject = new JSONObject(response);
                                     int kode = jsonObject.getInt("code");
                                     dataMenu  = jsonObject.getJSONArray("dataMenu");
-                                    System.out.println(dataMenu.length()+" INI HASILNYA");
+                                    System.out.println(kode + "");
                                     Toast.makeText(getActivity(), dataMenu.length()+" datamenu", Toast.LENGTH_SHORT).show();
                                     if (kode == 1){
 //                                berhasil get all menu
+//                                        System.out.println(dataMenu.length()+" INI HASILNYA QUERY");
                                         Toast.makeText(getActivity(), dataMenu.length()+"", Toast.LENGTH_SHORT).show();
-                                        rv.setLayoutManager(new LinearLayoutManager(v.getContext()));
-                                        itemadapter = new MenuAdapter(dataMenu);
-                                        rv.setAdapter(itemadapter);
-                                        itemadapter.notifyDataSetChanged();
+                                        showRecycler();
                                     }else if(kode == -3){
 //                                tidak ada data
-                                        Toast.makeText(getActivity(), "No Menu Yet", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getActivity(), "No Menu", Toast.LENGTH_SHORT).show();
                                     }
 
 //                            Toast.makeText(LoginActivity.this, pesan, Toast.LENGTH_SHORT).show();
@@ -136,16 +184,14 @@ public class SearchFragment extends Fragment {
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String, String> params = new HashMap<>();
-//                params.put("phone",noTelp.getText().toString());
-//                params.put("password",password.getText().toString());
-//                params.put("role","0");
-                        System.out.println();
+                        params.put("query",edtSearch.getText().toString());
                         return params;
                     }
                 };
 
                 RequestQueue requestQueue = Volley.newRequestQueue(v.getContext());
                 requestQueue.add(stringRequest);
+                showRecycler();
             }
         });
 
