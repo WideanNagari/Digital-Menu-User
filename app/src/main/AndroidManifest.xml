@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UserApplication">
         <activity
+            android:name=".DetailMenuActivity"
+            android:exported="true" />
+        <activity
             android:name=".LoginActivity"
             android:exported="true" />
         <activity

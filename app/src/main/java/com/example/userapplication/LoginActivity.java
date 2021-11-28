@@ -35,9 +35,6 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.cirLoginButton);
         edPhone = findViewById(R.id.loginTelp);
         edPass = findViewById(R.id.loginPassword);
-        
-
-        
 
 
         btnLogin.setOnClickListener(this::doLogin);
