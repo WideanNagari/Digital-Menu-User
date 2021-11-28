@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
 //            startActivity(i);
             StringRequest stringRequest = new StringRequest(
                     Request.Method.POST,
-                    getResources().getString(R.string.url)+"login",
+                    getResources().getString(R.string.url)+"loginUser",
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
                                 int kode = jsonObject.getInt("code");
                                 String pesan  = jsonObject.getString("message");
                                 System.out.println(kode+" ========");
-                                if (kode == 1){
+                                if (kode == 2){
                                     Intent i = new Intent(LoginActivity.this, HomeActivity.class);
                                     startActivity(i);
                                     finish();
