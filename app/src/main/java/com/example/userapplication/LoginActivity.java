@@ -35,12 +35,9 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.cirLoginButton);
         edPhone = findViewById(R.id.loginTelp);
         edPass = findViewById(R.id.loginPassword);
-        
-
-        
-
 
         btnLogin.setOnClickListener(this::doLogin);
+
     }
 
     private void doLogin(View view){
@@ -59,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
                                 int kode = jsonObject.getInt("code");
                                 String pesan  = jsonObject.getString("message");
                                 System.out.println(kode+" ========");
-                                if (kode == 2){
+                                if (kode == 1){
                                     Intent i = new Intent(LoginActivity.this, HomeActivity.class);
                                     startActivity(i);
                                     finish();
@@ -86,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
                     Map<String, String> params = new HashMap<>();
                     params.put("phone",edPhone.getText().toString());
                     params.put("password",edPass.getText().toString());
-                    params.put("role","0");
+                    params.put("role","1");
                     System.out.println();
                     return params;
                 }

@@ -18,6 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.userapplication.Fragments.HomeFragment;
+import com.example.userapplication.Fragments.OrderFragment;
 import com.example.userapplication.Fragments.ProfileFragment;
 import com.example.userapplication.Fragments.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -45,13 +46,16 @@ public class HomeActivity extends AppCompatActivity {
                 Fragment frag;
                 switch (item.getItemId()){
                     default:
-                        frag= HomeFragment.newInstance("param1", "param2");
+                        frag = HomeFragment.newInstance("param1", "param2");
                         break;
                     case R.id.btn_navhome:
-                        frag= HomeFragment.newInstance("param1", "param2");
+                        frag = HomeFragment.newInstance("param1", "param2");
                         break;
                     case R.id.btn_navsearch:
-                        frag= SearchFragment.newInstance();
+                        frag = SearchFragment.newInstance();
+                        break;
+                    case R.id.btn_navorder:
+                        frag = OrderFragment.newInstance();
                         break;
                     case R.id.btn_navprofile:
                         frag = ProfileFragment.newInstance("param1", "param2");
@@ -65,6 +69,10 @@ public class HomeActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        if (savedInstanceState == null) {
+            navbar.setSelectedItemId(R.id.btn_navhome);
+        }
 
     }
     private void GetAllMahasiswaProcess(){

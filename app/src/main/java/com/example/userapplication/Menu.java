@@ -1,9 +1,12 @@
 package com.example.userapplication;
 
-public class menu {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Menu implements Parcelable {
     String id, nama_menu, harga_menu, deskripsi_menu, jenis_menu, status_menu;
 
-    public menu(String id, String nama_menu, String harga_menu, String deskripsi_menu, String jenis_menu, String status_menu) {
+    public Menu(String id, String nama_menu, String harga_menu, String deskripsi_menu, String jenis_menu, String status_menu) {
         this.id = id;
         this.nama_menu = nama_menu;
         this.harga_menu = harga_menu;
@@ -11,6 +14,27 @@ public class menu {
         this.jenis_menu = jenis_menu;
         this.status_menu = status_menu;
     }
+
+    protected Menu(Parcel in) {
+        id = in.readString();
+        nama_menu = in.readString();
+        harga_menu = in.readString();
+        deskripsi_menu = in.readString();
+        jenis_menu = in.readString();
+        status_menu = in.readString();
+    }
+
+    public static final Creator<Menu> CREATOR = new Creator<Menu>() {
+        @Override
+        public Menu createFromParcel(Parcel in) {
+            return new Menu(in);
+        }
+
+        @Override
+        public Menu[] newArray(int size) {
+            return new Menu[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -58,5 +82,20 @@ public class menu {
 
     public void setStatus_menu(String status_menu) {
         this.status_menu = status_menu;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(id);
+        parcel.writeString(nama_menu);
+        parcel.writeString(harga_menu);
+        parcel.writeString(deskripsi_menu);
+        parcel.writeString(jenis_menu);
+        parcel.writeString(status_menu);
     }
 }
