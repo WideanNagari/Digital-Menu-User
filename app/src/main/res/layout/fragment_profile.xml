@@ -5,27 +5,28 @@
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFDFBD"
+    android:background="@color/red5"
     tools:context=".Fragments.ProfileFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="411dp"
+        android:layout_width="0dp"
         android:layout_height="210dp"
-        android:scrollY="50dp"
-        android:src="@drawable/round_bg"
+        android:scrollY="0dp"
+        android:src="@drawable/shape_bg"
+        android:translationY="-50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/tv_profilename"
-        android:layout_width="393dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
@@ -43,6 +44,7 @@
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="-30dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -85,7 +87,7 @@
         <ImageView
             android:id="@+id/imageView3"
             android:layout_width="match_parent"
-            android:layout_height="2dp"
+            android:layout_height="1dp"
             android:foregroundTint="#FF8484"
             android:src="@drawable/round_bg" />
 
@@ -110,7 +112,7 @@
                 app:autoSizeTextType="none" />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/tv_profilesaldo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -125,7 +127,7 @@
         <ImageView
             android:id="@+id/imageView4"
             android:layout_width="match_parent"
-            android:layout_height="2dp"
+            android:layout_height="1dp"
             android:layout_weight="2"
             android:foregroundTint="#FF8484"
             android:src="@drawable/round_bg" />
@@ -151,7 +153,7 @@
                 app:autoSizeTextType="none" />
 
             <TextView
-                android:id="@+id/textView7"
+                android:id="@+id/tv_profilephonenum"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -166,8 +168,8 @@
 
     <Button
         android:id="@+id/btn_profileedit"
-        android:layout_width="200dp"
-        android:layout_height="75dp"
+        android:layout_width="240dp"
+        android:layout_height="70dp"
         android:backgroundTint="@color/pink3"
         android:text="Edit Profile"
         android:textSize="20sp"
@@ -177,6 +179,6 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-        app:layout_constraintVertical_bias="0.120000005" />
+        app:layout_constraintVertical_bias="0.542" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

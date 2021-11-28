@@ -17,6 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.userapplication.Classes.UserApp;
 import com.example.userapplication.Fragments.HomeFragment;
 import com.example.userapplication.Fragments.OrderFragment;
 import com.example.userapplication.Fragments.ProfileFragment;
@@ -33,12 +34,17 @@ import java.util.Map;
 
 public class HomeActivity extends AppCompatActivity {
 
+    UserApp loggedIn;
     BottomNavigationView navbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         navbar = findViewById(R.id.nav_home);
+        Intent par = getIntent();
+        if(par.hasExtra("loggedIn")){
+            loggedIn = par.getParcelableExtra("loggedIn");
+        }
 
         navbar.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -58,7 +64,7 @@ public class HomeActivity extends AppCompatActivity {
                         frag = OrderFragment.newInstance();
                         break;
                     case R.id.btn_navprofile:
-                        frag = ProfileFragment.newInstance("param1", "param2");
+                        frag = ProfileFragment.newInstance(loggedIn);
                         break;
                 }
                 try {
