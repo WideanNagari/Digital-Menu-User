@@ -2,6 +2,7 @@ package com.example.userapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +15,7 @@ public class DetailMenuActivity extends AppCompatActivity {
     TextView txtNama, txtHrg, txtDesc, txtJum, txtSub;
     ImageButton btnAdd, btnSub;
     Button btnAddtoCart, btnBack;
+    Intent it;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,9 +33,16 @@ public class DetailMenuActivity extends AppCompatActivity {
         btnBack=findViewById(R.id.btnBack);
 
         txtJum.setText(jum+"");
+
+        it=getIntent();
+        nama=it.getStringExtra("nama_detail");
+        hrg=Integer.parseInt(it.getStringExtra("harga_detail"));
+        desc=it.getStringExtra("desc_detail");
+
         setContentView(R.layout.activity_detail_menu);
     }
     int jum=0, hrg=0;
+    String nama, desc;
 
     public void add(View v){
         jum++;

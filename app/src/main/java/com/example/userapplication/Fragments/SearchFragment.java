@@ -22,9 +22,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.userapplication.DetailMenuActivity;
 import com.example.userapplication.HomeActivity;
 import com.example.userapplication.MainActivity;
 import com.example.userapplication.MenuAdapter;
+import com.example.userapplication.OnItemClickListener;
 import com.example.userapplication.R;
 
 import org.json.JSONArray;
@@ -132,6 +134,24 @@ public class SearchFragment extends Fragment {
         RequestQueue requestQueue = Volley.newRequestQueue(v.getContext());
         requestQueue.add(stringRequest);
 
+        itemadapter.onClick(new OnItemClickListener() {
+            @Override
+            public void onClick(View v, int position) {
+                Intent it=new Intent(getActivity(), DetailMenuActivity.class);
+                try {
+                    JSONObject data_now=dataMenu.getJSONObject(position);
+
+                    it.putExtra("nama_detail", data_now.getString("nama_menu"));
+                    it.putExtra("harga_detail", data_now.getString("harga_menu"));
+                    it.putExtra("desc_detail", data_now.getString("desc_menu"));
+                    startActivity(it);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
         btn_src.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -195,12 +215,13 @@ public class SearchFragment extends Fragment {
                 showRecycler();
             }
         });
-        btn_detail.setOnClickListener(new View.OnClickListener() {
+        /*btn_detail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
             }
-        });
+        });*/
+
         return v;
     }
     private void showRecycler() {
