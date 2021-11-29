@@ -34,7 +34,7 @@ import java.util.Map;
 
 public class HomeActivity extends AppCompatActivity {
 
-    UserApp loggedIn;
+    private UserApp loggedIn;
     BottomNavigationView navbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +81,15 @@ public class HomeActivity extends AppCompatActivity {
         }
 
     }
+
+    public UserApp getLoggedIn() {
+        return loggedIn;
+    }
+
+    public void setLoggedIn(UserApp loggedIn) {
+        this.loggedIn = loggedIn;
+    }
+
     private void GetAllMahasiswaProcess(){
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,

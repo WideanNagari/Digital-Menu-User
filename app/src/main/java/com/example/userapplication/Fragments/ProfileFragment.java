@@ -3,6 +3,10 @@ package com.example.userapplication.Fragments;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -15,6 +19,7 @@ import android.widget.TextView;
 
 import com.example.userapplication.Classes.UserApp;
 import com.example.userapplication.EditProfileActivity;
+import com.example.userapplication.HomeActivity;
 import com.example.userapplication.R;
 
 /**
@@ -75,12 +80,33 @@ public class ProfileFragment extends Fragment {
         email.setText(loggedIn.getEmail());
         cash.setText("Rp "+String.format("%,.2f", new Double(loggedIn.getSaldo())));
         phone.setText(loggedIn.getTelp());
+
+        ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+                if(result.getResultCode() == 110){
+                    Intent i = result.getData();
+                    if(i.hasExtra("loggedIn")){
+                        loggedIn = i.getParcelableExtra("loggedIn");
+                        name.setText(loggedIn.getName());
+                        email.setText(loggedIn.getEmail());
+                        cash.setText("Rp "+String.format("%,.2f", new Double(loggedIn.getSaldo())));
+                        phone.setText(loggedIn.getTelp());
+                        //set obyek user di home supaya baru
+                        HomeActivity par = (HomeActivity) getActivity();
+                        par.setLoggedIn(loggedIn);
+                    }
+                }
+            }
+        });
+
+
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent edit = new Intent(getActivity(), EditProfileActivity.class);
                 edit.putExtra("loggedIn",loggedIn);
-                startActivity(edit);
+                launcher.launch(edit);
             }
         });
     }

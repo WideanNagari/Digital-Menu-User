@@ -8,14 +8,17 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/imgDispMenu"
             android:layout_width="140dp"
             android:layout_height="140dp"
             android:layout_weight="0"
-            tools:srcCompat="@drawable/inverse_logo" />
+            android:src="@drawable/inverse_logo" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
