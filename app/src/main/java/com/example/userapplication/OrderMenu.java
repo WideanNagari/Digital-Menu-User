@@ -2,16 +2,32 @@ package com.example.userapplication;
 
 import android.os.Parcel;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "order")
 public class OrderMenu extends Menu {
+    @PrimaryKey(autoGenerate = true)
+    @NonNull
+    @ColumnInfo()
+    private int id;
+
+    @ColumnInfo(name = "jumlah")
     private int jumlah;
+
+    @ColumnInfo(name = "confirm")
     private boolean confirm;
+
+    @ColumnInfo(name = "status")
     private String status;
 
     public OrderMenu(String id, String nama_menu, String harga_menu, String deskripsi_menu, String jenis_menu, String status_menu) {
         super(id, nama_menu, harga_menu, deskripsi_menu, jenis_menu, status_menu);
         this.jumlah = 1;
         this.confirm = false;
-        this.status = "Pending";
+        this.status = "-";
         this.harga_menu = currency(this.getHarga_menu());
     }
 

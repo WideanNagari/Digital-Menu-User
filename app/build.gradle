@@ -42,4 +42,7 @@ dependencies {
     implementation 'com.airbnb.android:lottie:3.4.1'
     implementation 'br.com.simplepass:loading-button-android:1.14.0'
     implementation "androidx.cardview:cardview:1.0.0"
+
+    implementation 'androidx.room:room-runtime:2.2.0'
+    annotationProcessor 'androidx.room:room-compiler:2.2.0'
 }
