@@ -22,9 +22,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.userapplication.DetailMenuActivity;
 import com.example.userapplication.HomeActivity;
 import com.example.userapplication.MainActivity;
 import com.example.userapplication.MenuAdapter;
+import com.example.userapplication.OnItemClickListener;
 import com.example.userapplication.R;
 
 import org.json.JSONArray;
@@ -69,7 +71,7 @@ public class SearchFragment extends Fragment {
         }
     }
     EditText edtSearch;
-    Button btn_src;
+    Button btn_src, btn_detail;
     RecyclerView rv;
     MenuAdapter itemadapter;
     JSONArray dataMenu;
@@ -79,6 +81,7 @@ public class SearchFragment extends Fragment {
         // Inflate the layout for this fragment
         View v=inflater.inflate(R.layout.fragment_search, container, false);
         btn_src = v.findViewById(R.id.btn_search);
+        btn_detail = v.findViewById(R.id.btnDetail);
         edtSearch=v.findViewById(R.id.edt_SearchBar);
         rv=v.findViewById(R.id.rec_menu);
 
@@ -131,12 +134,30 @@ public class SearchFragment extends Fragment {
         RequestQueue requestQueue = Volley.newRequestQueue(v.getContext());
         requestQueue.add(stringRequest);
 
+        itemadapter.onClick(new OnItemClickListener() {
+            @Override
+            public void onClick(View v, int position) {
+                Intent it=new Intent(getActivity(), DetailMenuActivity.class);
+                try {
+                    JSONObject data_now=dataMenu.getJSONObject(position);
+
+                    it.putExtra("nama_detail", data_now.getString("nama_menu"));
+                    it.putExtra("harga_detail", data_now.getString("harga_menu"));
+                    it.putExtra("desc_detail", data_now.getString("desc_menu"));
+                    startActivity(it);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
         btn_src.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                Toast.makeText(getActivity(), edtSearch.getText().toString(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), edtSearch.getText().toString(), Toast.LENGTH_SHORT).show();
                 // do something
                 StringRequest stringRequest = new StringRequest(
                         Request.Method.POST,
@@ -149,12 +170,12 @@ public class SearchFragment extends Fragment {
                                     JSONObject jsonObject = new JSONObject(response);
                                     int kode = jsonObject.getInt("code");
                                     dataMenu  = jsonObject.getJSONArray("dataMenu");
-                                    System.out.println(kode + "");
-                                    Toast.makeText(getActivity(), dataMenu.length()+" datamenu", Toast.LENGTH_SHORT).show();
+//                                    System.out.println(kode + "");
+//                                    Toast.makeText(getActivity(), dataMenu.length()+" datamenu", Toast.LENGTH_SHORT).show();
                                     if (kode == 1){
 //                                berhasil get all menu
 //                                        System.out.println(dataMenu.length()+" INI HASILNYA QUERY");
-                                        Toast.makeText(getActivity(), dataMenu.length()+"", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getActivity(), dataMenu.length()+" Menu Fetched", Toast.LENGTH_SHORT).show();
                                         showRecycler();
                                     }else if(kode == -3){
 //                                tidak ada data
@@ -163,7 +184,7 @@ public class SearchFragment extends Fragment {
 
 //                            Toast.makeText(LoginActivity.this, pesan, Toast.LENGTH_SHORT).show();
                                 } catch (JSONException e) {
-                                    Toast.makeText(getActivity(), "Masuk catch", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(getActivity(), "Masuk catch", Toast.LENGTH_SHORT).show();
 
                                     e.printStackTrace();
                                 }
@@ -184,7 +205,7 @@ public class SearchFragment extends Fragment {
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String, String> params = new HashMap<>();
-                        params.put("query",edtSearch.getText().toString());
+                        params.put("query_string",edtSearch.getText().toString());
                         return params;
                     }
                 };
@@ -194,6 +215,12 @@ public class SearchFragment extends Fragment {
                 showRecycler();
             }
         });
+        /*btn_detail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });*/
 
         return v;
     }
@@ -202,8 +229,5 @@ public class SearchFragment extends Fragment {
         itemadapter = new MenuAdapter(dataMenu);
         rv.setAdapter(itemadapter);
         itemadapter.notifyDataSetChanged();
-    }
-    public void btn_Search(View v){
-
     }
 }

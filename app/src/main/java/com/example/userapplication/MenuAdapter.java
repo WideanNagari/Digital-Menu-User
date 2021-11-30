@@ -1,8 +1,10 @@
 package com.example.userapplication;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,6 +37,13 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder>{
             holder.tvNama.setText(itemnow.getString("nama_menu"));
             holder.tvHarga.setText(itemnow.getString("harga_menu"));
             holder.tvDesc.setText(itemnow.getString("deskripsi_menu"));
+
+            holder.detail.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+//                    onItemClickListener.onClick(holder, position);
+                }
+            });
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -50,13 +59,25 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder>{
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView img;
         TextView tvNama, tvHarga, tvDesc;
+        Button detail;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             img=itemView.findViewById(R.id.imgDispMenu);
             tvNama=itemView.findViewById(R.id.txtNamaMenu);
             tvHarga=itemView.findViewById(R.id.txtHargaMenu);
             tvDesc=itemView.findViewById(R.id.txtDescMenu);
+            detail=itemView.findViewById(R.id.btnDetail);
         }
+    }
+
+    private OnItemClickListener onItemClickListener;
+
+    public MenuAdapter(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    public void onClick(OnItemClickListener onItemClickListener){
+        this.onItemClickListener=onItemClickListener;
     }
 
 }

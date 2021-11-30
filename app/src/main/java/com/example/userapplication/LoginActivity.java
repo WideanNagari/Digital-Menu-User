@@ -17,6 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.userapplication.Classes.UserApp;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
 //            startActivity(i);
             StringRequest stringRequest = new StringRequest(
                     Request.Method.POST,
-                    getResources().getString(R.string.url)+"login",
+                    getResources().getString(R.string.url)+"loginUser",
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -55,9 +56,16 @@ public class LoginActivity extends AppCompatActivity {
                                 JSONObject jsonObject = new JSONObject(response);
                                 int kode = jsonObject.getInt("code");
                                 String pesan  = jsonObject.getString("message");
+                                JSONObject user = jsonObject.getJSONObject("user");
                                 System.out.println(kode+" ========");
-                                if (kode == 1){
+                                if (kode == 2){
+                                    UserApp loggedIn = new UserApp(user.getInt("user_id"),
+                                            user.getString("name"),user.getString("email"),
+                                            user.getString("no_telp"),user.getString("password"),
+                                            user.getInt("saldo"),user.getString("role"),
+                                            user.getString("status"));
                                     Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                                    i.putExtra("loggedIn",loggedIn);
                                     startActivity(i);
                                     finish();
                                 }
