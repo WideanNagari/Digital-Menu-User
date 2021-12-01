@@ -1,42 +1,86 @@
 package com.example.userapplication.Fragments;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.userapplication.AppDatabase;
+import com.example.userapplication.Classes.UserApp;
 import com.example.userapplication.OngoingAdapter;
 import com.example.userapplication.OrderMenu;
+import com.example.userapplication.PaymentActivity;
 import com.example.userapplication.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link OrderOngoingFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class OrderOngoingFragment extends Fragment {
+public class OrderOngoingFragment extends Fragment{
 
     ArrayList<OrderMenu> arrOrder;
     RecyclerView rv;
     OngoingAdapter ongoingAdapter;
+    Button btnPay;
+    TextView subtotal;
+    UserApp user;
+    OnActionListener onActionListener;
+
+    public OnActionListener getOnActionListener() {
+        return onActionListener;
+    }
+
+    public void setOnActionListener(OnActionListener onActionListener) {
+        this.onActionListener = onActionListener;
+    }
 
     public OrderOngoingFragment() {
         // Required empty public constructor
     }
 
-    public static OrderOngoingFragment newInstance(ArrayList<OrderMenu> order) {
+    public static OrderOngoingFragment newInstance(UserApp user) {
         OrderOngoingFragment fragment = new OrderOngoingFragment();
         Bundle args = new Bundle();
-        args.putParcelableArrayList("orderOngoing", order);
+        args.putParcelable("user", user);
         fragment.setArguments(args);
         return fragment;
     }
@@ -45,7 +89,7 @@ public class OrderOngoingFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            arrOrder = getArguments().getParcelableArrayList("orderOngoing");
+            user = getArguments().getParcelable("user");
         }
     }
 
@@ -61,9 +105,147 @@ public class OrderOngoingFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         rv = view.findViewById(R.id.rvOngoing);
-
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
+        arrOrder = new ArrayList<>();
         ongoingAdapter = new OngoingAdapter(arrOrder);
         rv.setAdapter(ongoingAdapter);
+
+        subtotal = view.findViewById(R.id.subtotalOngoing);
+        subtotal.setText("Rp. 0");
+
+        btnPay = view.findViewById(R.id.btnPayOrder);
+        btnPay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean pending = false;
+                boolean confirm = false;
+                for (int i = 0; i < arrOrder.size(); i++) {
+                    if (arrOrder.get(i).getStatus().equals("Pending")) pending = true;
+                    if (arrOrder.get(i).getStatus().equals("Confirmed")) confirm = true;
+                }
+                if (arrOrder.size() == 0){
+                    Toast.makeText(getContext(), "Your order(s) are still empty :(", Toast.LENGTH_SHORT).show();
+                }
+                else if (pending)
+                    Toast.makeText(getContext(), "there are still pending orders", Toast.LENGTH_SHORT).show();
+                else{
+                    if (confirm){
+                        Intent i = new Intent(getContext(), PaymentActivity.class);
+                        i.putExtra("customer", user);
+                        activityResultLauncher.launch(i);
+                    }else{
+                        Toast.makeText(getContext(), "You have no confirmed order(s).", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+
+        getAllOrder(user.getId()+"");
+    }
+
+    ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK){
+                        Intent data = result.getData();
+                        if (data.hasExtra("customer")){
+                            user = data.getParcelableExtra("customer");
+                        }
+                        if (data.hasExtra("done")){
+                            if (onActionListener!=null) onActionListener.onBack();
+                        }
+                    }
+                }
+            }
+    );
+
+    private void hitungTotal(){
+        int subtotals = 0;
+        for (int i = 0; i < arrOrder.size(); i++) {
+            OrderMenu order = arrOrder.get(i);
+            if (order.getStatus().equals("Confirmed")) subtotals += Integer.parseInt(order.getHarga_menu())*order.getJumlah();
+        }
+
+        subtotal.setText(currency(subtotals+""));
+    }
+
+    private String currency(String angkaAwal){
+        String hasil = "";
+
+        if (angkaAwal.length()>=3){
+            int ctr = 1;
+            for (int i = angkaAwal.length()-1; i >= 0; i--) {
+                hasil = angkaAwal.charAt(i) + hasil;
+                if (ctr%3==0 && ctr<angkaAwal.length()) hasil = "."+hasil;
+                ctr++;
+            }
+        }else{
+            hasil = angkaAwal;
+        }
+        return "Rp. "+hasil;
+    }
+
+    private void getAllOrder(String customer){
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.POST,
+                getResources().getString(R.string.url)+"order/",
+
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        System.out.println(response);
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            int kode = jsonObject.getInt("code");
+                            String pesan  = jsonObject.getString("message");
+
+                            if (kode == 1){
+                                arrOrder.clear();
+                                JSONArray arr = jsonObject.getJSONArray("dataOrder");
+                                for (int i = 0; i < arr.length(); i++) {
+                                    JSONObject order = arr.getJSONObject(i);
+                                    arrOrder.add(new OrderMenu(order.getString("id")
+                                            , order.getString("nama_menu")
+                                            , order.getString("harga_menu")
+                                            , order.getString("deskripsi_menu")
+                                            , order.getString("jenis_menu")
+                                            , order.getString("status_menu")
+                                            , order.getInt("jumlah")
+                                            , order.getString("status")
+                                    ));
+                                }
+                                ongoingAdapter.notifyDataSetChanged();
+                                hitungTotal();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println(error.getMessage());
+                    }
+                }
+        ){
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("customer",customer);
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(stringRequest);
+    }
+
+    public interface OnActionListener{
+        void onBack();
     }
 }

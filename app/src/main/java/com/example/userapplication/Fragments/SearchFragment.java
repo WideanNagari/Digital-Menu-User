@@ -134,22 +134,22 @@ public class SearchFragment extends Fragment {
         RequestQueue requestQueue = Volley.newRequestQueue(v.getContext());
         requestQueue.add(stringRequest);
 
-        itemadapter.onClick(new OnItemClickListener() {
-            @Override
-            public void onClick(View v, int position) {
-                Intent it=new Intent(getActivity(), DetailMenuActivity.class);
-                try {
-                    JSONObject data_now=dataMenu.getJSONObject(position);
-
-                    it.putExtra("nama_detail", data_now.getString("nama_menu"));
-                    it.putExtra("harga_detail", data_now.getString("harga_menu"));
-                    it.putExtra("desc_detail", data_now.getString("desc_menu"));
-                    startActivity(it);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+//        itemadapter.onClick(new OnItemClickListener() {
+//            @Override
+//            public void onClick(View v, int position) {
+//                Intent it=new Intent(getActivity(), DetailMenuActivity.class);
+//                try {
+//                    JSONObject data_now=dataMenu.getJSONObject(position);
+//
+//                    it.putExtra("nama_detail", data_now.getString("nama_menu"));
+//                    it.putExtra("harga_detail", data_now.getString("harga_menu"));
+//                    it.putExtra("desc_detail", data_now.getString("desc_menu"));
+//                    startActivity(it);
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
 
 
         btn_src.setOnClickListener(new View.OnClickListener()

@@ -10,7 +10,7 @@ import java.util.List;
 
 @Dao
 public interface OrderDAO {
-    @Query("SELECT * FROM `order`")
+    @Query("SELECT * FROM `order` Where status = '-'")
     List<OrderMenu> getAllOrder();
 
     @Insert

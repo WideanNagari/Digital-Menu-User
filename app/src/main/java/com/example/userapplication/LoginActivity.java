@@ -24,6 +24,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Stack;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -62,8 +63,10 @@ public class LoginActivity extends AppCompatActivity {
                                     UserApp loggedIn = new UserApp(user.getInt("user_id"),
                                             user.getString("name"),user.getString("email"),
                                             user.getString("no_telp"),user.getString("password"),
-                                            user.getInt("saldo"),user.getString("role"),
-                                            user.getString("status"));
+                                            user.getInt("saldo"), user.getInt("stamp"),
+                                            user.getString("role"),user.getString("status"),
+                                            jsonObject.getString("meja")
+                                    );
                                     Intent i = new Intent(LoginActivity.this, HomeActivity.class);
                                     i.putExtra("loggedIn",loggedIn);
                                     startActivity(i);
