@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -28,16 +29,26 @@ import java.util.Map;
 public class LoginActivity extends AppCompatActivity {
 
     Button btnLogin;
+    TextView btnToRegis;
     EditText edPhone, edPass;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         btnLogin = findViewById(R.id.cirLoginButton);
+        btnToRegis = findViewById(R.id.tv_toregis);
         edPhone = findViewById(R.id.loginTelp);
         edPass = findViewById(R.id.loginPassword);
 
         btnLogin.setOnClickListener(this::doLogin);
+        btnToRegis.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(i);
+                finish();
+            }
+        });
 
     }
 
