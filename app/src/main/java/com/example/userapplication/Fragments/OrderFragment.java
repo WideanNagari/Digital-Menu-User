@@ -119,7 +119,8 @@ public class OrderFragment extends Fragment implements AddOrderAsync.AddOrderCal
                     OrderOngoingFragment orderOngoingFragment = (OrderOngoingFragment) fragment;
                     orderOngoingFragment.setOnActionListener(new OrderOngoingFragment.OnActionListener() {
                         @Override
-                        public void onBack() {
+                        public void onBack(UserApp u) {
+                            user = u;
                             navbar.setSelectedItemId(R.id.item_cart);
                         }
                     });

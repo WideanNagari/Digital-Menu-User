@@ -52,7 +52,7 @@ public class PaymentActivity extends AppCompatActivity {
     Button pay;
     RecyclerView rv;
     PaymentAdapter paymentAdapter;
-    int totals, diskon, max, subtotals;
+    int totals, diskon, max, subtotals, disc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +103,7 @@ public class PaymentActivity extends AppCompatActivity {
         rv.setAdapter(paymentAdapter);
 
         alertDialogBuilder = new AlertDialog.Builder(this);
-        usePromo = "";
+        usePromo = "0";
     }
 
     private void hitungTotal(){
@@ -113,7 +113,7 @@ public class PaymentActivity extends AppCompatActivity {
             totals += Integer.parseInt(order.getHarga_menu())*order.getJumlah();
         }
 
-        int disc = diskon<=max ? diskon:max;
+        disc = diskon<=max ? diskon:max;
         subtotals = totals-disc;
 
         total.setText(currency(totals+""));
@@ -195,16 +195,10 @@ public class PaymentActivity extends AppCompatActivity {
             alertDialogBuilder.setPositiveButton("Pay", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick (DialogInterface dialogInterface,int j){
-                    addHJual(user.getId()+"",usePromo,arrOrder.size()+"", subtotals+"",totals/20000);
+                    addHJual(user.getId()+"",usePromo,arrOrder.size()+"", disc+"", subtotals+"",totals/20000);
                     for (int i = 0; i < arrOrder.size(); i++) {
                         addDJual(arrOrder.get(i).getId(),arrOrder.get(i).getJumlah()+"");
                     }
-                    Toast.makeText(PaymentActivity.this, "Thank You!", Toast.LENGTH_SHORT).show();
-                    //ini setelah add horder;
-                    i.putExtra("done","done");
-                    i.putExtra("customer", user);
-                    setResult(Activity.RESULT_OK, i);
-                    finish();
                 }
             });
         }
@@ -213,7 +207,7 @@ public class PaymentActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    public void addHJual(String customer, String promo, String jumlah, String subtotal, int stamp){
+    public void addHJual(String customer, String promo, String jumlah, String potongan, String subtotal, int stamp){
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
                 getResources().getString(R.string.url)+"transaction/addH",
@@ -227,6 +221,14 @@ public class PaymentActivity extends AppCompatActivity {
 //                            String pesan  = jsonObject.getString("message");
 //                            int kode = jsonObject.getInt("code");
                             user.setSaldo(jsonObject.getInt("saldo"));
+                            if(jsonObject.getString("checkin")!=null)
+                                user.setCheckIn(jsonObject.getString("checkin"));
+
+                            Toast.makeText(PaymentActivity.this, "Thank You!", Toast.LENGTH_SHORT).show();
+                            i.putExtra("done","done");
+                            i.putExtra("customer", user);
+                            setResult(Activity.RESULT_OK, i);
+                            finish();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -248,6 +250,7 @@ public class PaymentActivity extends AppCompatActivity {
                 params.put("customer",customer);
                 params.put("promo",promo);
                 params.put("jumlah",jumlah);
+                params.put("potongan",potongan);
                 params.put("subtotal",subtotal);
                 params.put("stamp",stamp+"");
                 return params;

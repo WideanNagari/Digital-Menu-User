@@ -21,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.userapplication.Classes.UserApp;
+import com.example.userapplication.Fragments.HistoryFragment;
 import com.example.userapplication.Fragments.HomeFragment;
 import com.example.userapplication.Fragments.OrderFragment;
 import com.example.userapplication.Fragments.ProfileFragment;
@@ -71,6 +72,9 @@ public class HomeActivity extends AppCompatActivity{
                         break;
                     case R.id.btn_navorder:
                         frag = OrderFragment.newInstance(loggedIn);
+                        break;
+                    case R.id.btn_navhistory:
+                        frag = HistoryFragment.newInstance(loggedIn);
                         break;
                     case R.id.btn_navprofile:
                         frag = ProfileFragment.newInstance(loggedIn);

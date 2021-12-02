@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/imgMenuHistory"
+        android:layout_width="0dp"
+        android:layout_height="75dp"
+        android:layout_weight="1"
+        android:src="@drawable/inverse_logo"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="4"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp">
+        <TextView
+            android:id="@+id/notaHistory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ORD001"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/jumlahItemHistory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="5 Items"
+            android:textColor="@color/black"
+            android:textSize="18dp"/>
+        <TextView
+            android:id="@+id/tanggalHistory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="02 Des 2021 08:24 AM"
+            android:textSize="16dp"/>
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/imgArrow"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:layout_weight="0.5"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_arrow_right"/>
+</LinearLayout>

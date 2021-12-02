@@ -117,25 +117,29 @@ public class OrderOngoingFragment extends Fragment{
         btnPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean pending = false;
-                boolean confirm = false;
-                for (int i = 0; i < arrOrder.size(); i++) {
-                    if (arrOrder.get(i).getStatus().equals("Pending")) pending = true;
-                    if (arrOrder.get(i).getStatus().equals("Confirmed")) confirm = true;
-                }
-                if (arrOrder.size() == 0){
-                    Toast.makeText(getContext(), "Your order(s) are still empty :(", Toast.LENGTH_SHORT).show();
-                }
-                else if (pending)
-                    Toast.makeText(getContext(), "there are still pending orders", Toast.LENGTH_SHORT).show();
-                else{
-                    if (confirm){
-                        Intent i = new Intent(getContext(), PaymentActivity.class);
-                        i.putExtra("customer", user);
-                        activityResultLauncher.launch(i);
-                    }else{
-                        Toast.makeText(getContext(), "You have no confirmed order(s).", Toast.LENGTH_SHORT).show();
+                if (!user.getCheckIn().equals("-")){
+                    boolean pending = false;
+                    boolean confirm = false;
+                    for (int i = 0; i < arrOrder.size(); i++) {
+                        if (arrOrder.get(i).getStatus().equals("Pending")) pending = true;
+                        if (arrOrder.get(i).getStatus().equals("Confirmed")) confirm = true;
                     }
+                    if (arrOrder.size() == 0){
+                        Toast.makeText(getContext(), "Your order(s) are still empty :(", Toast.LENGTH_SHORT).show();
+                    }
+                    else if (pending)
+                        Toast.makeText(getContext(), "there are still pending orders", Toast.LENGTH_SHORT).show();
+                    else{
+                        if (confirm){
+                            Intent i = new Intent(getContext(), PaymentActivity.class);
+                            i.putExtra("customer", user);
+                            activityResultLauncher.launch(i);
+                        }else{
+                            Toast.makeText(getContext(), "You have no confirmed order(s).", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }else{
+                    Toast.makeText(getContext(), "Please Check In!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -154,7 +158,7 @@ public class OrderOngoingFragment extends Fragment{
                             user = data.getParcelableExtra("customer");
                         }
                         if (data.hasExtra("done")){
-                            if (onActionListener!=null) onActionListener.onBack();
+                            if (onActionListener!=null) onActionListener.onBack(user);
                         }
                     }
                 }
@@ -246,6 +250,6 @@ public class OrderOngoingFragment extends Fragment{
     }
 
     public interface OnActionListener{
-        void onBack();
+        void onBack(UserApp user);
     }
 }
