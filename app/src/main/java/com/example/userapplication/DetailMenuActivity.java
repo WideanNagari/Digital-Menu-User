@@ -11,15 +11,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class DetailMenuActivity extends AppCompatActivity {
-    ImageView imgV;
+    ImageView imgV, imgLike;
     TextView txtNama, txtHrg, txtDesc, txtJum, txtSub;
     ImageButton btnAdd, btnSub;
     Button btnAddtoCart, btnBack;
-    Intent it;
+    Intent i;
+    boolean like;
+    Menu menu;
+
+    int jum=0;
+    String nama, desc;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_detail_menu);
+
         imgV=findViewById(R.id.imgDetailMenu);
+        imgLike=findViewById(R.id.imgLike);
         txtNama=findViewById(R.id.txtNamaDetail);
         txtHrg=findViewById(R.id.txtHargaDetail);
         txtDesc=findViewById(R.id.txtDescDetail);
@@ -32,23 +41,41 @@ public class DetailMenuActivity extends AppCompatActivity {
 
         btnBack=findViewById(R.id.btnBack);
 
-        txtJum.setText(jum+"");
+        txtJum.setText("1");
 
-        it=getIntent();
-        nama=it.getStringExtra("nama_detail");
-        hrg=Integer.parseInt(it.getStringExtra("harga_detail"));
-        desc=it.getStringExtra("desc_detail");
+        i=getIntent();
+        if (i.getExtras()!=null){
+            if (i.hasExtra("menu")){
+                menu = i.getParcelableExtra("menu");
+            }
+        }
+        txtNama.setText(menu.getNama_menu());
+        txtHrg.setText(currency(menu.getHarga_menu()+""));
+        txtDesc.setText(menu.getDeskripsi_menu());
 
-        setContentView(R.layout.activity_detail_menu);
+        like = true;
+        if (like) imgLike.setImageResource(R.drawable.liked);
+        else imgLike.setImageResource(R.drawable.like);
+        imgLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (like){
+                    //ngelike
+                    imgLike.setImageResource(R.drawable.liked);
+                }else{
+                    //ngunlike
+                    imgLike.setImageResource(R.drawable.like);
+                }
+            }
+        });
     }
-    int jum=0, hrg=0;
-    String nama, desc;
 
     public void add(View v){
         jum++;
         txtJum.setText(jum+"");
         updateSub();
     }
+
     public void sub(View v){
         if(jum>0){
             jum--;
@@ -56,9 +83,25 @@ public class DetailMenuActivity extends AppCompatActivity {
         }
         updateSub();
     }
+
     public void updateSub(){
-        int sub=hrg*jum;
-        txtSub.setText("Subtotal: Rp. "+sub+",-");
+        int sub=Integer.parseInt(menu.getHarga_menu())*jum;
+        txtSub.setText("Subtotal: "+currency(sub+""));
+    }
+
+    private String currency(String angkaAwal){
+        String hasil = "";
+        if (angkaAwal.length()>=3){
+            int ctr = 1;
+            for (int i = angkaAwal.length()-1; i >= 0; i--) {
+                hasil = angkaAwal.charAt(i) + hasil;
+                if (ctr%3==0 && ctr<angkaAwal.length()) hasil = "."+hasil;
+                ctr++;
+            }
+        }else{
+            hasil = angkaAwal;
+        }
+        return "Rp. "+hasil;
     }
     public void back(View v){
         finish();

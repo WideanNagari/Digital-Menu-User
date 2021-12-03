@@ -15,44 +15,53 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder>{
-    JSONArray dataMenu;
+import java.util.ArrayList;
 
-    public MenuAdapter(JSONArray dataMenu) {
-        this.dataMenu = dataMenu;
+public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder>{
+    ArrayList<Menu> arrMenu;
+    OnItemClick onItemClick;
+
+    public OnItemClick getOnItemClick() {
+        return onItemClick;
+    }
+
+    public void setOnItemClick(OnItemClick onItemClick) {
+        this.onItemClick = onItemClick;
+    }
+
+    public MenuAdapter(ArrayList<Menu> arrMenu) {
+        this.arrMenu = arrMenu;
     }
 
     @NonNull
     @Override
-    public MenuAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from((parent.getContext())).inflate(R.layout.recycler_menu,parent,false);
-        return new ViewHolder(v);
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.recycler_menu, parent,false);
+        ViewHolder viewHolder = new ViewHolder(view);
+        return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull MenuAdapter.ViewHolder holder, int position) {
-        JSONObject itemnow;
-        try {
-            itemnow = dataMenu.getJSONObject(position);
-            holder.tvNama.setText(itemnow.getString("nama_menu"));
-            holder.tvHarga.setText(itemnow.getString("harga_menu"));
-            holder.tvDesc.setText(itemnow.getString("deskripsi_menu"));
+        Menu m = arrMenu.get(position);
 
-            holder.detail.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-//                    onItemClickListener.onClick(holder, position);
-                }
-            });
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        holder.tvNama.setText(m.getNama_menu());
+        holder.tvHarga.setText(m.getHarga_menu());
+        holder.tvDesc.setText(m.getDeskripsi_menu());
+
+        holder.detail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (onItemClick!=null) onItemClick.onDetailClick(m);
+            }
+        });
 
     }
 
     @Override
     public int getItemCount() {
-        return dataMenu.length();
+        return arrMenu.size();
 
     }
 
@@ -70,14 +79,8 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder>{
         }
     }
 
-    private OnItemClickListener onItemClickListener;
-
-    public MenuAdapter(OnItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
-    }
-
-    public void onClick(OnItemClickListener onItemClickListener){
-        this.onItemClickListener=onItemClickListener;
+    public interface OnItemClick{
+        void onDetailClick(Menu m);
     }
 
 }
