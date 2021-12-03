@@ -18,7 +18,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.userapplication.Classes.UserApp;
-import com.example.userapplication.EditPasswordActivity;
 import com.example.userapplication.EditProfileActivity;
 import com.example.userapplication.HomeActivity;
 import com.example.userapplication.R;
@@ -114,9 +113,9 @@ public class ProfileFragment extends Fragment {
         btnPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent edit = new Intent(getActivity(), EditPasswordActivity.class);
-                edit.putExtra("loggedIn",loggedIn);
-                launcher.launch(edit);
+//                Intent edit = new Intent(getActivity(), EditPasswordActivity.class);
+//                edit.putExtra("loggedIn",loggedIn);
+//                launcher.launch(edit);
             }
         });
     }

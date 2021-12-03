@@ -76,8 +76,8 @@ public class LoginActivity extends AppCompatActivity {
                                             user.getString("no_telp"),user.getString("password"),
                                             user.getInt("saldo"), user.getInt("stamp"),
                                             user.getString("role"),user.getString("status"),
-                                            jsonObject.getString("meja")
-                                    );
+                                            jsonObject.getString("meja"), jsonObject.getString("idMeja")
+                                            );
                                     Intent i = new Intent(LoginActivity.this, HomeActivity.class);
                                     i.putExtra("loggedIn",loggedIn);
                                     startActivity(i);

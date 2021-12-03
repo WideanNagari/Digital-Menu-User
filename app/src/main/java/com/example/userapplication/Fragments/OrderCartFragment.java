@@ -243,7 +243,7 @@ public class OrderCartFragment extends Fragment implements LoadCartAsync.LoadCar
                         if (order.isConfirm()){
                             order.setStatus("Pending");
                             new UpdateCartAsync(getActivity(),OrderCartFragment.this, order).execute();
-                            addOrder(user.getId()+"",order.getId()+"",order.getJumlah()+"");
+                            addOrder(user.getId()+"",order.getId()+"",order.getJumlah()+"", user.getIdMeja());
                             orderMenus.add(order);
                         }
                     }
@@ -265,7 +265,7 @@ public class OrderCartFragment extends Fragment implements LoadCartAsync.LoadCar
         alertDialog.show();
     }
 
-    public void addOrder(String customer, String menu, String jumlah){
+    public void addOrder(String customer, String menu, String jumlah, String meja){
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
                 getResources().getString(R.string.url)+"order/addOrder",
@@ -301,6 +301,7 @@ public class OrderCartFragment extends Fragment implements LoadCartAsync.LoadCar
                 params.put("customer",customer);
                 params.put("menu",menu);
                 params.put("jumlah",jumlah);
+                params.put("meja",meja);
                 params.put("reward","0");
                 params.put("stamp","0");
                 return params;
@@ -327,6 +328,9 @@ public class OrderCartFragment extends Fragment implements LoadCartAsync.LoadCar
                             Toast.makeText(getContext(), pesan, Toast.LENGTH_SHORT).show();
                             if (kode==1) {
                                 user.setCheckIn(jsonObject.getString("meja"));
+                                user.setIdMeja(jsonObject.getString("idMeja"));
+                                System.out.println(user.getCheckIn());
+                                System.out.println(user.getIdMeja());
                                 btnCheckin.setEnabled(false);
                                 btnCheckin.setText(user.getCheckIn());
                                 bottomSheetDialog.dismiss();

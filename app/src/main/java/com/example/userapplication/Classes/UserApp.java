@@ -21,8 +21,9 @@ public class UserApp implements Parcelable {
     private String role;
     private String status;
     private String checkIn;
+    private String idMeja;
 
-    public UserApp(int id, String name, String email, String telp, String password, int saldo, int stamp, String role, String status, String checkIn) {
+    public UserApp(int id, String name, String email, String telp, String password, int saldo, int stamp, String role, String status, String checkIn, String idMeja) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -33,6 +34,7 @@ public class UserApp implements Parcelable {
         this.role = role;
         this.status = status;
         this.checkIn = checkIn;
+        this.idMeja = idMeja;
     }
 
     protected UserApp(Parcel in) {
@@ -46,6 +48,7 @@ public class UserApp implements Parcelable {
         role = in.readString();
         status = in.readString();
         checkIn = in.readString();
+        idMeja = in.readString();
     }
 
     public static final Creator<UserApp> CREATOR = new Creator<UserApp>() {
@@ -59,6 +62,14 @@ public class UserApp implements Parcelable {
             return new UserApp[size];
         }
     };
+
+    public String getIdMeja() {
+        return idMeja;
+    }
+
+    public void setIdMeja(String idMeja) {
+        this.idMeja = idMeja;
+    }
 
     public int getId() {
         return id;
@@ -140,6 +151,7 @@ public class UserApp implements Parcelable {
         this.checkIn = checkIn;
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -157,6 +169,6 @@ public class UserApp implements Parcelable {
         parcel.writeString(role);
         parcel.writeString(status);
         parcel.writeString(checkIn);
+        parcel.writeString(idMeja);
     }
-
 }
