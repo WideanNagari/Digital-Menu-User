@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.userapplication.Classes.UserApp;
+import com.example.userapplication.EditPasswordActivity;
 import com.example.userapplication.EditProfileActivity;
 import com.example.userapplication.HomeActivity;
 import com.example.userapplication.R;
@@ -67,7 +68,7 @@ public class ProfileFragment extends Fragment {
     }
 
     TextView name, email, cash, phone;
-    Button btnEdit;
+    Button btnEdit, btnPass;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -76,6 +77,7 @@ public class ProfileFragment extends Fragment {
         cash = view.findViewById(R.id.tv_profilesaldo);
         phone = view.findViewById(R.id.tv_profilephonenum);
         btnEdit = view.findViewById(R.id.btn_profileedit);
+        btnPass = view.findViewById(R.id.btn_updpass);
         name.setText(loggedIn.getName());
         email.setText(loggedIn.getEmail());
         cash.setText("Rp "+String.format("%,.2f", new Double(loggedIn.getSaldo())));
@@ -105,6 +107,14 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent edit = new Intent(getActivity(), EditProfileActivity.class);
+                edit.putExtra("loggedIn",loggedIn);
+                launcher.launch(edit);
+            }
+        });
+        btnPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent edit = new Intent(getActivity(), EditPasswordActivity.class);
                 edit.putExtra("loggedIn",loggedIn);
                 launcher.launch(edit);
             }

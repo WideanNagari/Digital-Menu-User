@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UserApplication">
         <activity
+            android:name=".EditPasswordActivity"
+            android:exported="true" />
+        <activity
             android:name=".ClaimRewardActivity"
             android:exported="true" />
         <activity

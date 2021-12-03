@@ -184,30 +184,19 @@
                 android:orientation="horizontal"
                 android:outlineProvider="none">
 
-                <TextView
-                    android:id="@+id/textView6"
-                    android:layout_width="match_parent"
+                <Button
+                    android:id="@+id/btn_updpass"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:fontFamily="sans-serif-light"
-                    android:paddingTop="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingBottom="10dp"
-                    android:text="Phone Num."
-                    android:textAlignment="viewEnd"
-                    android:textSize="16sp"
-                    app:autoSizeTextType="none" />
-
-                <TextView
-                    android:id="@+id/tv_profilephonenum"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:layout_weight="1"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:text="0813-XXXX-XXXX"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:backgroundTint="@color/red1"
+                    android:capitalize="none"
+                    android:text="Change Password"
+                    android:textAllCaps="false"
+                    android:textSize="20sp"
+                    app:cornerRadius="20dp" />
             </LinearLayout>
 
         </LinearLayout>
