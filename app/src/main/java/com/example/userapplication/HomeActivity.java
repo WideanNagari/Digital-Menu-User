@@ -4,6 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentOnAttachListener;
+import androidx.room.FtsOptions;
 
 import android.content.Context;
 import android.content.Intent;
@@ -24,6 +27,7 @@ import com.example.userapplication.Classes.UserApp;
 import com.example.userapplication.Fragments.HistoryFragment;
 import com.example.userapplication.Fragments.HomeFragment;
 import com.example.userapplication.Fragments.OrderFragment;
+import com.example.userapplication.Fragments.OrderOngoingFragment;
 import com.example.userapplication.Fragments.ProfileFragment;
 import com.example.userapplication.Fragments.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -62,10 +66,10 @@ public class HomeActivity extends AppCompatActivity{
                 Fragment frag;
                 switch (item.getItemId()){
                     default:
-                        frag = HomeFragment.newInstance("param1", "param2");
+                        frag = HomeFragment.newInstance(loggedIn);
                         break;
                     case R.id.btn_navhome:
-                        frag = HomeFragment.newInstance("param1", "param2");
+                        frag = HomeFragment.newInstance(loggedIn);
                         break;
                     case R.id.btn_navsearch:
                         frag = SearchFragment.newInstance(loggedIn);
@@ -92,6 +96,31 @@ public class HomeActivity extends AppCompatActivity{
         if (savedInstanceState == null) {
             navbar.setSelectedItemId(R.id.btn_navhome);
         }
+
+        getSupportFragmentManager().addFragmentOnAttachListener(new FragmentOnAttachListener() {
+            @Override
+            public void onAttachFragment(@NonNull FragmentManager fragmentManager, @NonNull Fragment fragment) {
+                if (fragment instanceof OrderFragment) {
+                    OrderFragment orderFragment = (OrderFragment) fragment;
+                    orderFragment.setOnActionListener(new OrderFragment.OnActionListener() {
+                        @Override
+                        public void onBack(UserApp u) {
+                            loggedIn = u;
+                            navbar.setSelectedItemId(R.id.btn_navhome);
+                        }
+                    });
+                }else if (fragment instanceof HomeFragment){
+                    HomeFragment homeFragment = (HomeFragment) fragment;
+                    homeFragment.setOnActionListener(new HomeFragment.OnActionListener() {
+                        @Override
+                        public void onBack(UserApp user) {
+                            loggedIn = user;
+                            navbar.setSelectedItemId(R.id.btn_navhome);
+                        }
+                    });
+                }
+            }
+        });
 
     }
 

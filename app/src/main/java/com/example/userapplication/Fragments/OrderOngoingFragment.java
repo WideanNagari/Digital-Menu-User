@@ -218,6 +218,7 @@ public class OrderOngoingFragment extends Fragment{
                                             , order.getString("status_menu")
                                             , order.getInt("jumlah")
                                             , order.getString("status")
+                                            , order.getInt("reward_status")
                                     ));
                                 }
                                 ongoingAdapter.notifyDataSetChanged();

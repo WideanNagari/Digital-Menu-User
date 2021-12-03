@@ -42,6 +42,16 @@ public class OrderFragment extends Fragment implements AddOrderAsync.AddOrderCal
 
     BottomNavigationView navbar;
     UserApp user;
+    OnActionListener onActionListener;
+
+    public OnActionListener getOnActionListener() {
+        return onActionListener;
+    }
+
+    public void setOnActionListener(OnActionListener onActionListener) {
+        this.onActionListener = onActionListener;
+    }
+
     public OrderFragment() {
         // Required empty public constructor
     }
@@ -73,14 +83,14 @@ public class OrderFragment extends Fragment implements AddOrderAsync.AddOrderCal
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-//        new AddOrderAsync(getContext(), OrderFragment.this, new OrderMenu("1", "menu satu", "25000", "deskripsi menu satu harganya 25 rebu", "x", "yes",1,"-")).execute();
-//        new AddOrderAsync(getContext(), OrderFragment.this, new OrderMenu("2", "menu dua", "15500", "deskripsi menu dua harganya 15 rebu 5 ratus", "x", "yes",1,"-")).execute();
-//        new AddOrderAsync(getContext(), OrderFragment.this, new OrderMenu("3", "menu tiga", "5000", "deskripsi menu tiga harganya 5 rebu", "x", "yes",1,"-")).execute();
-//        new AddOrderAsync(getContext(), OrderFragment.this, new OrderMenu("4", "menu empat", "10000", "deskripsi menu empat harganya 10 rebu", "x", "yes",1,"-")).execute();
-//        new AddOrderAsync(getContext(), OrderFragment.this, new OrderMenu("5", "menu lima", "71200", "deskripsi menu lima harganya 71 rebu 2 ratus", "x", "yes",1,"-")).execute();
-//        new AddOrderAsync(getContext(), OrderFragment.this, new OrderMenu("2", "menu dua", "71200", "deskripsi menu lima harganya 71 rebu 2 ratus", "x", "yes",1,"-")).execute();
-//        new AddOrderAsync(getContext(), OrderFragment.this, new OrderMenu("1", "menu satu", "71200", "deskripsi menu lima harganya 71 rebu 2 ratus", "x", "yes",1,"-")).execute();
-//        new AddOrderAsync(getContext(), OrderFragment.this, new OrderMenu("3", "menu tiga", "71200", "deskripsi menu lima harganya 71 rebu 2 ratus", "x", "yes",1,"-")).execute();
+//        new AddOrderAsync(getContext(), OrderFragment.this, new OrderMenu("1", "menu satu", "25000", "deskripsi menu satu harganya 25 rebu", "x", "yes",1,"-",0)).execute();
+//        new AddOrderAsync(getContext(), OrderFragment.this, new OrderMenu("2", "menu dua", "15500", "deskripsi menu dua harganya 15 rebu 5 ratus", "x", "yes",1,"-",0)).execute();
+//        new AddOrderAsync(getContext(), OrderFragment.this, new OrderMenu("3", "menu tiga", "5000", "deskripsi menu tiga harganya 5 rebu", "x", "yes",1,"-",0)).execute();
+//        new AddOrderAsync(getContext(), OrderFragment.this, new OrderMenu("4", "menu empat", "10000", "deskripsi menu empat harganya 10 rebu", "x", "yes",1,"-",0)).execute();
+//        new AddOrderAsync(getContext(), OrderFragment.this, new OrderMenu("5", "menu lima", "71200", "deskripsi menu lima harganya 71 rebu 2 ratus", "x", "yes",1,"-",0)).execute();
+//        new AddOrderAsync(getContext(), OrderFragment.this, new OrderMenu("2", "menu dua", "71200", "deskripsi menu lima harganya 71 rebu 2 ratus", "x", "yes",1,"-",0)).execute();
+//        new AddOrderAsync(getContext(), OrderFragment.this, new OrderMenu("1", "menu satu", "71200", "deskripsi menu lima harganya 71 rebu 2 ratus", "x", "yes",1,"-",0)).execute();
+//        new AddOrderAsync(getContext(), OrderFragment.this, new OrderMenu("3", "menu tiga", "71200", "deskripsi menu lima harganya 71 rebu 2 ratus", "x", "yes",1,"-",0)).execute();
 
         navbar = view.findViewById(R.id.navigationOrder);
         navbar.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -115,13 +125,12 @@ public class OrderFragment extends Fragment implements AddOrderAsync.AddOrderCal
             @Override
             public void onAttachFragment(@NonNull FragmentManager fragmentManager, @NonNull Fragment fragment) {
                 if (fragment instanceof OrderOngoingFragment) {
-                    // total di trans, pemasukan, pengeluaran
                     OrderOngoingFragment orderOngoingFragment = (OrderOngoingFragment) fragment;
                     orderOngoingFragment.setOnActionListener(new OrderOngoingFragment.OnActionListener() {
                         @Override
                         public void onBack(UserApp u) {
                             user = u;
-                            navbar.setSelectedItemId(R.id.item_cart);
+                            if (onActionListener!=null) onActionListener.onBack(user);
                         }
                     });
                 }
@@ -137,6 +146,10 @@ public class OrderFragment extends Fragment implements AddOrderAsync.AddOrderCal
     @Override
     public void postExecuteAdd() {
 
+    }
+
+    public interface OnActionListener{
+        void onBack(UserApp user);
     }
 }
 

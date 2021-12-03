@@ -23,11 +23,26 @@ public class OrderMenu extends Menu {
     @ColumnInfo(name = "status")
     private String status;
 
-    public OrderMenu(String id, String nama_menu, String harga_menu, String deskripsi_menu, String jenis_menu, String status_menu, int jumlah, String status) {
+    private int reward_status;
+
+    public OrderMenu(String id, String nama_menu, String harga_menu, String deskripsi_menu, String jenis_menu, String status_menu, int jumlah, String status, int reward_status) {
         super(id, nama_menu, harga_menu, deskripsi_menu, jenis_menu, status_menu);
         this.jumlah = jumlah;
         this.confirm = false;
         this.status = status;
+        this.reward_status = reward_status;
+
+        if (this.reward_status == 1){
+            this.harga_menu = "0";
+        }
+    }
+
+    public int getReward_status() {
+        return reward_status;
+    }
+
+    public void setReward_status(int reward_status) {
+        this.reward_status = reward_status;
     }
 
     public int getIdOrder() {

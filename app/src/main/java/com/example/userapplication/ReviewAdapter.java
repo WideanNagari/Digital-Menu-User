@@ -17,7 +17,7 @@ import com.example.userapplication.Classes.Review;
 
 import java.util.ArrayList;
 
-public class ReviewAdapter  extends RecyclerView.Adapter<ReviewAdapter.ViewHolder>{
+public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder>{
     ArrayList<Review> arrReview;
     String isi;
 

@@ -73,6 +73,8 @@ public class OrderCartFragment extends Fragment implements LoadCartAsync.LoadCar
     String[] spinItem;
     ArrayAdapter<String> spinAdapter;
     BottomSheetDialog bottomSheetDialog;
+    View bottomSheetView;
+    Spinner spin;
 
     public OrderCartFragment() {
         // Required empty public constructor
@@ -160,6 +162,7 @@ public class OrderCartFragment extends Fragment implements LoadCartAsync.LoadCar
             }
         });
 
+        sheetDialogNew();
         btnCheckin = view.findViewById(R.id.btnCheckin);
         if (!user.getCheckIn().equals("-")){
             btnCheckin.setEnabled(false);
@@ -169,37 +172,41 @@ public class OrderCartFragment extends Fragment implements LoadCartAsync.LoadCar
             @Override
             public void onClick(View view) {
                 if (user.getCheckIn().equals("-")){
-                    bottomSheetDialog = new BottomSheetDialog(getContext());
-                    View bottomSheetView = LayoutInflater.from(getContext().getApplicationContext())
-                            .inflate(
-                                    R.layout.layout_checkin,
-                                    (LinearLayout)view.findViewById(R.id.bottomContainer)
-                            );
-                    EditText isiKode = bottomSheetView.findViewById(R.id.kodeCheckIn);
-                    Spinner spin = bottomSheetView.findViewById(R.id.spinnerCheckin);
-                    bottomSheetView.findViewById(R.id.doCheckin).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            checkIn(arrMeja.get(spin.getSelectedItemPosition()).getId()+"",user.getId()+"",isiKode.getText().toString());
-                        }
-                    });
-                    isiSpinner();
-                    spin.setAdapter(spinAdapter);
-
-                    bottomSheetDialog.setContentView(bottomSheetView);
-                    bottomSheetDialog.show();
+                    getAvailableTable();
                 }
-
             }
         });
 
         new LoadCartAsync(getActivity(),OrderCartFragment.this).execute();
-
         alertDialogBuilder = new AlertDialog.Builder(getContext());
     }
 
+    private void sheetDialogNew(){
+        bottomSheetDialog = new BottomSheetDialog(getContext());
+        bottomSheetView = LayoutInflater.from(getContext().getApplicationContext())
+                .inflate(
+                        R.layout.layout_checkin,
+                        (LinearLayout)getView().findViewById(R.id.bottomContainer)
+                );
+
+        EditText isiKode = bottomSheetView.findViewById(R.id.kodeCheckIn);
+        spin = bottomSheetView.findViewById(R.id.spinnerCheckin);
+        bottomSheetView.findViewById(R.id.doCheckin).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkIn(arrMeja.get(spin.getSelectedItemPosition()).getId()+"",user.getId()+"",isiKode.getText().toString());
+            }
+        });
+    }
+
+    private void callSheetDialog(){
+        spin.setAdapter(spinAdapter);
+
+        bottomSheetDialog.setContentView(bottomSheetView);
+        bottomSheetDialog.show();
+    }
+
     private void isiSpinner(){
-        getAvailableTable();
         spinItem = new String[arrMeja.size()];
         for (int i = 0; i < arrMeja.size(); i++) {
             spinItem[i] = arrMeja.get(i).getNomor_meja();
@@ -210,6 +217,7 @@ public class OrderCartFragment extends Fragment implements LoadCartAsync.LoadCar
                 spinItem
         );
         spinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        callSheetDialog();
     }
 
     private void showDialog(String message, Drawable drawable, String action){
@@ -293,6 +301,8 @@ public class OrderCartFragment extends Fragment implements LoadCartAsync.LoadCar
                 params.put("customer",customer);
                 params.put("menu",menu);
                 params.put("jumlah",jumlah);
+                params.put("reward","0");
+                params.put("stamp","0");
                 return params;
             }
         };
@@ -434,6 +444,7 @@ public class OrderCartFragment extends Fragment implements LoadCartAsync.LoadCar
                                             , meja.getString("kode")
                                     ));
                                 }
+                                isiSpinner();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

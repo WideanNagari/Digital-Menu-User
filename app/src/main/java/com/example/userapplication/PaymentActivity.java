@@ -197,7 +197,7 @@ public class PaymentActivity extends AppCompatActivity {
                 public void onClick (DialogInterface dialogInterface,int j){
                     addHJual(user.getId()+"",usePromo,arrOrder.size()+"", disc+"", subtotals+"",totals/20000);
                     for (int i = 0; i < arrOrder.size(); i++) {
-                        addDJual(arrOrder.get(i).getId(),arrOrder.get(i).getJumlah()+"");
+                        addDJual(arrOrder.get(i).getId(),arrOrder.get(i).getJumlah()+"", arrOrder.get(i).getReward_status()+"");
                     }
                 }
             });
@@ -261,7 +261,7 @@ public class PaymentActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    public void addDJual(String menu, String quantity){
+    public void addDJual(String menu, String quantity, String reward){
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
                 getResources().getString(R.string.url)+"transaction/addD",
@@ -294,6 +294,8 @@ public class PaymentActivity extends AppCompatActivity {
                 Map<String, String> params = new HashMap<>();
                 params.put("menu",menu);
                 params.put("quantity",quantity);
+                params.put("reward",reward);
+                params.put("stamp","0");
                 return params;
             }
         };
@@ -330,6 +332,7 @@ public class PaymentActivity extends AppCompatActivity {
                                                 , order.getString("status_menu")
                                                 , order.getInt("jumlah")
                                                 , order.getString("status")
+                                                , order.getInt("reward_status")
                                         ));
                                     }
                                 }

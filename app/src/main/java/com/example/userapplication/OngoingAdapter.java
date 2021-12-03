@@ -43,7 +43,7 @@ public class OngoingAdapter  extends RecyclerView.Adapter<OngoingAdapter.ViewHol
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         OrderMenu o = arrOrder.get(position);
         holder.nama.setText(o.getNama_menu());
-        holder.harga.setText(o.getJumlah()+" x "+o.getHarga_menu());
+        holder.harga.setText(o.getJumlah()+" x "+currency(o.getHarga_menu()));
         holder.status.setText(o.getStatus());
 
         int warna = Color.parseColor("#FF8FA3");
@@ -67,5 +67,21 @@ public class OngoingAdapter  extends RecyclerView.Adapter<OngoingAdapter.ViewHol
             harga = itemView.findViewById(R.id.hargaMenuOngoing);
             status = itemView.findViewById(R.id.statusMenu);
         }
+    }
+
+    private String currency(String angkaAwal){
+        String hasil = "";
+
+        if (angkaAwal.length()>=3){
+            int ctr = 1;
+            for (int i = angkaAwal.length()-1; i >= 0; i--) {
+                hasil = angkaAwal.charAt(i) + hasil;
+                if (ctr%3==0 && ctr<angkaAwal.length()) hasil = "."+hasil;
+                ctr++;
+            }
+        }else{
+            hasil = angkaAwal;
+        }
+        return "Rp. "+hasil;
     }
 }
