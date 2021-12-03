@@ -3,6 +3,13 @@ package com.example.userapplication.Classes;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.room.Dao;
+import androidx.room.Delete;
+import androidx.room.Insert;
+import androidx.room.Query;
+
+import java.util.List;
+
 public class UserApp implements Parcelable {
     private int id;
     private String name;
@@ -151,4 +158,5 @@ public class UserApp implements Parcelable {
         parcel.writeString(status);
         parcel.writeString(checkIn);
     }
+
 }

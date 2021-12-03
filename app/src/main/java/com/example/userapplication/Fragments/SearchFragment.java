@@ -22,6 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.userapplication.Classes.UserApp;
 import com.example.userapplication.DetailMenuActivity;
 import com.example.userapplication.Menu;
 import com.example.userapplication.MenuAdapter;
@@ -45,17 +46,17 @@ public class SearchFragment extends Fragment {
     Button btn_src, btn_detail;
     RecyclerView rv;
     MenuAdapter itemadapter;
-    JSONArray dataMenu;
     ArrayList<Menu> arrMenu;
+    UserApp user;
 
     public SearchFragment() {
         // Required empty public constructor
     }
 
-    public static SearchFragment newInstance() {
+    public static SearchFragment newInstance(UserApp user) {
         SearchFragment fragment = new SearchFragment();
         Bundle args = new Bundle();
-
+        args.putParcelable("user", user);
         fragment.setArguments(args);
         return fragment;
     }
@@ -64,7 +65,7 @@ public class SearchFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-
+            user = getArguments().getParcelable("user");
         }
     }
 
@@ -92,6 +93,7 @@ public class SearchFragment extends Fragment {
             public void onDetailClick(Menu m) {
                 Intent i = new Intent(getContext(), DetailMenuActivity.class);
                 i.putExtra("menu",m);
+                i.putExtra("user",user);
                 startActivity(i);
             }
         });

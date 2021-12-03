@@ -47,7 +47,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder>{
         Menu m = arrMenu.get(position);
 
         holder.tvNama.setText(m.getNama_menu());
-        holder.tvHarga.setText(m.getHarga_menu());
+        holder.tvHarga.setText(currency(m.getHarga_menu()));
         holder.tvDesc.setText(m.getDeskripsi_menu());
 
         holder.detail.setOnClickListener(new View.OnClickListener() {
@@ -57,6 +57,21 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder>{
             }
         });
 
+    }
+
+    private String currency(String angkaAwal){
+        String hasil = "";
+        if (angkaAwal.length()>=3){
+            int ctr = 1;
+            for (int i = angkaAwal.length()-1; i >= 0; i--) {
+                hasil = angkaAwal.charAt(i) + hasil;
+                if (ctr%3==0 && ctr<angkaAwal.length()) hasil = "."+hasil;
+                ctr++;
+            }
+        }else{
+            hasil = angkaAwal;
+        }
+        return "Rp. "+hasil;
     }
 
     @Override

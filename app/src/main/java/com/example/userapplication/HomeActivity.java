@@ -68,7 +68,7 @@ public class HomeActivity extends AppCompatActivity{
                         frag = HomeFragment.newInstance("param1", "param2");
                         break;
                     case R.id.btn_navsearch:
-                        frag = SearchFragment.newInstance();
+                        frag = SearchFragment.newInstance(loggedIn);
                         break;
                     case R.id.btn_navorder:
                         frag = OrderFragment.newInstance(loggedIn);

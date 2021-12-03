@@ -6,9 +6,10 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {OrderMenu.class}, version = 1)
+@Database(entities = {OrderMenu.class, Like.class}, version = 1)
 public abstract class AppDatabase  extends RoomDatabase {
     public abstract OrderDAO orderDAO();
+    public abstract LikeDAO likeDAO();
 
     public static AppDatabase database = null;
     public static void initDatabase(Context context, String databaseName){
