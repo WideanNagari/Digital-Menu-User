@@ -17,5 +17,11 @@
         <item name="colorSecondary">@color/red5</item>
         <item name="colorPrimary">@color/white</item>
     </style>
+    <style name="FullScreen" parent="Theme.UserApplication">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
 
 </resources>

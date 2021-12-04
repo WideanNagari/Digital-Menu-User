@@ -96,7 +96,7 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        getAllMenu();
+        //getAllMenu();
 
         btn_src.setOnClickListener(new View.OnClickListener(){
             @Override
