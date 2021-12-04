@@ -15,16 +15,35 @@
 
     </FrameLayout>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
+    <com.etebarian.meowbottomnavigation.MeowBottomNavigation
         android:id="@+id/nav_home"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="10"
-        android:background="@color/red1"
-        android:foregroundTint="@color/colorPrimary"
-        android:theme="@style/Custom"
-        android:visibility="visible"
-        app:itemHorizontalTranslationEnabled="true"
-        app:labelVisibilityMode="labeled"
-        app:menu="@menu/navbar_home" />
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:mbn_shadowColor="@color/cardview_shadow_start_color"
+        app:mbn_backgroundBottomColor="@color/pink3"
+        app:mbn_circleColor="@color/white"
+        app:mbn_countBackgroundColor="@color/pink9"
+        app:mbn_countTextColor="@color/black"
+        app:mbn_defaultIconColor="@color/white"
+        app:mbn_selectedIconColor="@color/red1">
+
+    </com.etebarian.meowbottomnavigation.MeowBottomNavigation>
+
+
+<!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
+<!--        android:id="@+id/nav_home"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_weight="10"-->
+<!--        android:background="@color/red1"-->
+<!--        android:foregroundTint="@color/colorPrimary"-->
+<!--        android:theme="@style/Custom"-->
+<!--        android:visibility="visible"-->
+<!--        app:itemHorizontalTranslationEnabled="true"-->
+<!--        app:labelVisibilityMode="labeled"-->
+<!--        app:menu="@menu/navbar_home" />-->
 </LinearLayout>

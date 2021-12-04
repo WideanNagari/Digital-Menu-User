@@ -6,16 +6,5 @@
     tools:context=".Home.HomeActivity"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Ini Halaman Home" />
-
-    <Button
-        android:id="@+id/goClaim"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Reward"
-        />
+    
 </LinearLayout>
