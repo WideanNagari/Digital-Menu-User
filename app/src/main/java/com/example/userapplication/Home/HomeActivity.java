@@ -119,13 +119,20 @@ public class HomeActivity extends AppCompatActivity{
         bottomNavigation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(HomeActivity.this, "", Toast.LENGTH_SHORT).show();
+                Toast.makeText(HomeActivity.this, "a", Toast.LENGTH_SHORT).show();
+            }
+        });
+        bottomNavigation.setOnClickMenuListener(new MeowBottomNavigation.ClickListener() {
+            @Override
+            public void onClickItem(MeowBottomNavigation.Model item) {
+
             }
         });
         bottomNavigation.setOnReselectListener(new MeowBottomNavigation.ReselectListener() {
             @Override
             public void onReselectItem(MeowBottomNavigation.Model item) {
-                Toast.makeText(HomeActivity.this, "", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(HomeActivity.this, "", Toast.LENGTH_SHORT).show();
+//                System.out.println("a");
             }
         });
         bottomNavigation.setCount(ID_ORDER, "0"); //yg kasih notif
