@@ -80,6 +80,7 @@ public class HomeFragment extends Fragment {
 
     RecyclerView rv_reward, rv_popular, rv_recommended,  rv_again;
     RewardAdapter rewardAdapter;
+    PopularAdapter popularAdapter;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -90,8 +91,20 @@ public class HomeFragment extends Fragment {
         rv_reward.setAdapter(rewardAdapter);
 
         rv_popular = view.findViewById(R.id.popular_recycler);
+        popularAdapter = new PopularAdapter(listPopular);
+        rv_popular.setLayoutManager( new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        rv_popular.setAdapter(popularAdapter);
+
         rv_recommended = view.findViewById(R.id.recommended_recycler);
+        popularAdapter = new PopularAdapter(listPopular);
+        rv_recommended.setLayoutManager( new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        rv_recommended.setAdapter(popularAdapter);
+
         rv_again = view.findViewById(R.id.again_recycler);
+        popularAdapter = new PopularAdapter(listPopular);
+        rv_again.setLayoutManager( new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        rv_again.setAdapter(popularAdapter);
+
 //        btn = view.findViewById(R.id.goClaim);
 //        btn.setOnClickListener(new View.OnClickListener() {
 //            @Override
