@@ -4,8 +4,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -29,34 +32,40 @@ import java.util.Stack;
 
 public class LoginActivity extends AppCompatActivity {
 
-    Button btnLogin;
-    TextView btnToRegis;
     EditText edPhone, edPass;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.M){
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
         setContentView(R.layout.activity_login);
-        btnLogin = findViewById(R.id.cirLoginButton);
-        btnToRegis = findViewById(R.id.tv_toregis);
+
+        changeStatusBarColor();
+
         edPhone = findViewById(R.id.loginTelp);
         edPass = findViewById(R.id.loginPassword);
 
-        btnLogin.setOnClickListener(this::doLogin);
-        btnToRegis.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(LoginActivity.this, RegisterActivity.class);
-                startActivity(i);
-                finish();
-            }
-        });
-
     }
 
-    private void doLogin(View view){
+    private void changeStatusBarColor() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(getResources().getColor(R.color.red2));
+        }
+    }
+
+    public void onLoginClick(View View){
+        startActivity(new Intent(this,RegisterActivity.class));
+        overridePendingTransition(R.anim.slide_in_right,R.anim.stay);
+    }
+
+    public void btnClick(View view){
+        Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+        startActivity(i);
+        finish();
         if(edPhone.getText().length()>0 && edPass.getText().length()>0){
-//            Intent i = new Intent(LoginActivity.this, HomeActivity.class);
-//            startActivity(i);
             StringRequest stringRequest = new StringRequest(
                     Request.Method.POST,
                     getResources().getString(R.string.url)+"loginUser",
@@ -113,7 +122,8 @@ public class LoginActivity extends AppCompatActivity {
 
             RequestQueue requestQueue = Volley.newRequestQueue(this);
             requestQueue.add(stringRequest);
-        }else{
+        }
+        else{
             Toast.makeText(getApplicationContext(), "Empty field!", Toast.LENGTH_SHORT).show();
         }
     }

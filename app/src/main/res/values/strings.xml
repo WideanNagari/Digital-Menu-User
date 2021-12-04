@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">User Application</string>
+    <string name="app_name">Foodies User</string>
     <!--ini connection punya widean,-->
     <!--yang lain kalo beda jangan ngehapus ini, remark trus bikin baru dibawah aja-->
-<!--    <string name="url">http://10.10.1.47:8000/api/</string>-->
+    <string name="url">http://10.10.1.47:8000/api/</string>
 <!--    <string name="url">http://192.168.1.14:8000/api/</string>-->
 
     <!--    marvella L4-->
@@ -13,4 +13,11 @@
     <!--    vitto-->
 <!--    <string name="url">http://192.168.5.7:8000/api/</string>-->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="login_telp_hint">Mobile Number</string>
+    <string name="login_email_hint">Email</string>
+    <string name="login_password_hint">Password</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>
