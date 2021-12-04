@@ -3,10 +3,6 @@ package com.example.userapplication.Classes;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.example.userapplication.OrderMenu;
-
-import java.util.ArrayList;
-
 public class HJual implements Parcelable {
     private String nomor_nota;
     private String promo;

@@ -13,34 +13,34 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UserApplication">
         <activity
-            android:name=".EditPasswordActivity"
+            android:name=".Profile.EditPasswordActivity"
             android:exported="true" />
         <activity
-            android:name=".ClaimRewardActivity"
+            android:name=".Reward.ClaimRewardActivity"
             android:exported="true" />
         <activity
-            android:name=".ReviewActivity"
+            android:name=".History.ReviewActivity"
             android:exported="true" />
         <activity
-            android:name=".DetailHistoryActivity"
+            android:name=".History.DetailHistoryActivity"
             android:exported="true" />
         <activity
-            android:name=".PaymentActivity"
+            android:name=".Payment.PaymentActivity"
             android:exported="true" />
         <activity
             android:name=".RegisterActivity"
             android:exported="true" />
         <activity
-            android:name=".DetailMenuActivity"
+            android:name=".Menu.DetailMenuActivity"
             android:exported="true" />
         <activity
-            android:name=".EditProfileActivity"
+            android:name=".Profile.EditProfileActivity"
             android:exported="true" />
         <activity
             android:name=".LoginActivity"
             android:exported="true" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".Home.HomeActivity"
             android:exported="true" />
         <activity
             android:name=".MainActivity"
