@@ -33,6 +33,7 @@ import com.example.userapplication.Menu.DetailMenuActivity;
 import com.example.userapplication.Reward.ClaimRewardActivity;
 import com.example.userapplication.Classes.UserApp;
 import com.example.userapplication.R;
+import com.example.userapplication.Reward.RewardAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -132,7 +133,7 @@ public class HomeFragment extends Fragment {
         listReward.add(new Reward("menu3","1",2));
         listReward.add(new Reward("menu4","1",2));
         listReward.add(new Reward("menu5","1",2));
-        rewardAdapter = new RewardAdapter(listReward);
+        rewardAdapter = new RewardAdapter(listReward, 5);
         rv_reward = view.findViewById(R.id.reward_recycler);
         rv_reward.setLayoutManager( new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rv_reward.setAdapter(rewardAdapter);

@@ -43,7 +43,9 @@ public class RewardAdapter extends RecyclerView.Adapter<RewardAdapter.ViewHolder
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_reward, parent,false);
+                .inflate(R.layout.item_reward,
+                        parent,
+                        false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
@@ -52,21 +54,21 @@ public class RewardAdapter extends RecyclerView.Adapter<RewardAdapter.ViewHolder
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Reward r = arrReward.get(position);
 
-        holder.nama.setText(r.getReward());
+        holder.rewardName.setText(r.getReward());
 
         String stamps = "1 Stamp";
         if (r.getStamp()>1) stamps = r.getStamp()+" Stamps";
         holder.stamp.setText(stamps);
 
         if (userStamp>=r.getStamp()){
-            holder.claim.setOnClickListener(new View.OnClickListener() {
+            holder.btn_claim.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (onClaimClick!=null) onClaimClick.onClaim(r);
                 }
             });
         }else{
-            holder.claim.setEnabled(false);
+            holder.btn_claim.setEnabled(false);
         }
     }
 
@@ -76,15 +78,16 @@ public class RewardAdapter extends RecyclerView.Adapter<RewardAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView img;
-        TextView nama, stamp;
-        Button claim;
+        ImageView rewardImage;
+        TextView rewardName, jenis, stamp;
+        Button btn_claim;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            img = itemView.findViewById(R.id.imgMenuReward);
-            nama = itemView.findViewById(R.id.namaMenuReward);
-            stamp = itemView.findViewById(R.id.stampMenu);
-            claim = itemView.findViewById(R.id.btnClaim);
+            rewardImage = itemView.findViewById(R.id.image_Reward);
+            rewardName = itemView.findViewById(R.id.nama_reward);
+            jenis = itemView.findViewById(R.id.jenis_promo);
+            stamp = itemView.findViewById(R.id.jumlah_stamp);
+            btn_claim = itemView.findViewById(R.id.btn_claim_reward);
         }
     }
 

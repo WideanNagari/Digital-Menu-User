@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -77,13 +78,15 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.PopularV
 
     public class PopularViewHolder extends RecyclerView.ViewHolder {
         ImageView foodImage;
-        TextView price, name;
+        TextView name, rate;
+        Button price;
 
         public PopularViewHolder(@NonNull View itemView) {
             super(itemView);
-            foodImage = itemView.findViewById(R.id.food_image);
-            price = itemView.findViewById(R.id.price_food);
-            name = itemView.findViewById(R.id.name_food);
+            foodImage = itemView.findViewById(R.id.image_food);
+            price = itemView.findViewById(R.id.button_price);
+            name = itemView.findViewById(R.id.recommended_name);
+            rate = itemView.findViewById(R.id.recommended_rating);
         }
     }
 

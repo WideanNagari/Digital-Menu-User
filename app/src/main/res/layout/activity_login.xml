@@ -59,15 +59,24 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputEmail"
                         style="@style/parent"
-                        android:layout_marginTop="20dp">
+                        android:hint="@string/login_telp_hint"
+                        app:startIconDrawable="@drawable/ic_phone"
+                        android:layout_marginTop="20dp"
+                        app:counterEnabled="true"
+                        app:counterMaxLength="12"
+                        app:endIconMode="clear_text"
+                        android:textColorHint="@color/red3"
+                        app:prefixText="+62"
+                        app:startIconTint="@color/red3"
+                        app:endIconTint="@color/pink1"
+                        app:prefixTextColor="@color/pink1"
+                        android:backgroundTint="@color/red3">
 
                         <EditText
                             android:id="@+id/loginTelp"
                             style="@style/modifiedEditText"
                             android:backgroundTint="@color/colorPrimary"
-                            android:textColorHint="@color/red3"
-                            android:hint="@string/login_telp_hint"
-                            android:inputType="phone"
+                            android:inputType="number"
                             android:maxLines="1"
                             android:textSize="16sp" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -75,14 +84,18 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputPassword"
                         style="@style/parent"
+                        android:hint="@string/login_password_hint"
                         android:layout_marginTop="20dp"
-                        app:passwordToggleEnabled="true">
+                        app:passwordToggleEnabled="true"
+                        app:passwordToggleTint="@color/red3"
+                        app:startIconDrawable="@drawable/ic_lock"
+                        android:textColorHint="@color/red3"
+                        app:startIconTint="@color/red3">
 
                         <EditText
                             android:id="@+id/loginPassword"
                             style="@style/modifiedEditText"
                             android:backgroundTint="@color/colorPrimary"
-                            android:hint="@string/login_password_hint"
                             android:inputType="textPassword"
                             android:maxLines="1"
                             android:textSize="16sp" />

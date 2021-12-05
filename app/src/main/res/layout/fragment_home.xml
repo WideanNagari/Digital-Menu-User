@@ -55,10 +55,10 @@
                 android:layout_height="@dimen/_30sdp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
-                android:background="@drawable/round_bg"
                 android:padding="5dp"
-                android:src="@drawable/ic_logout"
-                android:tint="@color/colorPrimary"
+                android:background="@drawable/round_bg"
+                app:srcCompat="@drawable/inverse_logo"
+                android:src="@drawable/inverse_logo"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>

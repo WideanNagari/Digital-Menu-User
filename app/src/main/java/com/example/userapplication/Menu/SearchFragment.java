@@ -76,6 +76,7 @@ public class SearchFragment extends Fragment {
         return layoutI.inflate(getResources().getLayout(R.layout.fragment_search), container, false);
     }
 
+    SearchAdapter searchAdapter;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -86,9 +87,9 @@ public class SearchFragment extends Fragment {
 
         arrMenu = new ArrayList<>();
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
-        itemadapter = new MenuAdapter(arrMenu);
-        rv.setAdapter(itemadapter);
-        itemadapter.setOnItemClick(new MenuAdapter.OnItemClick() {
+        searchAdapter = new SearchAdapter(arrMenu);
+        rv.setAdapter(searchAdapter);
+        searchAdapter.setOnItemClick(new SearchAdapter.OnItemClick() {
             @Override
             public void onDetailClick(Menu m) {
                 Intent i = new Intent(getContext(), DetailMenuActivity.class);
