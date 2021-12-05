@@ -1,6 +1,7 @@
 package com.example.userapplication.Menu;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -28,8 +29,8 @@ import java.util.concurrent.Executors;
 public class DetailMenuActivity extends AppCompatActivity implements AddLikeAsync.AddLikeCallback, DeleteLikeAsync.DeleteLikeCallback, LoadLikeAsync.LoadLikeCallback {
     ImageView imgV, imgLike;
     TextView txtNama, txtHrg, txtDesc, txtJum, txtSub;
-    ImageButton btnAdd, btnSub;
-    Button btnAddtoCart, btnBack;
+    ImageView btnAdd, btnSub, btnAddtoCart;
+    AppCompatImageView btnBack;
     Intent i;
     boolean like;
     Menu menu;
@@ -46,19 +47,19 @@ public class DetailMenuActivity extends AppCompatActivity implements AddLikeAsyn
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_menu);
 
-        imgV=findViewById(R.id.imgDetailMenu);
-        imgLike=findViewById(R.id.imgLike);
-        txtNama=findViewById(R.id.txtNamaDetail);
-        txtHrg=findViewById(R.id.txtHargaDetail);
-        txtDesc=findViewById(R.id.txtDescDetail);
+        imgV=findViewById(R.id.detailImage);
+        imgLike=findViewById(R.id.detail_btn_like);
+        txtNama=findViewById(R.id.detail_name);
+        txtHrg=findViewById(R.id.detail_price);
+        txtDesc=findViewById(R.id.detail_desc);
 
-        txtJum=findViewById(R.id.txtJum);
-        txtSub=findViewById(R.id.txtSubtotal);
-        btnAdd=findViewById(R.id.btnAdd);
-        btnSub=findViewById(R.id.btnSub);
-        btnAddtoCart=findViewById(R.id.btnAddToCart);
+        txtJum=findViewById(R.id.detail_jum_order);
+        txtSub=findViewById(R.id.detail_sub_price);
+        btnAdd=findViewById(R.id.btn_plus);
+        btnSub=findViewById(R.id.btn_minus);
+        btnAddtoCart=findViewById(R.id.detail_add_cart);
 
-        btnBack=findViewById(R.id.btnBack);
+        btnBack=findViewById(R.id.detail_back);
 
         txtJum.setText("1");
 

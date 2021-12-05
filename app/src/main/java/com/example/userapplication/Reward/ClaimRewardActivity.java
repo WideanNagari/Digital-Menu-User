@@ -2,6 +2,7 @@ package com.example.userapplication.Reward;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -37,7 +38,7 @@ public class ClaimRewardActivity extends AppCompatActivity {
     Intent i;
     UserApp user;
     TextView jumlahStamp;
-    Button back;
+    AppCompatImageView back;
     RewardAdapter rewardAdapter;
     RecyclerView rv;
     ArrayList<Reward> arrReward;
