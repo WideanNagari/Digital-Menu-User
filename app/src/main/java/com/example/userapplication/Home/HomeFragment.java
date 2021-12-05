@@ -183,7 +183,7 @@ public class HomeFragment extends Fragment {
         });
 
         nama = view.findViewById(R.id.txtNamaUser);
-        //nama.setText("Hi, "+user.getName());
+        nama.setText("Hi, "+user.getName());
 
         more_reward = view.findViewById(R.id.txtMoreReward);
         more_reward.setOnClickListener(new View.OnClickListener() {
@@ -191,6 +191,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
                 //pindah ke activity reward
                 Intent i = new Intent(getContext(), ClaimRewardActivity.class);
+                i.putExtra("user", user);
                 startActivity(i);
             }
         });

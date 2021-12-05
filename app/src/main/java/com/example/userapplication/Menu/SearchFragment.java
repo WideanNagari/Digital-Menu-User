@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSmoothScroller;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -26,8 +28,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.userapplication.Classes.Promo;
+import com.example.userapplication.Classes.Type;
 import com.example.userapplication.Classes.UserApp;
 import com.example.userapplication.Classes.Menu;
+import com.example.userapplication.Payment.PaymentActivity;
 import com.example.userapplication.R;
 
 import org.json.JSONArray;
@@ -48,8 +53,8 @@ public class SearchFragment extends Fragment {
     Button  btn_detail;
     Button btn_src;
     RecyclerView rv;
-    MenuAdapter itemadapter;
     ArrayList<Menu> arrMenu;
+    ArrayList<Type> arrJenis;
     UserApp user;
 
     public SearchFragment() {
@@ -83,60 +88,79 @@ public class SearchFragment extends Fragment {
     GroupSearchAdp groupSearchAdp;
 
     //dropdown
-    String[] items = {"Makanan", "Minuman"};
+    String[] items;
     AutoCompleteTextView autoCompleteTextView;
     ArrayAdapter<String> adapterItems;
+
+    RecyclerView.SmoothScroller smoothScroller;
+    LinearLayoutManager layoutManager;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         btn_src = view.findViewById(R.id.btn_search);
         btn_detail = view.findViewById(R.id.btnDetail);
         edtSearch = view.findViewById(R.id.edt_SearchBar);
+        edtSearch.requestFocus();
+
         rv = view.findViewById(R.id.rec_menu);
 
         autoCompleteTextView = view.findViewById(R.id.autoComplete);
+
+        arrMenu = new ArrayList<>();
+        arrJenis = new ArrayList<>();
+
+        groupSearchAdp = new GroupSearchAdp(getActivity(), arrMenu, arrJenis);
+        layoutManager = new LinearLayoutManager(getActivity());
+        rv.setLayoutManager(layoutManager);
+        rv.setAdapter(groupSearchAdp);
+        smoothScroller = new LinearSmoothScroller(getContext()) {
+            @Override protected int getVerticalSnapPreference() {
+                return LinearSmoothScroller.SNAP_TO_START;
+            }
+        };
+        groupSearchAdp.setOnItemClick(new GroupSearchAdp.OnItemClick() {
+            @Override
+            public void onDetailClick(Menu m) {
+                Intent i = new Intent(getContext(), DetailMenuActivity.class);
+                i.putExtra("menu",m);
+                i.putExtra("user",user);
+                startActivity(i);
+            }
+        });
+
+        getAllMenu();
+
+        btn_src.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v)
+            {
+                String s = edtSearch.getText().toString();
+                if(s.equals("")) getAllMenu();
+                else getQueryMenu(s);
+            }
+        });
+    }
+
+    private void pasangSpinner(){
+        items = new String[arrJenis.size()];
+        for (int i = 0; i < arrJenis.size(); i++) {
+            items[i] = arrJenis.get(i).getNama();
+        }
+
         adapterItems = new ArrayAdapter<String>(getContext(), R.layout.list_dropdown, items);
         autoCompleteTextView.setAdapter(adapterItems);
         autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String item = adapterView.getItemAtPosition(i).toString();
-
-            }
-        });
-
-        arrMenu = new ArrayList<>();
-
-        groupSearchAdp = new GroupSearchAdp(getActivity(), arrMenu);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        rv.setLayoutManager(layoutManager);
-        rv.setAdapter(groupSearchAdp);
-
-//        rv.setLayoutManager(new LinearLayoutManager(getContext()));
-//        searchAdapter = new SearchAdapter(arrMenu);
-//        rv.setAdapter(searchAdapter);
-//        searchAdapter.setOnItemClick(new SearchAdapter.OnItemClick() {
-//            @Override
-//            public void onDetailClick(Menu m) {
-//                Intent i = new Intent(getContext(), DetailMenuActivity.class);
-//                i.putExtra("menu",m);
-//                i.putExtra("user",user);
-//                startActivity(i);
-//            }
-//        });
-
-        //getAllMenu();
-
-        btn_src.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v)
-            {
-                getQueryMenu();
+                smoothScroller.setTargetPosition(i);
+                layoutManager.startSmoothScroll(smoothScroller);
             }
         });
     }
 
-    private void getQueryMenu(){
+    private void getQueryMenu(String kueri){
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
                 getResources().getString(R.string.url)+"menu/byQuery",
@@ -144,13 +168,10 @@ public class SearchFragment extends Fragment {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            System.out.println("WOY");
                             JSONObject jsonObject = new JSONObject(response);
-                            int kode = jsonObject.getInt("code");
-                            String pesan  = jsonObject.getString("message");
                             JSONArray arr = jsonObject.getJSONArray("dataMenu");
+                            int kode = jsonObject.getInt("code");
                             if (kode == 1){
-//                                Toast.makeText(getActivity(), dataMenu.length()+" Menu Fetched", Toast.LENGTH_SHORT).show();
                                 arrMenu.clear();
                                 for (int i = 0; i < arr.length(); i++) {
                                     JSONObject order = arr.getJSONObject(i);
@@ -163,7 +184,17 @@ public class SearchFragment extends Fragment {
                                             , order.getInt("rating")
                                     ));
                                 }
-                                itemadapter.notifyDataSetChanged();
+
+                                JSONArray jen = jsonObject.getJSONArray("dataJenis");
+                                arrJenis.clear();
+                                for (int i = 0; i < jen.length(); i++) {
+                                    JSONObject jeniss = jen.getJSONObject(i);
+                                    arrJenis.add(new Type(jeniss.getString("id_jenis")
+                                            , jeniss.getString("nama_jenis")
+                                    ));
+                                }
+                                pasangSpinner();
+                                groupSearchAdp.notifyDataSetChanged();
                             }else if(kode == -3){
 //                                Toast.makeText(getActivity(), "No Menu", Toast.LENGTH_SHORT).show();
                             }
@@ -185,7 +216,7 @@ public class SearchFragment extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("query_string", edtSearch.getText().toString());
+                params.put("query_string", kueri);
                 return params;
             }
         };
@@ -197,7 +228,7 @@ public class SearchFragment extends Fragment {
     private void getAllMenu(){
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
-                getResources().getString(R.string.url)+"menu",
+                getResources().getString(R.string.url)+"menu/forSearchAll",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -219,9 +250,17 @@ public class SearchFragment extends Fragment {
                                             , order.getInt("rating")
                                     ));
                                 }
-//                                Toast.makeText(getActivity(), dataMenu.length()+" Menu Fetched", Toast.LENGTH_SHORT).show();
-//                                System.out.println(dataMenu.length()+" INI HASILNYA");
-                                itemadapter.notifyDataSetChanged();
+
+                                JSONArray jen = jsonObject.getJSONArray("dataJenis");
+                                arrJenis.clear();
+                                for (int i = 0; i < jen.length(); i++) {
+                                    JSONObject jeniss = jen.getJSONObject(i);
+                                    arrJenis.add(new Type(jeniss.getString("id_jenis")
+                                            , jeniss.getString("nama_jenis")
+                                    ));
+                                }
+                                pasangSpinner();
+                                groupSearchAdp.notifyDataSetChanged();
                             }else if(kode == -3){
 //                                Toast.makeText(getActivity(), "No Menu", Toast.LENGTH_SHORT).show();
                             }

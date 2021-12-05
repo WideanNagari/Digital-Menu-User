@@ -11,17 +11,33 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.userapplication.Classes.Menu;
+import com.example.userapplication.Classes.Type;
 import com.example.userapplication.R;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class GroupSearchAdp extends RecyclerView.Adapter<GroupSearchAdp.ViewHolder> {
     private Activity activity;
     ArrayList<Menu> list;
+    ArrayList<Type> listJenis;
 
-    public GroupSearchAdp(Activity activity, ArrayList<Menu> list) {
+    OnItemClick onItemClick;
+    public OnItemClick getOnItemClick() {
+        return onItemClick;
+    }
+    public void setOnItemClick(OnItemClick onItemClick) {
+        this.onItemClick = onItemClick;
+    }
+
+    public interface OnItemClick{
+        void onDetailClick(Menu m);
+    }
+
+    public GroupSearchAdp(Activity activity, ArrayList<Menu> list, ArrayList<Type> jenis) {
         this.activity = activity;
         this.list = list;
+        this.listJenis = jenis;
     }
 
     @NonNull
@@ -36,17 +52,30 @@ public class GroupSearchAdp extends RecyclerView.Adapter<GroupSearchAdp.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull GroupSearchAdp.ViewHolder holder, int position) {
-        holder.tvName.setText(list.get(position).getJenis_menu());
+        Type type = listJenis.get(position);
+        holder.tvName.setText(type.getNama());
 
-        SearchAdapter searchAdapter = new SearchAdapter(list);
+        ArrayList<Menu> arrMenu = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getJenis_menu().equals(type.getNama()))
+                arrMenu.add(list.get(i));
+        }
+
+        SearchAdapter searchAdapter = new SearchAdapter(arrMenu);
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
         holder.rvMember.setLayoutManager(layoutManager);
         holder.rvMember.setAdapter(searchAdapter);
+        searchAdapter.setOnItemClick(new SearchAdapter.OnItemClick() {
+            @Override
+            public void onDetailClick(Menu m) {
+                if (onItemClick!=null) onItemClick.onDetailClick(m);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return listJenis.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
