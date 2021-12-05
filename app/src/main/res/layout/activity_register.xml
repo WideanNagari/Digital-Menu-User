@@ -81,19 +81,20 @@
                         android:hint="@string/login_telp_hint"
                         app:startIconDrawable="@drawable/ic_phone"
                         app:counterEnabled="true"
-                        app:counterMaxLength="12"
-                        app:endIconMode="clear_text"
+                        app:counterMaxLength="13"
                         android:textColorHint="@color/red3"
                         app:prefixText="+62"
                         app:prefixTextColor="@color/pink1"
                         app:startIconTint="@color/red3"
-                        app:endIconTint="@color/red3">
+                        app:endIconTint="@color/red3"
+                        app:errorEnabled="true"
+                        app:errorIconDrawable="@drawable/ic_error">
 
-                        <EditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/registerMobile"
                             style="@style/modifiedEditText"
                             android:backgroundTint="@color/colorPrimary"
-                            android:inputType="number"
+                            android:inputType="number|phone"
                             android:maxLines="1"
                             android:textSize="16sp" />
                     </com.google.android.material.textfield.TextInputLayout>

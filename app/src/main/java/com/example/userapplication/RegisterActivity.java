@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -47,6 +49,27 @@ public class RegisterActivity extends AppCompatActivity {
         edPhone = findViewById(R.id.registerMobile);
         edPass = findViewById(R.id.registerPassword);
         edCPass = findViewById(R.id.registerConfPassword);
+
+        edPhone.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(edPhone.getText().length()>13) {
+                    edPhone.setError("No More");
+                } else if(edPhone.getText().length()<13) {
+                    edPhone.setError(null);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     private void changeStatusBarColor() {
