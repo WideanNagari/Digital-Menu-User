@@ -46,10 +46,18 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull SearchAdapter.ViewHolder holder, int position) {
-        holder.jenis.setText(listMenu.get(position).getJenis_menu());
-        holder.nama.setText(listMenu.get(position).getNama_menu());
-        holder.Rate.setText(listMenu.get(position).getRating()+"");
-        holder.price.setText(listMenu.get(position).getHarga_menu()+"");
+        Menu m = listMenu.get(position);
+        holder.jenis.setText(m.getJenis_menu());
+        holder.nama.setText(m.getNama_menu());
+        holder.Rate.setText(m.getRating()+"");
+        holder.price.setText(currency(m.getHarga_menu()));
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (onItemClick!=null) onItemClick.onDetailClick(m);
+            }
+        });
     }
 
     @Override
@@ -68,5 +76,20 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             Rate = itemView.findViewById(R.id.rating);
             price = itemView.findViewById(R.id.price);
         }
+    }
+
+    private String currency(String angkaAwal){
+        String hasil = "";
+        if (angkaAwal.length()>=3){
+            int ctr = 1;
+            for (int i = angkaAwal.length()-1; i >= 0; i--) {
+                hasil = angkaAwal.charAt(i) + hasil;
+                if (ctr%3==0 && ctr<angkaAwal.length()) hasil = "."+hasil;
+                ctr++;
+            }
+        }else{
+            hasil = angkaAwal;
+        }
+        return "Rp. "+hasil;
     }
 }
