@@ -46,7 +46,10 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull SearchAdapter.ViewHolder holder, int position) {
-
+        holder.jenis.setText(listMenu.get(position).getJenis_menu());
+        holder.nama.setText(listMenu.get(position).getNama_menu());
+        holder.Rate.setText(listMenu.get(position).getRating()+"");
+        holder.price.setText(listMenu.get(position).getHarga_menu()+"");
     }
 
     @Override

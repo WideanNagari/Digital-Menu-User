@@ -12,6 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -76,7 +79,13 @@ public class SearchFragment extends Fragment {
         return layoutI.inflate(getResources().getLayout(R.layout.fragment_search), container, false);
     }
 
-    SearchAdapter searchAdapter;
+    //SearchAdapter searchAdapter;
+    GroupSearchAdp groupSearchAdp;
+
+    //dropdown
+    String[] items = {"Makanan", "Minuman"};
+    AutoCompleteTextView autoCompleteTextView;
+    ArrayAdapter<String> adapterItems;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -85,19 +94,36 @@ public class SearchFragment extends Fragment {
         edtSearch = view.findViewById(R.id.edt_SearchBar);
         rv = view.findViewById(R.id.rec_menu);
 
-        arrMenu = new ArrayList<>();
-        rv.setLayoutManager(new LinearLayoutManager(getContext()));
-        searchAdapter = new SearchAdapter(arrMenu);
-        rv.setAdapter(searchAdapter);
-        searchAdapter.setOnItemClick(new SearchAdapter.OnItemClick() {
+        autoCompleteTextView = view.findViewById(R.id.autoComplete);
+        adapterItems = new ArrayAdapter<String>(getContext(), R.layout.list_dropdown, items);
+        autoCompleteTextView.setAdapter(adapterItems);
+        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onDetailClick(Menu m) {
-                Intent i = new Intent(getContext(), DetailMenuActivity.class);
-                i.putExtra("menu",m);
-                i.putExtra("user",user);
-                startActivity(i);
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String item = adapterView.getItemAtPosition(i).toString();
+
             }
         });
+
+        arrMenu = new ArrayList<>();
+
+        groupSearchAdp = new GroupSearchAdp(getActivity(), arrMenu);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        rv.setLayoutManager(layoutManager);
+        rv.setAdapter(groupSearchAdp);
+
+//        rv.setLayoutManager(new LinearLayoutManager(getContext()));
+//        searchAdapter = new SearchAdapter(arrMenu);
+//        rv.setAdapter(searchAdapter);
+//        searchAdapter.setOnItemClick(new SearchAdapter.OnItemClick() {
+//            @Override
+//            public void onDetailClick(Menu m) {
+//                Intent i = new Intent(getContext(), DetailMenuActivity.class);
+//                i.putExtra("menu",m);
+//                i.putExtra("user",user);
+//                startActivity(i);
+//            }
+//        });
 
         //getAllMenu();
 

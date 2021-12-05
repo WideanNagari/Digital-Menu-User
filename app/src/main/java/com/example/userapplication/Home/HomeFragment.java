@@ -49,8 +49,6 @@ import java.util.Map;
  * create an instance of this fragment.
  */
 public class HomeFragment extends Fragment {
-
-    Button btn;
     TextView nama;
     UserApp user;
     OnActionListener onActionListener;
@@ -184,7 +182,7 @@ public class HomeFragment extends Fragment {
         });
 
         nama = view.findViewById(R.id.txtNamaUser);
-        nama.setText("Hi, "+user.getName());
+        //nama.setText("Hi, "+user.getName());
 
         if (onActionListener!=null) onActionListener.onReady(this);
     }
