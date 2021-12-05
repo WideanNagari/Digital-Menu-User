@@ -126,7 +126,7 @@ public class HomeActivity extends AppCompatActivity{
         bottomNavigation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(HomeActivity.this, "a", Toast.LENGTH_SHORT).show();
+                Toast.makeText(HomeActivity.this, "", Toast.LENGTH_SHORT).show();
             }
         });
         bottomNavigation.setOnClickMenuListener(new MeowBottomNavigation.ClickListener() {

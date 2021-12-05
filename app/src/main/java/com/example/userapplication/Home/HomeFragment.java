@@ -49,7 +49,7 @@ import java.util.Map;
  * create an instance of this fragment.
  */
 public class HomeFragment extends Fragment {
-    TextView nama;
+    TextView nama, more_reward;
     UserApp user;
     OnActionListener onActionListener;
 
@@ -121,6 +121,7 @@ public class HomeFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -183,6 +184,16 @@ public class HomeFragment extends Fragment {
 
         nama = view.findViewById(R.id.txtNamaUser);
         //nama.setText("Hi, "+user.getName());
+
+        more_reward = view.findViewById(R.id.txtMoreReward);
+        more_reward.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //pindah ke activity reward
+                Intent i = new Intent(getContext(), ClaimRewardActivity.class);
+                startActivity(i);
+            }
+        });
 
         if (onActionListener!=null) onActionListener.onReady(this);
     }

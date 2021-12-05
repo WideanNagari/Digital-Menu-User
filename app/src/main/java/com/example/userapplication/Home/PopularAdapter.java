@@ -47,6 +47,7 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.PopularV
         holder.foodImage.setImageResource(R.drawable.popularfood2);
         holder.name.setText(menu.getNama_menu());
         holder.price.setText(currency(menu.getHarga_menu()));
+        holder.jenis.setText(menu.getJenis_menu());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,7 +79,7 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.PopularV
 
     public class PopularViewHolder extends RecyclerView.ViewHolder {
         ImageView foodImage;
-        TextView name, rate;
+        TextView name, rate, jenis;
         Button price;
 
         public PopularViewHolder(@NonNull View itemView) {
@@ -86,6 +87,7 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.PopularV
             foodImage = itemView.findViewById(R.id.image_food);
             price = itemView.findViewById(R.id.button_price);
             name = itemView.findViewById(R.id.recommended_name);
+            jenis = itemView.findViewById(R.id.recommended_jenis);
             rate = itemView.findViewById(R.id.recommended_rating);
         }
     }

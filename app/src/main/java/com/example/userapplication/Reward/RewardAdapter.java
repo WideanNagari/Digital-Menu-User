@@ -42,12 +42,20 @@ public class RewardAdapter extends RecyclerView.Adapter<RewardAdapter.ViewHolder
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_reward,
-                        parent,
-                        false);
-        ViewHolder viewHolder = new ViewHolder(view);
-        return viewHolder;
+        //if(viewType == VIEW_TYPE_ITEM) {
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.item_reward,
+                            parent,
+                            false);
+            return new ViewHolder(view);
+//        } else {
+//            View view = LayoutInflater.from(parent.getContext())
+//                    .inflate(R.layout.item_loading,
+//                            parent,
+//                            false);
+//            //return new LoadingHolder(view);
+//            return new ViewHolder(view);
+//        }
     }
 
     @Override
@@ -77,6 +85,13 @@ public class RewardAdapter extends RecyclerView.Adapter<RewardAdapter.ViewHolder
         return arrReward.size();
     }
 
+//    final int VIEW_TYPE_LOADING = 0;
+//    final int VIEW_TYPE_ITEM = 1;
+//    @Override
+//    public int getItemViewType(int position) {
+//        return arrReward.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
+//    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView rewardImage;
         TextView rewardName, jenis, stamp;
@@ -90,6 +105,13 @@ public class RewardAdapter extends RecyclerView.Adapter<RewardAdapter.ViewHolder
             btn_claim = itemView.findViewById(R.id.btn_claim_reward);
         }
     }
+
+//    public class LoadingHolder extends RecyclerView.ViewHolder{
+//
+//        public LoadingHolder(@NonNull View itemView) {
+//            super(itemView);
+//        }
+//    }
 
     public interface OnClaimClick{
         void onClaim(Reward reward);

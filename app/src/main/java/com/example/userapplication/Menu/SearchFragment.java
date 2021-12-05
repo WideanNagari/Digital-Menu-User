@@ -46,7 +46,7 @@ import java.util.Map;
 public class SearchFragment extends Fragment {
     EditText edtSearch;
     Button  btn_detail;
-    ImageView btn_src;
+    Button btn_src;
     RecyclerView rv;
     MenuAdapter itemadapter;
     ArrayList<Menu> arrMenu;
