@@ -25,8 +25,8 @@ public class OrderMenu extends Menu {
 
     private int reward_status;
 
-    public OrderMenu(String id, String nama_menu, String harga_menu, String deskripsi_menu, String jenis_menu, String status_menu, int jumlah, String status, int reward_status) {
-        super(id, nama_menu, harga_menu, deskripsi_menu, jenis_menu, status_menu);
+    public OrderMenu(String id, String nama_menu, String harga_menu, String deskripsi_menu, String jenis_menu, String status_menu, int rating, int jumlah, String status, int reward_status) {
+        super(id, nama_menu, harga_menu, deskripsi_menu, jenis_menu, status_menu, rating);
         this.jumlah = jumlah;
         this.confirm = false;
         this.status = status;

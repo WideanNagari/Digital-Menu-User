@@ -62,9 +62,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void btnClick(View view){
-        Intent i = new Intent(LoginActivity.this, HomeActivity.class);
-        startActivity(i);
-        finish();
+//        Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+//        startActivity(i);
+//        finish();
         if(edPhone.getText().length()>0 && edPass.getText().length()>0){
             StringRequest stringRequest = new StringRequest(
                     Request.Method.POST,

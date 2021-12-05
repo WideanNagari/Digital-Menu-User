@@ -187,6 +187,7 @@ public class DetailHistoryActivity extends AppCompatActivity {
                                             , djual.getString("deskripsi")
                                             , djual.getString("jenis_menu")
                                             , djual.getString("status_menu")
+                                            , djual.getInt("rating")
                                             , djual.getInt("jumlah")
                                             , djual.getString("status")
                                             , djual.getInt("reward_status")

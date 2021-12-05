@@ -3,7 +3,7 @@
     <!--ini connection punya widean,-->
     <!--yang lain kalo beda jangan ngehapus ini, remark trus bikin baru dibawah aja-->
 <!--    <string name="url">http://10.10.1.47:8000/api/</string>-->
-<!--    <string name="url">http://192.168.1.14:8000/api/</string>-->
+    <string name="url">http://192.168.180.17:8000/api/</string>
 
     <!--    marvella L4-->
     <!--        <string name="url">https://192.168.0.16:8000/api/</string>-->
@@ -11,7 +11,7 @@
     <!--    <string name="url">http://192.168.0.14:8000/api/</string>-->
 
     <!--    vitto-->
-    <string name="url">http://192.168.5.7:8000/api/</string>
+<!--    <string name="url">http://192.168.5.7:8000/api/</string>-->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="login_telp_hint">Mobile Number</string>

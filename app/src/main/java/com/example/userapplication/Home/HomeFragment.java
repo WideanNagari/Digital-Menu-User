@@ -18,14 +18,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.userapplication.Classes.Menu;
 import com.example.userapplication.Classes.Reward;
+import com.example.userapplication.Menu.DetailMenuActivity;
 import com.example.userapplication.Reward.ClaimRewardActivity;
 import com.example.userapplication.Classes.UserApp;
 import com.example.userapplication.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,13 +50,42 @@ import java.util.ArrayList;
 public class HomeFragment extends Fragment {
 
     Button btn;
+    TextView nama;
     UserApp user;
     OnActionListener onActionListener;
+
+    RecyclerView rv_reward, rv_popular, rv_recommended,  rv_again;
+    RewardAdapter rewardAdapter;
+    PopularAdapter popularAdapter, recommendAdapter, againAdapter;
 
     private ArrayList<Reward> listReward = new ArrayList<>();
     private ArrayList<Menu> listPopular = new ArrayList<>();
     private ArrayList<Menu> listRecommended = new ArrayList<>();
     private ArrayList<Menu> listAgain = new ArrayList<>();
+
+    public void setListReward(ArrayList<Reward> listReward) {
+        this.listReward.clear();
+        this.listReward.addAll(listReward);
+        rewardAdapter.notifyDataSetChanged();
+    }
+
+    public void setListPopular(ArrayList<Menu> listPopular) {
+        this.listPopular.clear();
+        this.listPopular.addAll(listPopular);
+        popularAdapter.notifyDataSetChanged();
+    }
+
+    public void setListRecommended(ArrayList<Menu> listRecommended) {
+        this.listRecommended.clear();
+        this.listRecommended.addAll(listRecommended);
+        recommendAdapter.notifyDataSetChanged();
+    }
+
+    public void setListAgain(ArrayList<Menu> listAgain) {
+        this.listAgain.clear();
+        this.listAgain.addAll(listAgain);
+        againAdapter.notifyDataSetChanged();
+    }
 
     public OnActionListener getOnActionListener() {
         return onActionListener;
@@ -78,42 +122,70 @@ public class HomeFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
-    RecyclerView rv_reward, rv_popular, rv_recommended,  rv_again;
-    RewardAdapter rewardAdapter;
-    PopularAdapter popularAdapter;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        rv_reward = view.findViewById(R.id.reward_recycler);
+        listReward = new ArrayList<>();
+        listReward.add(new Reward("menu","1",2));
+        listReward.add(new Reward("menu2","1",2));
+        listReward.add(new Reward("menu3","1",2));
+        listReward.add(new Reward("menu4","1",2));
+        listReward.add(new Reward("menu5","1",2));
         rewardAdapter = new RewardAdapter(listReward);
+        rv_reward = view.findViewById(R.id.reward_recycler);
         rv_reward.setLayoutManager( new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rv_reward.setAdapter(rewardAdapter);
 
-        rv_popular = view.findViewById(R.id.popular_recycler);
+        listPopular = new ArrayList<>();
         popularAdapter = new PopularAdapter(listPopular);
+        rv_popular = view.findViewById(R.id.popular_recycler);
         rv_popular.setLayoutManager( new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rv_popular.setAdapter(popularAdapter);
+        popularAdapter.setOnPilihListener(new PopularAdapter.OnPilihListener() {
+            @Override
+            public void clickMenu(Menu m) {
+                Intent i = new Intent(getContext(), DetailMenuActivity.class);
+                i.putExtra("menu",m);
+                i.putExtra("user",user);
+                startActivity(i);
+            }
+        });
 
+        listRecommended = new ArrayList<>();
+        recommendAdapter = new PopularAdapter(listRecommended);
         rv_recommended = view.findViewById(R.id.recommended_recycler);
-        popularAdapter = new PopularAdapter(listPopular);
         rv_recommended.setLayoutManager( new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        rv_recommended.setAdapter(popularAdapter);
+        rv_recommended.setAdapter(recommendAdapter);
+        recommendAdapter.setOnPilihListener(new PopularAdapter.OnPilihListener() {
+            @Override
+            public void clickMenu(Menu m) {
+                Intent i = new Intent(getContext(), DetailMenuActivity.class);
+                i.putExtra("menu",m);
+                i.putExtra("user",user);
+                startActivity(i);
+            }
+        });
 
+        listAgain = new ArrayList<>();
+        againAdapter = new PopularAdapter(listAgain);
         rv_again = view.findViewById(R.id.again_recycler);
-        popularAdapter = new PopularAdapter(listPopular);
         rv_again.setLayoutManager( new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        rv_again.setAdapter(popularAdapter);
+        rv_again.setAdapter(againAdapter);
+        againAdapter.setOnPilihListener(new PopularAdapter.OnPilihListener() {
+            @Override
+            public void clickMenu(Menu m) {
+                Intent i = new Intent(getContext(), DetailMenuActivity.class);
+                i.putExtra("menu",m);
+                i.putExtra("user",user);
+                startActivity(i);
+            }
+        });
 
-//        btn = view.findViewById(R.id.goClaim);
-//        btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent i = new Intent(getContext(), ClaimRewardActivity.class);
-//                i.putExtra("user", user);
-//                activityResultLauncher.launch(i);
-//            }
-//        });
+        nama = view.findViewById(R.id.txtNamaUser);
+        nama.setText("Hi, "+user.getName());
+
+        if (onActionListener!=null) onActionListener.onReady(this);
     }
 
     ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
@@ -136,5 +208,6 @@ public class HomeFragment extends Fragment {
 
     public interface OnActionListener{
         void onBack(UserApp user);
+        void onReady(HomeFragment homeFragment);
     }
 }

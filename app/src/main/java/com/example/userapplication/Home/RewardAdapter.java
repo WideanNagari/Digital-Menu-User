@@ -33,7 +33,8 @@ public class RewardAdapter extends RecyclerView.Adapter<RewardAdapter.RewardView
 
     @Override
     public void onBindViewHolder(@NonNull RewardAdapter.RewardViewHolder holder, int position) {
-        holder.rewardName.setText(rewardsList.get(position).getReward());
+        Reward reward = rewardsList.get(position);
+        holder.rewardName.setText(reward.getReward());
 
     }
 

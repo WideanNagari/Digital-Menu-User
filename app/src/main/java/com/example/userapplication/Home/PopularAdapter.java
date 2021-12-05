@@ -17,9 +17,18 @@ import java.util.ArrayList;
 
 public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.PopularViewHolder> {
     private ArrayList<Menu> listpopular = new ArrayList<>();
+    OnPilihListener onPilihListener;
 
     public PopularAdapter(ArrayList<Menu> listpopular) {
         this.listpopular = listpopular;
+    }
+
+    public OnPilihListener getOnPilihListener() {
+        return onPilihListener;
+    }
+
+    public void setOnPilihListener(OnPilihListener onPilihListener) {
+        this.onPilihListener = onPilihListener;
     }
 
     @NonNull
@@ -33,15 +42,15 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.PopularV
 
     @Override
     public void onBindViewHolder(@NonNull PopularAdapter.PopularViewHolder holder, int position) {
+        Menu menu = listpopular.get(position);
         holder.foodImage.setImageResource(R.drawable.popularfood2);
-        holder.name.setText(listpopular.get(position).getNama_menu());
-        holder.price.setText(listpopular.get(position).getHarga_menu()+"");
+        holder.name.setText(menu.getNama_menu());
+        holder.price.setText(currency(menu.getHarga_menu()));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent i = new Intent(context, DetailsActivity.class);
-//                context.startActivity(i);
+                if (onPilihListener!=null) onPilihListener.clickMenu(menu);
             }
         });
     }
@@ -49,6 +58,21 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.PopularV
     @Override
     public int getItemCount() {
         return listpopular.size();
+    }
+
+    private String currency(String angkaAwal){
+        String hasil = "";
+        if (angkaAwal.length()>=3){
+            int ctr = 1;
+            for (int i = angkaAwal.length()-1; i >= 0; i--) {
+                hasil = angkaAwal.charAt(i) + hasil;
+                if (ctr%3==0 && ctr<angkaAwal.length()) hasil = "."+hasil;
+                ctr++;
+            }
+        }else{
+            hasil = angkaAwal;
+        }
+        return "Rp. "+hasil;
     }
 
     public class PopularViewHolder extends RecyclerView.ViewHolder {
@@ -61,5 +85,9 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.PopularV
             price = itemView.findViewById(R.id.price_food);
             name = itemView.findViewById(R.id.name_food);
         }
+    }
+
+    public interface OnPilihListener{
+        void clickMenu(Menu m);
     }
 }

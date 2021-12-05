@@ -133,6 +133,7 @@ public class SearchFragment extends Fragment {
                                             , order.getString("deskripsi_menu")
                                             , order.getString("jenis_menu")
                                             , order.getString("status_menu")
+                                            , order.getInt("rating")
                                     ));
                                 }
                                 itemadapter.notifyDataSetChanged();
@@ -188,6 +189,7 @@ public class SearchFragment extends Fragment {
                                             , order.getString("deskripsi_menu")
                                             , order.getString("jenis_menu")
                                             , order.getString("status_menu")
+                                            , order.getInt("rating")
                                     ));
                                 }
 //                                Toast.makeText(getActivity(), dataMenu.length()+" Menu Fetched", Toast.LENGTH_SHORT).show();

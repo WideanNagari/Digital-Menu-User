@@ -11,7 +11,6 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -27,6 +26,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
+import com.example.userapplication.Classes.Menu;
 import com.example.userapplication.DAO.AppDatabase;
 import com.example.userapplication.Classes.UserApp;
 import com.example.userapplication.History.HistoryFragment;
@@ -41,6 +41,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,6 +58,12 @@ public class HomeActivity extends AppCompatActivity{
     private final int ID_HISTORY = 4;
     private final int ID_PROFILE = 5;
 
+    MeowBottomNavigation bottomNavigation;
+
+    ArrayList<Menu> pop;
+    ArrayList<Menu> recommend;
+    ArrayList<Menu> again;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +77,7 @@ public class HomeActivity extends AppCompatActivity{
             loggedIn = par.getParcelableExtra("loggedIn");
         }
 
-        MeowBottomNavigation bottomNavigation = findViewById(R.id.nav_home);
+        bottomNavigation = findViewById(R.id.nav_home);
         bottomNavigation.add(new MeowBottomNavigation.Model(ID_HOME, R.drawable.ic_baseline_circle_24));
         bottomNavigation.add(new MeowBottomNavigation.Model(ID_SEARCH, R.drawable.ic_baseline_search_24));
         bottomNavigation.add(new MeowBottomNavigation.Model(ID_ORDER, R.drawable.ic_baseline_shopping_cart_24));
@@ -135,14 +142,35 @@ public class HomeActivity extends AppCompatActivity{
 //                System.out.println("a");
             }
         });
-        bottomNavigation.setCount(ID_ORDER, "0"); //yg kasih notif
-        bottomNavigation.show(ID_HOME, true);
 
+        bottomNavigation.setCount(ID_ORDER, "0"); //yg kasih notif
+
+        pop = new ArrayList<>();
+        recommend = new ArrayList<>();
+        again = new ArrayList<>();
+
+        getPopular();
 
         getSupportFragmentManager().addFragmentOnAttachListener(new FragmentOnAttachListener() {
             @Override
             public void onAttachFragment(@NonNull FragmentManager fragmentManager, @NonNull Fragment fragment) {
+                if (fragment instanceof HomeFragment){
+                    HomeFragment homeFragment = (HomeFragment) fragment;
+                    homeFragment.setOnActionListener(new HomeFragment.OnActionListener() {
+                        @Override
+                        public void onBack(UserApp user) {
+                            loggedIn = user;
+                            bottomNavigation.show(ID_HOME, true);
+                        }
 
+                        @Override
+                        public void onReady(HomeFragment homeFragment) {
+                            homeFragment.setListPopular(pop);
+                            homeFragment.setListRecommended(recommend);
+                            homeFragment.setListAgain(again);
+                        }
+                    });
+                }
             }
         });
     }
@@ -163,36 +191,44 @@ public class HomeActivity extends AppCompatActivity{
         this.loggedIn = loggedIn;
     }
 
-    private void GetAllMahasiswaProcess(){
+    private void getPopular(){
+        System.out.println("popular");
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
-                getResources().getString(R.string.url),
-                new Response.Listener<String>(){
+                getResources().getString(R.string.url)+"menu/popular",
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-//                        Toast.makeText(getActivity(), response, Toast.LENGTH_SHORT).show();
                         try {
-                            JSONObject list = new JSONObject(response);
-                            int responsecode = list.getInt("code");
-                            String responsemessage = list.getString("message");
-                            if(responsecode == 1){
-                                //JSONArray HARUS DIGANTI
-                                JSONArray listJSON = list.getJSONArray("datamhs");
-                                for (int i = 0; i < listJSON.length(); i++) {
-                                    JSONObject mhs = listJSON.getJSONObject(i);
-                                    //DI SINI TERIMA OBJECT KALO UDAH SIAP CLASSNYA
+                            JSONObject jsonObject = new JSONObject(response);
+                            JSONArray arr = jsonObject.getJSONArray("dataMenu");
+                            int kode = jsonObject.getInt("code");
+                            if (kode == 1){
+                                pop.clear();
+                                for (int i = 0; i < arr.length(); i++) {
+                                    JSONObject order = arr.getJSONObject(i);
+                                    pop.add(new Menu(order.getString("id")
+                                            , order.getString("nama_menu")
+                                            , order.getString("harga_menu")
+                                            , order.getString("deskripsi_menu")
+                                            , order.getString("jenis_menu")
+                                            , order.getString("status_menu")
+                                            , order.getInt("rating")
+                                    ));
                                 }
+                                getRecommended();
                             }
-//                            adapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
                 },
-                new Response.ErrorListener(){
+
+                //untuk handle error
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        System.out.println(error.getMessage());
                     }
                 }
         ){
@@ -200,13 +236,115 @@ public class HomeActivity extends AppCompatActivity{
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-//                params.put("function","getallmhs");
-                //DI SINI PANGGIL FUNCTION LARAVEL GET ALL
                 return params;
             }
         };
-
         RequestQueue requestQueue = Volley.newRequestQueue(HomeActivity.this);
         requestQueue.add(stringRequest);
     }
+
+    private void getRecommended(){
+        System.out.println("recom");
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.POST,
+                getResources().getString(R.string.url)+"menu/recommended",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            JSONArray arr = jsonObject.getJSONArray("dataMenu");
+                            int kode = jsonObject.getInt("code");
+                            if (kode == 1){
+                                recommend.clear();
+                                for (int i = 0; i < arr.length(); i++) {
+                                    JSONObject order = arr.getJSONObject(i);
+                                    recommend.add(new com.example.userapplication.Classes.Menu(order.getString("id")
+                                            , order.getString("nama_menu")
+                                            , order.getString("harga_menu")
+                                            , order.getString("deskripsi_menu")
+                                            , order.getString("jenis_menu")
+                                            , order.getString("status_menu")
+                                            , order.getInt("rating")
+                                    ));
+                                }
+                                getAgain();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+
+                //untuk handle error
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println(error.getMessage());
+                    }
+                }
+        ){
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(HomeActivity.this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void getAgain(){
+        System.out.println("again");
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.POST,
+                getResources().getString(R.string.url)+"menu/orderAgain",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            JSONArray arr = jsonObject.getJSONArray("dataMenu");
+                            int kode = jsonObject.getInt("code");
+                            if (kode == 1){
+                                again.clear();
+                                for (int i = 0; i < arr.length(); i++) {
+                                    JSONObject order = arr.getJSONObject(i);
+                                    again.add(new Menu(order.getString("id")
+                                            , order.getString("nama_menu")
+                                            , order.getString("harga_menu")
+                                            , order.getString("deskripsi_menu")
+                                            , order.getString("jenis_menu")
+                                            , order.getString("status_menu")
+                                            , order.getInt("rating")
+                                    ));
+                                }
+                                bottomNavigation.show(ID_HOME, true);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+
+                //untuk handle error
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println(error.getMessage());
+                    }
+                }
+        ){
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(HomeActivity.this);
+        requestQueue.add(stringRequest);
+    }
+
 }
