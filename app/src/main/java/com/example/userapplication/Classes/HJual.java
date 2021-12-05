@@ -11,6 +11,7 @@ public class HJual implements Parcelable {
     private int jumlahItem;
     private int review_status;
     private String tanggal;
+    private boolean isExpandable;
 
     public HJual(String nomor_nota, String promo, int potongan, int subtotal, int jumlahItem, int review_status, String tanggal) {
         this.nomor_nota = nomor_nota;
@@ -20,6 +21,7 @@ public class HJual implements Parcelable {
         this.jumlahItem = jumlahItem;
         this.review_status = review_status;
         this.tanggal = tanggal;
+        isExpandable = false;
     }
 
     protected HJual(Parcel in) {
@@ -30,6 +32,14 @@ public class HJual implements Parcelable {
         jumlahItem = in.readInt();
         review_status = in.readInt();
         tanggal = in.readString();
+    }
+
+    public boolean isExpandable() {
+        return isExpandable;
+    }
+
+    public void setExpandable(boolean expandable) {
+        isExpandable = expandable;
     }
 
     public static final Creator<HJual> CREATOR = new Creator<HJual>() {

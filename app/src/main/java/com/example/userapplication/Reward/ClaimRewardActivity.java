@@ -76,7 +76,7 @@ public class ClaimRewardActivity extends AppCompatActivity {
             }
         }
 
-        jumlahStamp.setText(user.getStamp()>1 ? user.getStamp()+" Stamps":user.getStamp()+" Stamp");
+        //jumlahStamp.setText(user.getStamp()>1 ? user.getStamp()+" Stamps":user.getStamp()+" Stamp");
 
         rv.setLayoutManager(new LinearLayoutManager(this));
         //rewardAdapter = new RewardAdapter(arrReward, user.getStamp());

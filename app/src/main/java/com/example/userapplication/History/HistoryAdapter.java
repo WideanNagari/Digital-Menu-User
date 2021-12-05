@@ -69,10 +69,10 @@ public class HistoryAdapter  extends RecyclerView.Adapter<HistoryAdapter.ViewHol
         TextView nota, jumlahItem, tanggal;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            img = itemView.findViewById(R.id.imgMenuHistory);
-            nota = itemView.findViewById(R.id.notaHistory);
-            jumlahItem = itemView.findViewById(R.id.jumlahItemHistory);
-            tanggal = itemView.findViewById(R.id.tanggalHistory);
+//            img = itemView.findViewById(R.id.imgMenuHistory);
+//            nota = itemView.findViewById(R.id.notaHistory);
+//            jumlahItem = itemView.findViewById(R.id.jumlahItemHistory);
+//            tanggal = itemView.findViewById(R.id.tanggalHistory);
         }
     }
 

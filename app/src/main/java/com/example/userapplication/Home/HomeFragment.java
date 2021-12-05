@@ -183,7 +183,7 @@ public class HomeFragment extends Fragment {
         });
 
         nama = view.findViewById(R.id.txtNamaUser);
-        nama.setText("Hi, "+user.getName());
+        //nama.setText("Hi, "+user.getName());
 
         more_reward = view.findViewById(R.id.txtMoreReward);
         more_reward.setOnClickListener(new View.OnClickListener() {

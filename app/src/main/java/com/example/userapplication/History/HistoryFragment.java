@@ -83,20 +83,23 @@ public class HistoryFragment extends Fragment {
         arrHistory = new ArrayList<>();
         rv = view.findViewById(R.id.rvHistory);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
-        historyAdapter = new HistoryAdapter(arrHistory);
-        rv.setAdapter(historyAdapter);
+        GroupHistoryAdp historyAdp = new GroupHistoryAdp(getActivity(), arrHistory);
+        rv.setAdapter(historyAdp);
+//        historyAdapter = new HistoryAdapter(arrHistory);
+//        rv.setAdapter(historyAdapter);
+//
+//
+//        historyAdapter.setOnItemClickCallback(new HistoryAdapter.OnItemClickCallback() {
+//            @Override
+//            public void onItemClicked(HJual h) {
+//                Intent i = new Intent(getContext(), DetailHistoryActivity.class);
+//                i.putExtra("hjual", h);
+//                i.putExtra("user", user);
+//                activityResultLauncher.launch(i);
+//            }
+//        });
 
-        historyAdapter.setOnItemClickCallback(new HistoryAdapter.OnItemClickCallback() {
-            @Override
-            public void onItemClicked(HJual h) {
-                Intent i = new Intent(getContext(), DetailHistoryActivity.class);
-                i.putExtra("hjual", h);
-                i.putExtra("user", user);
-                activityResultLauncher.launch(i);
-            }
-        });
-
-        getHistory(user.getId()+"");
+        //getHistory(user.getId()+"");
     }
 
     ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(

@@ -1,50 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="10dp">
+    app:cardCornerRadius="15dp"
+    android:elevation="5dp"
+    android:layout_marginTop="15dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="3dp"
+    android:layout_marginBottom="1dp"
+    android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/imgMenuHistory"
-        android:layout_width="0dp"
-        android:layout_height="75dp"
-        android:layout_weight="1"
-        android:src="@drawable/inverse_logo"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp">
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="4"
-        android:orientation="vertical"
-        android:layout_marginLeft="10dp">
+        <ImageView
+            android:id="@+id/history_image"
+            android:layout_width="102dp"
+            android:layout_height="84dp"
+            android:adjustViewBounds="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/popularfood2" />
+
         <TextView
-            android:id="@+id/notaHistory"
-            android:layout_width="match_parent"
+            android:id="@+id/history_nama"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="ORD001"
-            android:textColor="@color/black"
-            android:textSize="20dp"
-            android:textStyle="bold"/>
+            android:layout_marginTop="5dp"
+            android:text="Nama Makanan"
+            android:textColor="#091020"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="@+id/history_jenis"
+            app:layout_constraintTop_toBottomOf="@+id/history_jenis" />
+
         <TextView
-            android:id="@+id/jumlahItemHistory"
-            android:layout_width="match_parent"
+            android:id="@+id/history_price"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="5 Items"
-            android:textColor="@color/black"
-            android:textSize="18dp"/>
+            android:layout_marginEnd="16dp"
+            android:text="Rp 20.000"
+            android:textColor="#FF6813"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/img_history_rate"
+            app:layout_constraintEnd_toEndOf="parent" />
+
         <TextView
-            android:id="@+id/tanggalHistory"
-            android:layout_width="match_parent"
+            android:id="@+id/history_jenis"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="02 Des 2021 08:24 AM"
-            android:textSize="16dp"/>
-    </LinearLayout>
-    <ImageView
-        android:id="@+id/imgArrow"
-        android:layout_width="0dp"
-        android:layout_height="25dp"
-        android:layout_weight="0.5"
-        android:layout_gravity="center"
-        android:src="@drawable/ic_arrow_right"/>
-</LinearLayout>
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="5dp"
+            android:text="Jenis Makanan"
+            android:textColor="#F06941"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/history_image"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/history_jum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="16dp"
+            android:text="2"
+            android:textColor="#091020"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/history_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="4.5"
+            android:textColor="#091020"
+            app:layout_constraintBottom_toBottomOf="@+id/img_history_rate"
+            app:layout_constraintStart_toEndOf="@+id/img_history_rate"
+            app:layout_constraintTop_toTopOf="@+id/img_history_rate" />
+
+        <ImageView
+            android:id="@+id/img_history_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/history_nama"
+            app:layout_constraintTop_toBottomOf="@+id/history_nama"
+            app:srcCompat="@drawable/ic_star" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
+
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:orientation="horizontal"-->
+<!--    android:padding="10dp">-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/imgMenuHistory"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="75dp"-->
+<!--        android:layout_weight="1"-->
+<!--        android:src="@drawable/inverse_logo"/>-->
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_weight="4"-->
+<!--        android:orientation="vertical"-->
+<!--        android:layout_marginLeft="10dp">-->
+<!--        <TextView-->
+<!--            android:id="@+id/notaHistory"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="ORD001"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="20dp"-->
+<!--            android:textStyle="bold"/>-->
+<!--        <TextView-->
+<!--            android:id="@+id/jumlahItemHistory"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="5 Items"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="18dp"/>-->
+<!--        <TextView-->
+<!--            android:id="@+id/tanggalHistory"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="02 Des 2021 08:24 AM"-->
+<!--            android:textSize="16dp"/>-->
+<!--    </LinearLayout>-->
+<!--    <ImageView-->
+<!--        android:id="@+id/imgArrow"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="25dp"-->
+<!--        android:layout_weight="0.5"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:src="@drawable/ic_arrow_right"/>-->
+<!--</LinearLayout>-->

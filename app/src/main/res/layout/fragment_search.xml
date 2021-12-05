@@ -67,7 +67,7 @@
             android:inputType="text"
             android:textColor="@color/black"
             android:textColorHint="@color/pink1"
-            android:textSize="@dimen/_13ssp"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="parent"
