@@ -32,7 +32,7 @@ import java.util.concurrent.Executors;
  * Use the {@link OrderFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class OrderFragment extends Fragment implements AddOrderAsync.AddOrderCallback  {
+public class OrderFragment extends Fragment  {
 
     BottomNavigationView navbar;
     UserApp user;
@@ -132,45 +132,7 @@ public class OrderFragment extends Fragment implements AddOrderAsync.AddOrderCal
         });
     }
 
-    @Override
-    public void preExecuteAdd() {
-
-    }
-
-    @Override
-    public void postExecuteAdd() {
-
-    }
-
     public interface OnActionListener{
         void onBack(UserApp user);
-    }
-}
-
-class AddOrderAsync{
-    private final WeakReference<Context> weakContext;
-    private final WeakReference<AddOrderCallback> weakCallback;
-    private OrderMenu orderMenu;
-    private AddOrderAsync addGameAsync;
-    AddOrderAsync(Context weakContext, AddOrderCallback addGameCallback,OrderMenu orderMenu) {
-        this.weakContext = new WeakReference<>(weakContext);
-        this.weakCallback = new WeakReference<>(addGameCallback);
-        this.orderMenu = orderMenu;
-    }
-
-    void execute(){
-        ExecutorService executorService = Executors.newSingleThreadExecutor();
-        Handler handler = new Handler(Looper.getMainLooper());
-        weakCallback.get().preExecuteAdd();
-        executorService.execute(() -> {
-            Context context = weakContext.get();
-            AppDatabase.database.orderDAO().insert(orderMenu);
-            handler.post(() -> weakCallback.get().postExecuteAdd());
-        });
-    }
-
-    interface AddOrderCallback {
-        void preExecuteAdd();
-        void postExecuteAdd();
     }
 }

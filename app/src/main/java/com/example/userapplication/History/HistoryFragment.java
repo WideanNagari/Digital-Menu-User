@@ -25,6 +25,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.userapplication.Classes.DJual;
 import com.example.userapplication.Classes.HJual;
 import com.example.userapplication.Classes.UserApp;
 import com.example.userapplication.R;
@@ -46,8 +47,9 @@ public class HistoryFragment extends Fragment {
 
     UserApp user;
     RecyclerView rv;
-    HistoryAdapter historyAdapter;
     ArrayList<HJual> arrHistory;
+    ArrayList<DJual> arrDHistory;
+    GroupHistoryAdp historyAdp;
 
     public HistoryFragment() {
         // Required empty public constructor
@@ -81,25 +83,27 @@ public class HistoryFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         arrHistory = new ArrayList<>();
+        arrDHistory = new ArrayList<>();
         rv = view.findViewById(R.id.rvHistory);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
-        GroupHistoryAdp historyAdp = new GroupHistoryAdp(getActivity(), arrHistory);
+        historyAdp = new GroupHistoryAdp(getActivity(), arrHistory, arrDHistory);
         rv.setAdapter(historyAdp);
 //        historyAdapter = new HistoryAdapter(arrHistory);
 //        rv.setAdapter(historyAdapter);
 //
 //
-//        historyAdapter.setOnItemClickCallback(new HistoryAdapter.OnItemClickCallback() {
-//            @Override
-//            public void onItemClicked(HJual h) {
-//                Intent i = new Intent(getContext(), DetailHistoryActivity.class);
-//                i.putExtra("hjual", h);
-//                i.putExtra("user", user);
-//                activityResultLauncher.launch(i);
-//            }
-//        });
+        historyAdp.setOnItemClick(new GroupHistoryAdp.OnItemClick() {
+            @Override
+            public void onItemClicked(HJual h) {
+                Intent i = new Intent(getContext(), DetailHistoryActivity.class);
+                i.putExtra("hjual", h);
+                i.putExtra("user", user);
+                activityResultLauncher.launch(i);
+            }
+        });
 
-        //getHistory(user.getId()+"");
+        getHistory(user.getId()+"");
+        getDHistory();
     }
 
     ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
@@ -145,7 +149,7 @@ public class HistoryFragment extends Fragment {
                                             , hjual.getString("tanggal")
                                     ));
                                 }
-                                historyAdapter.notifyDataSetChanged();
+                                historyAdp.notifyDataSetChanged();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -165,6 +169,60 @@ public class HistoryFragment extends Fragment {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("id",id);
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(stringRequest);
+    }
+
+    private void getDHistory(){
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.POST,
+                getResources().getString(R.string.url)+"transaction/getDetailNested",
+
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        System.out.println(response);
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            int kode = jsonObject.getInt("code");
+                            String pesan  = jsonObject.getString("message");
+
+                            if (kode == 1){
+                                arrDHistory.clear();
+                                JSONArray arr = jsonObject.getJSONArray("dataDjual");
+                                for (int i = 0; i < arr.length(); i++) {
+                                    JSONObject djual = arr.getJSONObject(i);
+                                    arrDHistory.add(new DJual(djual.getString("nomor_nota")
+                                            , djual.getString("nama_menu")
+                                            , djual.getString("jenis_menu")
+                                            , djual.getDouble("rating")
+                                            , djual.getInt("jumlah")
+                                            , djual.getInt("harga_menu")
+                                    ));
+                                }
+                                historyAdp.notifyDataSetChanged();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println(error.getMessage());
+                    }
+                }
+        ){
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
                 return params;
             }
         };

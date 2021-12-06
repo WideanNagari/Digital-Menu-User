@@ -2,8 +2,8 @@
     <string name="app_name">Foodies User</string>
     <!--ini connection punya widean,-->
     <!--yang lain kalo beda jangan ngehapus ini, remark trus bikin baru dibawah aja-->
-<!--    <string name="url">http://10.10.1.47:8000/api/</string>-->
-    <string name="url">http://192.168.180.17:8000/api/</string>
+    <string name="url">http://192.168.0.4:8000/api/</string>
+<!--    <string name="url">http://192.168.180.17:8000/api/</string>-->
 
     <!--    marvella L4-->
     <!--        <string name="url">https://192.168.0.16:8000/api/</string>-->

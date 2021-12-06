@@ -4,10 +4,10 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Menu implements Parcelable {
-    String id, nama_menu, harga_menu, deskripsi_menu, jenis_menu, status_menu;
-    int rating;
+    protected String id, nama_menu, harga_menu, deskripsi_menu, jenis_menu, status_menu;
+    protected double rating;
 
-    public Menu(String id, String nama_menu, String harga_menu, String deskripsi_menu, String jenis_menu, String status_menu, int rating) {
+    public Menu(String id, String nama_menu, String harga_menu, String deskripsi_menu, String jenis_menu, String status_menu, double rating) {
         this.id = id;
         this.nama_menu = nama_menu;
         this.harga_menu = harga_menu;
@@ -24,7 +24,7 @@ public class Menu implements Parcelable {
         deskripsi_menu = in.readString();
         jenis_menu = in.readString();
         status_menu = in.readString();
-        rating = in.readInt();
+        rating = in.readDouble();
     }
 
     public static final Creator<Menu> CREATOR = new Creator<Menu>() {
@@ -87,11 +87,11 @@ public class Menu implements Parcelable {
         this.status_menu = status_menu;
     }
 
-    public int getRating() {
+    public double getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(double rating) {
         this.rating = rating;
     }
 
@@ -108,6 +108,6 @@ public class Menu implements Parcelable {
         parcel.writeString(deskripsi_menu);
         parcel.writeString(jenis_menu);
         parcel.writeString(status_menu);
-        parcel.writeInt(rating);
+        parcel.writeDouble(rating);
     }
 }

@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.userapplication.Classes.DJual;
 import com.example.userapplication.Classes.HJual;
 import com.example.userapplication.Classes.Menu;
 import com.example.userapplication.R;
@@ -17,9 +18,9 @@ import java.util.ArrayList;
 
 public class NestedHistoryAdapter extends RecyclerView.Adapter<NestedHistoryAdapter.ViewHolder> {
 
-    private ArrayList<HJual> list;
+    private ArrayList<DJual> list;
 
-    public NestedHistoryAdapter(ArrayList<HJual> list) {
+    public NestedHistoryAdapter(ArrayList<DJual> list) {
         this.list = list;
     }
 
@@ -33,7 +34,28 @@ public class NestedHistoryAdapter extends RecyclerView.Adapter<NestedHistoryAdap
 
     @Override
     public void onBindViewHolder(@NonNull NestedHistoryAdapter.ViewHolder holder, int position) {
+        DJual dJual = list.get(position);
 
+        holder.txtNama.setText(dJual.getNama_menu());
+        holder.txtJenis.setText(dJual.getJenis_menu());
+        holder.txtPrice.setText(currency(dJual.getHarga()+""));
+        holder.txtRate.setText(dJual.getRating()+"");
+        holder.txtJum.setText(dJual.getQuantity()+"");
+    }
+
+    private String currency(String angkaAwal){
+        String hasil = "";
+        if (angkaAwal.length()>=3){
+            int ctr = 1;
+            for (int i = angkaAwal.length()-1; i >= 0; i--) {
+                hasil = angkaAwal.charAt(i) + hasil;
+                if (ctr%3==0 && ctr<angkaAwal.length()) hasil = "."+hasil;
+                ctr++;
+            }
+        }else{
+            hasil = angkaAwal;
+        }
+        return "Rp. "+hasil;
     }
 
     @Override

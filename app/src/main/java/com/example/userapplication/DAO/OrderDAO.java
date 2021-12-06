@@ -12,8 +12,8 @@ import java.util.List;
 
 @Dao
 public interface OrderDAO {
-    @Query("SELECT * FROM `order` Where status = '-'")
-    List<OrderMenu> getAllOrder();
+    @Query("SELECT * FROM `order` Where status = '-' and customer = :id")
+    List<OrderMenu> getAllOrder(String id);
 
     @Insert
     void insert(OrderMenu orderMenu);

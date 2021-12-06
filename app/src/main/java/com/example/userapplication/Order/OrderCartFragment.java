@@ -173,7 +173,7 @@ public class OrderCartFragment extends Fragment implements LoadCartAsync.LoadCar
             }
         });
 
-        new LoadCartAsync(getActivity(),OrderCartFragment.this).execute();
+        new LoadCartAsync(getActivity(),OrderCartFragment.this, user.getId()+"").execute();
         alertDialogBuilder = new AlertDialog.Builder(getContext());
     }
 
@@ -533,10 +533,12 @@ class DeleteCartAsync{
 class LoadCartAsync{
     private final WeakReference<Context> weakContext;
     private final WeakReference<LoadCartCallback> weakCallback;
+    private String id;
 
-    LoadCartAsync(Context context, LoadCartCallback updateCartCallback) {
+    LoadCartAsync(Context context, LoadCartCallback updateCartCallback, String id) {
         this.weakContext = new WeakReference<>(context);
         this.weakCallback = new WeakReference<>(updateCartCallback);
+        this.id = id;
     }
 
     void execute() {
@@ -546,7 +548,7 @@ class LoadCartAsync{
         weakCallback.get().preExecuteLoad();
         executorService.execute(() -> {
             Context context = weakContext.get();
-            List<OrderMenu> orderList = AppDatabase.database.orderDAO().getAllOrder();
+            List<OrderMenu> orderList = AppDatabase.database.orderDAO().getAllOrder(id);
             handler.post(() -> weakCallback.get().postExecuteLoad(orderList));
         });
     }

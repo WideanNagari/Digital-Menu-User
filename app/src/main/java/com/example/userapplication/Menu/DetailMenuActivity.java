@@ -1,5 +1,6 @@
 package com.example.userapplication.Menu;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 
@@ -13,22 +14,41 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.userapplication.Classes.OrderMenu;
+import com.example.userapplication.Classes.Type;
 import com.example.userapplication.DAO.AppDatabase;
 import com.example.userapplication.Classes.Like;
 import com.example.userapplication.Classes.Menu;
 import com.example.userapplication.Classes.UserApp;
+import com.example.userapplication.Order.OrderCartFragment;
 import com.example.userapplication.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class DetailMenuActivity extends AppCompatActivity implements AddLikeAsync.AddLikeCallback, DeleteLikeAsync.DeleteLikeCallback, LoadLikeAsync.LoadLikeCallback {
+public class DetailMenuActivity extends AppCompatActivity implements AddLikeAsync.AddLikeCallback, DeleteLikeAsync.DeleteLikeCallback,
+        LoadLikeAsync.LoadLikeCallback, AddOrderAsync.AddOrderCallback, LoadCartAsync.LoadCartCallback {
     ImageView imgV, imgLike;
-    TextView txtNama, txtHrg, txtDesc, txtJum, txtSub;
+    TextView txtNama, txtJenis, txtHrg, txtDesc, txtJum, txtSub;
+    TextView txtRating, txtOrder;
     ImageView btnAdd, btnSub, btnAddtoCart;
     AppCompatImageView btnBack;
     Intent i;
@@ -36,9 +56,10 @@ public class DetailMenuActivity extends AppCompatActivity implements AddLikeAsyn
     Menu menu;
     UserApp user;
     ArrayList<Like> arrLike;
+    List<OrderMenu> cartMenu;
     Like likes;
 
-    int jum=0;
+    int jum=1, subtotal;
     String nama, desc;
     boolean canAction;
 
@@ -50,18 +71,41 @@ public class DetailMenuActivity extends AppCompatActivity implements AddLikeAsyn
         imgV=findViewById(R.id.detailImage);
         imgLike=findViewById(R.id.detail_btn_like);
         txtNama=findViewById(R.id.detail_name);
+        txtJenis=findViewById(R.id.detail_jenis);
         txtHrg=findViewById(R.id.detail_price);
         txtDesc=findViewById(R.id.detail_desc);
+
+        txtOrder=findViewById(R.id.detail_jum_orders);
+        txtRating=findViewById(R.id.detail_rate);
 
         txtJum=findViewById(R.id.detail_jum_order);
         txtSub=findViewById(R.id.detail_sub_price);
         btnAdd=findViewById(R.id.btn_plus);
         btnSub=findViewById(R.id.btn_minus);
         btnAddtoCart=findViewById(R.id.detail_add_cart);
+        btnAddtoCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean ada = false;
+                for (int i = 0; i < cartMenu.size(); i++) {
+                    if (cartMenu.get(i).getId().equals(menu.getId()))
+                        ada = true;
+                }
+
+                if (ada){
+                    Toast.makeText(DetailMenuActivity.this, "This item already in your cart.", Toast.LENGTH_SHORT).show();
+                }else{
+                    new AddOrderAsync(DetailMenuActivity.this, DetailMenuActivity.this,
+                            new OrderMenu(menu.getId(), menu.getNama_menu(), menu.getHarga_menu(), menu.getDeskripsi_menu(),
+                                    menu.getJenis_menu(), menu.getStatus_menu(),menu.getRating(), user.getId(), jum,"-",0)).execute();
+                }
+            }
+        });
+
 
         btnBack=findViewById(R.id.detail_back);
 
-        txtJum.setText("1");
+        txtJum.setText(jum+"");
 
         i=getIntent();
         if (i.getExtras()!=null){
@@ -73,8 +117,15 @@ public class DetailMenuActivity extends AppCompatActivity implements AddLikeAsyn
             }
         }
         txtNama.setText(menu.getNama_menu());
+        txtJenis.setText(menu.getJenis_menu());
         txtHrg.setText(currency(menu.getHarga_menu()+""));
         txtDesc.setText(menu.getDeskripsi_menu());
+        txtRating.setText(menu.getRating()+"");
+
+        getJumOrder(menu.getId());
+
+        subtotal = Integer.parseInt(menu.getHarga_menu());
+        txtSub.setText("Subtotal: "+currency(subtotal+""));
 
         like = false;
         canAction = false;
@@ -99,6 +150,9 @@ public class DetailMenuActivity extends AppCompatActivity implements AddLikeAsyn
                 }
             }
         });
+
+        cartMenu = new ArrayList<>();
+        new LoadCartAsync(this, DetailMenuActivity.this, user.getId()+"").execute();
     }
 
     public void add(View v){
@@ -108,7 +162,7 @@ public class DetailMenuActivity extends AppCompatActivity implements AddLikeAsyn
     }
 
     public void sub(View v){
-        if(jum>0){
+        if(jum>1){
             jum--;
             txtJum.setText(jum+"");
         }
@@ -191,6 +245,65 @@ public class DetailMenuActivity extends AppCompatActivity implements AddLikeAsyn
             canAction = true;
             imgLike.setImageResource(R.drawable.like);
         }
+    }
+
+    private void getJumOrder(String id){
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.POST,
+                getResources().getString(R.string.url)+"transaction/countMenu",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String jumOrder = jsonObject.getString("count");
+                            txtOrder.setText(jumOrder);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+
+                //untuk handle error
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println(error.getMessage());
+                    }
+                }
+        ){
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("id",id);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(DetailMenuActivity.this);
+        requestQueue.add(stringRequest);
+    }
+
+    @Override
+    public void preExecuteAddO() {
+
+    }
+
+    @Override
+    public void postExecuteAddO() {
+        Toast.makeText(this, "Your orders have been added to your cart.", Toast.LENGTH_SHORT).show();
+        new LoadCartAsync(this, DetailMenuActivity.this, user.getId()+"").execute();
+    }
+
+    @Override
+    public void preExecuteLoadO() {
+
+    }
+
+    @Override
+    public void postExecuteLoadO(List<OrderMenu> listMenu) {
+        cartMenu.clear();
+        cartMenu.addAll(listMenu);
     }
 }
 
@@ -276,5 +389,61 @@ class DeleteLikeAsync{
     interface DeleteLikeCallback {
         void preExecuteDelete();
         void postExecuteDelete();
+    }
+}
+
+class AddOrderAsync{
+    private final WeakReference<Context> weakContext;
+    private final WeakReference<AddOrderCallback> weakCallback;
+    private OrderMenu orderMenu;
+    AddOrderAsync(Context weakContext, AddOrderCallback addGameCallback,OrderMenu orderMenu) {
+        this.weakContext = new WeakReference<>(weakContext);
+        this.weakCallback = new WeakReference<>(addGameCallback);
+        this.orderMenu = orderMenu;
+    }
+
+    void execute(){
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        Handler handler = new Handler(Looper.getMainLooper());
+        weakCallback.get().preExecuteAddO();
+        executorService.execute(() -> {
+            Context context = weakContext.get();
+            AppDatabase.database.orderDAO().insert(orderMenu);
+            handler.post(() -> weakCallback.get().postExecuteAddO());
+        });
+    }
+
+    interface AddOrderCallback {
+        void preExecuteAddO();
+        void postExecuteAddO();
+    }
+}
+
+class LoadCartAsync{
+    private final WeakReference<Context> weakContext;
+    private final WeakReference<LoadCartAsync.LoadCartCallback> weakCallback;
+    private String id;
+
+    LoadCartAsync(Context context, LoadCartAsync.LoadCartCallback updateCartCallback, String id) {
+        this.weakContext = new WeakReference<>(context);
+        this.weakCallback = new WeakReference<>(updateCartCallback);
+        this.id = id;
+    }
+
+    void execute() {
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        Handler handler = new Handler(Looper.getMainLooper());
+
+        weakCallback.get().preExecuteLoadO();
+        executorService.execute(() -> {
+            Context context = weakContext.get();
+            List<OrderMenu> orderList = AppDatabase.database.orderDAO().getAllOrder(id);
+            handler.post(() -> weakCallback.get().postExecuteLoadO(orderList));
+        });
+    }
+
+    interface LoadCartCallback{
+        void preExecuteLoadO();
+        void postExecuteLoadO(List<OrderMenu> listMenu);
     }
 }

@@ -207,7 +207,8 @@ public class OrderOngoingFragment extends Fragment{
                                             , order.getString("deskripsi_menu")
                                             , order.getString("jenis_menu")
                                             , order.getString("status_menu")
-                                            , order.getInt("rating")
+                                            , order.getDouble("rating")
+                                            , 0
                                             , order.getInt("jumlah")
                                             , order.getString("status")
                                             , order.getInt("reward_status")

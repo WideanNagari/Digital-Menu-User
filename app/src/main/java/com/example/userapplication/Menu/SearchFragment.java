@@ -181,7 +181,7 @@ public class SearchFragment extends Fragment {
                                             , order.getString("deskripsi_menu")
                                             , order.getString("jenis_menu")
                                             , order.getString("status_menu")
-                                            , order.getInt("rating")
+                                            , order.getDouble("rating")
                                     ));
                                 }
 
@@ -247,7 +247,7 @@ public class SearchFragment extends Fragment {
                                             , order.getString("deskripsi_menu")
                                             , order.getString("jenis_menu")
                                             , order.getString("status_menu")
-                                            , order.getInt("rating")
+                                            , order.getDouble("rating")
                                     ));
                                 }
 

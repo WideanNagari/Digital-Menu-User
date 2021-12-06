@@ -46,6 +46,7 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.PopularV
         Menu menu = listpopular.get(position);
         holder.foodImage.setImageResource(R.drawable.popularfood2);
         holder.name.setText(menu.getNama_menu());
+        holder.rate.setText(menu.getRating()+"");
         holder.price.setText(currency(menu.getHarga_menu()));
         holder.jenis.setText(menu.getJenis_menu());
 

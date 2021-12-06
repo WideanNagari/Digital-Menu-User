@@ -8,9 +8,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentOnAttachListener;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -27,9 +30,11 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.example.userapplication.Classes.Menu;
+import com.example.userapplication.Classes.OrderMenu;
 import com.example.userapplication.DAO.AppDatabase;
 import com.example.userapplication.Classes.UserApp;
 import com.example.userapplication.History.HistoryFragment;
+import com.example.userapplication.Order.OrderCartFragment;
 import com.example.userapplication.Order.OrderFragment;
 import com.example.userapplication.Profile.ProfileFragment;
 import com.example.userapplication.Menu.SearchFragment;
@@ -41,14 +46,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import me.ibrahimsn.lib.OnItemSelectedListener;
 import me.ibrahimsn.lib.SmoothBottomBar;
 
-public class HomeActivity extends AppCompatActivity{
+public class HomeActivity extends AppCompatActivity implements LoadCartAsync.LoadCartCallback{
 
     private UserApp loggedIn;
 
@@ -143,8 +152,6 @@ public class HomeActivity extends AppCompatActivity{
             }
         });
 
-        bottomNavigation.setCount(ID_ORDER, "0"); //yg kasih notif
-
         pop = new ArrayList<>();
         recommend = new ArrayList<>();
         again = new ArrayList<>();
@@ -173,6 +180,8 @@ public class HomeActivity extends AppCompatActivity{
                 }
             }
         });
+
+        new LoadCartAsync(HomeActivity.this, HomeActivity.this, loggedIn.getId()+"").execute();
     }
 
     private void changeStatusBarColor() {
@@ -213,7 +222,7 @@ public class HomeActivity extends AppCompatActivity{
                                             , order.getString("deskripsi_menu")
                                             , order.getString("jenis_menu")
                                             , order.getString("status_menu")
-                                            , order.getInt("rating")
+                                            , order.getDouble("rating")
                                     ));
                                 }
                                 getRecommended();
@@ -265,7 +274,7 @@ public class HomeActivity extends AppCompatActivity{
                                             , order.getString("deskripsi_menu")
                                             , order.getString("jenis_menu")
                                             , order.getString("status_menu")
-                                            , order.getInt("rating")
+                                            , order.getDouble("rating")
                                     ));
                                 }
                                 getAgain();
@@ -317,7 +326,7 @@ public class HomeActivity extends AppCompatActivity{
                                             , order.getString("deskripsi_menu")
                                             , order.getString("jenis_menu")
                                             , order.getString("status_menu")
-                                            , order.getInt("rating")
+                                            , order.getDouble("rating")
                                     ));
                                 }
                                 bottomNavigation.show(ID_HOME, true);
@@ -347,4 +356,43 @@ public class HomeActivity extends AppCompatActivity{
         requestQueue.add(stringRequest);
     }
 
+    @Override
+    public void preExecuteLoadO() {
+
+    }
+
+    @Override
+    public void postExecuteLoadO(List<OrderMenu> listMenu) {
+        String jumlah = listMenu.size()+"";
+        bottomNavigation.setCount(ID_ORDER, jumlah); //yg kasih notif
+    }
+}
+
+class LoadCartAsync{
+    private final WeakReference<Context> weakContext;
+    private final WeakReference<LoadCartAsync.LoadCartCallback> weakCallback;
+    private String id;
+
+    LoadCartAsync(Context context, LoadCartAsync.LoadCartCallback updateCartCallback, String id) {
+        this.weakContext = new WeakReference<>(context);
+        this.weakCallback = new WeakReference<>(updateCartCallback);
+        this.id = id;
+    }
+
+    void execute() {
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        Handler handler = new Handler(Looper.getMainLooper());
+
+        weakCallback.get().preExecuteLoadO();
+        executorService.execute(() -> {
+            Context context = weakContext.get();
+            List<OrderMenu> orderList = AppDatabase.database.orderDAO().getAllOrder(id);
+            handler.post(() -> weakCallback.get().postExecuteLoadO(orderList));
+        });
+    }
+
+    interface LoadCartCallback{
+        void preExecuteLoadO();
+        void postExecuteLoadO(List<OrderMenu> listMenu);
+    }
 }

@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.userapplication.Classes.DJual;
 import com.example.userapplication.Classes.HJual;
 import com.example.userapplication.R;
 
@@ -21,6 +22,16 @@ import java.util.ArrayList;
 public class GroupHistoryAdp extends RecyclerView.Adapter<GroupHistoryAdp.ViewHolder> {
     private Activity activity;
     ArrayList<HJual> arrHistory;
+    ArrayList<DJual> arrItem;
+    OnItemClick onItemClick;
+
+    public OnItemClick getOnItemClick() {
+        return onItemClick;
+    }
+
+    public void setOnItemClick(OnItemClick onItemClick) {
+        this.onItemClick = onItemClick;
+    }
 
     @NonNull
     @Override
@@ -38,6 +49,7 @@ public class GroupHistoryAdp extends RecyclerView.Adapter<GroupHistoryAdp.ViewHo
 
         holder.tvName.setText(hJual.getNomor_nota());
         holder.date.setText(hJual.getTanggal());
+        holder.jumtotal.setText(hJual.getJumlahItem()+(hJual.getJumlahItem()>1?" Items":" Item"));
 
         boolean isExpandable = hJual.isExpandable();
         holder.expandableLayout.setVisibility(isExpandable ? View.VISIBLE : View.GONE);
@@ -48,35 +60,37 @@ public class GroupHistoryAdp extends RecyclerView.Adapter<GroupHistoryAdp.ViewHo
             holder.mArrowImage.setImageResource(R.drawable.ic_down);
         }
 
-        NestedHistoryAdapter adapter = new NestedHistoryAdapter(arrHistory);
+        ArrayList<DJual> arrPass = new ArrayList<>();
+        for (int i = 0; i < arrItem.size(); i++) {
+//            System.out.println(arrItem.get(i).getNota()+" "+hJual.getNomor_nota());
+            if (arrItem.get(i).getNota().equals(hJual.getNomor_nota())){
+                arrPass.add(arrItem.get(i));
+            }
+        }
+        NestedHistoryAdapter adapter = new NestedHistoryAdapter(arrPass);
         holder.rvMember.setLayoutManager(new LinearLayoutManager(holder.itemView.getContext()));
         holder.rvMember.setHasFixedSize(true);
         holder.rvMember.setAdapter(adapter);
-        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+        holder.mArrowImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 hJual.setExpandable(!hJual.isExpandable());
-                notifyItemChanged(holder.getAdapterPosition());
+                notifyItemChanged(holder.getLayoutPosition());
             }
         });
 
-//        HistoryAdapter historyAdapter = new HistoryAdapter(arrHistory);
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
-//        holder.rvMember.setLayoutManager(layoutManager);
-//        holder.rvMember.setAdapter(historyAdapter);
-
-
-//        searchAdapter.setOnItemClick(new SearchAdapter.OnItemClick() {
-//            @Override
-//            public void onDetailClick(Menu m) {
-//                if (onItemClick!=null) onItemClick.onDetailClick(m);
-//            }
-//        });
+        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onItemClick!=null) onItemClick.onItemClicked(hJual);
+            }
+        });
     }
 
-    public GroupHistoryAdp(Activity activity, ArrayList<HJual> arrHistory) {
+    public GroupHistoryAdp(Activity activity, ArrayList<HJual> arrHistory, ArrayList<DJual> arrD) {
         this.activity = activity;
         this.arrHistory = arrHistory;
+        this.arrItem = arrD;
     }
 
     @Override
@@ -102,5 +116,9 @@ public class GroupHistoryAdp extends RecyclerView.Adapter<GroupHistoryAdp.ViewHo
             tvName = itemView.findViewById(R.id.itemTv);
             jumtotal = itemView.findViewById(R.id.itemTotal);
         }
+    }
+
+    public interface OnItemClick{
+        void onItemClicked(HJual h);
     }
 }
