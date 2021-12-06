@@ -65,7 +65,7 @@ public class ProfileFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 
-    TextView name, email, cash, phone;
+    TextView name, email, cash, phone, stamps;
     Button btnEdit, btnPass;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -74,12 +74,14 @@ public class ProfileFragment extends Fragment {
         email = view.findViewById(R.id.tv_profileemail);
         cash = view.findViewById(R.id.tv_profilesaldo);
         phone = view.findViewById(R.id.tv_profilephonenum);
+        stamps = view.findViewById(R.id.tv_profilestamps);
         btnEdit = view.findViewById(R.id.btn_profileedit);
         btnPass = view.findViewById(R.id.btn_updpass);
         name.setText(loggedIn.getName());
         email.setText(loggedIn.getEmail());
         cash.setText("Rp "+String.format("%,.2f", new Double(loggedIn.getSaldo())));
         phone.setText(loggedIn.getTelp());
+        stamps.setText(loggedIn.getStamp()+" stamps");
 
         ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
