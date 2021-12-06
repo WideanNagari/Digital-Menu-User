@@ -20,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -40,6 +41,7 @@ import com.example.userapplication.Classes.OrderMenu;
 import com.example.userapplication.R;
 import com.example.userapplication.Classes.Table;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -52,6 +54,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -107,6 +111,11 @@ public class OrderCartFragment extends Fragment implements LoadCartAsync.LoadCar
 
     TextView jumOrder, txtCheck;
     CardView btnOrder, btnCheckin;
+    CircularProgressButton doCheckin;
+
+    //check-in
+    TextInputEditText Check_Name, Check_Phone, kodeCheckIn;
+    AutoCompleteTextView spinnerCheckin;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -166,6 +175,14 @@ public class OrderCartFragment extends Fragment implements LoadCartAsync.LoadCar
                 }
             }
         });
+
+        //check-in
+        //check-in
+        Check_Name = view.findViewById(R.id.Check_Name);
+        Check_Phone = view.findViewById(R.id.Check_Phone);
+        kodeCheckIn = view.findViewById(R.id.kodeCheckIn);
+        spinnerCheckin = view.findViewById(R.id.spinnerCheckin);
+        doCheckin = view.findViewById(R.id.doCheckin);
 
         sheetDialogNew();
         btnCheckin = view.findViewById(R.id.btnCheckin);

@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -39,9 +40,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
+
 public class PaymentActivity extends AppCompatActivity {
 
-    Spinner promo;
+    //Spinner promo;
     String[] spinItem;
     ArrayList<Promo> arrPromo;
     ArrayList<OrderMenu> arrOrder;
@@ -51,12 +54,16 @@ public class PaymentActivity extends AppCompatActivity {
     String usePromo;
 
     TextView total, potongan, subtotal, stamp, infoPromo, promoAlert, balance, balanceAlert;
-    Button pay;
+    CircularProgressButton pay, pay_back;
     RecyclerView rv;
     PaymentAdapter paymentAdapter;
     int totals, diskon, max, subtotals, disc;
 
     int counter, maxx;
+
+    String[] items;
+    AutoCompleteTextView promo;
+    ArrayAdapter<String> adapterItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +90,13 @@ public class PaymentActivity extends AppCompatActivity {
         balance = findViewById(R.id.userBalance);
         balanceAlert = findViewById(R.id.userBalanceAlert);
         balance.setText(currency(user.getSaldo()+""));
+        pay_back = findViewById(R.id.pay_back);
+        pay_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //kembali ke halaman sebelummnya
+            }
+        });
 
         pay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,19 +159,27 @@ public class PaymentActivity extends AppCompatActivity {
     }
 
     private void isiSpinner(){
-        spinItem = new String[arrPromo.size()];
+        items = new String[arrPromo.size()];
         for (int i = 0; i < arrPromo.size(); i++) {
-            Promo promo = arrPromo.get(i);
-            spinItem[i] = promo.getNama_promo();
+            items[i] = arrPromo.get(i).getNama_promo();
         }
-        ArrayAdapter<String> spinAdapter = new ArrayAdapter<String>(
-                PaymentActivity.this,
-                android.R.layout.simple_spinner_item,
-                spinItem
-        );
 
-        spinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        promo.setAdapter(spinAdapter);
+        adapterItems = new ArrayAdapter<String>(this, R.layout.list_dropdown, items);
+        promo.setAdapter(adapterItems);
+//
+//        spinItem = new String[arrPromo.size()];
+//        for (int i = 0; i < arrPromo.size(); i++) {
+//            Promo promo = arrPromo.get(i);
+//            spinItem[i] = promo.getNama_promo();
+//        }
+//        ArrayAdapter<String> spinAdapter = new ArrayAdapter<String>(
+//                PaymentActivity.this,
+//                android.R.layout.simple_spinner_item,
+//                spinItem
+//        );
+//
+//        spinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        promo.setAdapter(spinAdapter);
 
         promo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
