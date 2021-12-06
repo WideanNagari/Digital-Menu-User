@@ -2,6 +2,7 @@ package com.example.userapplication.Profile;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,6 +32,7 @@ public class EditPasswordActivity extends AppCompatActivity {
     Button btnConf;
     EditText edOld, edNew, edConfirmNew;
     UserApp loggedIn;
+    AppCompatImageView btnBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +47,13 @@ public class EditPasswordActivity extends AppCompatActivity {
             loggedIn = par.getParcelableExtra("loggedIn");
         }
         btnConf.setOnClickListener(this::doUpdatePassword);
+        btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
     public void doUpdatePassword(View view) {

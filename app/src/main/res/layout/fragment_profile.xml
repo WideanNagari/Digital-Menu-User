@@ -19,7 +19,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/shape_bg" />
+            app:srcCompat="@drawable/top_btn_bg" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout1"
@@ -45,13 +45,14 @@
 
         <ImageView
             android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginTop="32dp"
-            android:src="@drawable/profile"
+            android:src="@drawable/ic_baseline_person_24"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/red1" />
 
         <TextView
             android:id="@+id/tv_profilename"
@@ -59,7 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Nama Customer"
-            android:textColor="@color/white"
+            android:textColor="@color/red1"
             android:textSize="@dimen/_24ssp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/imageView2"
@@ -353,13 +354,14 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/img_edit_pass"
-                android:layout_width="@dimen/_40sdp"
-                android:layout_height="@dimen/_40sdp"
+                android:layout_marginTop="3dp"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
                 android:layout_gravity="end"
                 android:layout_marginEnd="@dimen/_20sdp"
-                android:background="@drawable/round_bg"
+                android:background="@drawable/top_btn_bg"
                 android:padding="5dp"
-                android:tint="@color/white"
+                android:tint="@color/pink1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/update" />
