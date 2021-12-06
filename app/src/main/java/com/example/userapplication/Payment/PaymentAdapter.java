@@ -34,7 +34,8 @@ public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         OrderMenu o = arrOrder.get(position);
         holder.nama.setText(o.getNama_menu());
-        holder.harga.setText(o.getJumlah()+" x "+currency(o.getHarga_menu()));
+        holder.jum.setText(o.getJumlah()+" x");
+        holder.harga.setText(currency(o.getHarga_menu()));
         holder.total.setText(currency(o.getJumlah()*Integer.parseInt(o.getHarga_menu())+""));
     }
 
@@ -60,13 +61,14 @@ public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView img;
-        TextView nama, harga, total;
+        TextView nama, harga, total, jum;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             img = itemView.findViewById(R.id.imgMenuPurchase);
             nama = itemView.findViewById(R.id.namaMenuPurchase);
             harga = itemView.findViewById(R.id.hargaMenuPurchase);
             total = itemView.findViewById(R.id.totalHargaPurchase);
+            jum  = itemView.findViewById(R.id.txtJum);
         }
     }
 }
