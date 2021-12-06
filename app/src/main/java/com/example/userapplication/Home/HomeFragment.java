@@ -138,7 +138,7 @@ public class HomeFragment extends Fragment {
         rv_reward.setAdapter(rewardAdapter);
 
         listPopular = new ArrayList<>();
-        popularAdapter = new PopularAdapter(listPopular);
+        popularAdapter = new PopularAdapter(getActivity(), listPopular);
         rv_popular = view.findViewById(R.id.popular_recycler);
         rv_popular.setLayoutManager( new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rv_popular.setAdapter(popularAdapter);
@@ -153,7 +153,7 @@ public class HomeFragment extends Fragment {
         });
 
         listRecommended = new ArrayList<>();
-        recommendAdapter = new PopularAdapter(listRecommended);
+        recommendAdapter = new PopularAdapter(getActivity(), listRecommended);
         rv_recommended = view.findViewById(R.id.recommended_recycler);
         rv_recommended.setLayoutManager( new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rv_recommended.setAdapter(recommendAdapter);
@@ -168,7 +168,7 @@ public class HomeFragment extends Fragment {
         });
 
         listAgain = new ArrayList<>();
-        againAdapter = new PopularAdapter(listAgain);
+        againAdapter = new PopularAdapter(getActivity(), listAgain);
         rv_again = view.findViewById(R.id.again_recycler);
         rv_again.setLayoutManager( new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rv_again.setAdapter(againAdapter);

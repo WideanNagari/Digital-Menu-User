@@ -98,7 +98,7 @@ public class OrderOngoingFragment extends Fragment{
         rv = view.findViewById(R.id.rvOngoing);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
         arrOrder = new ArrayList<>();
-        ongoingAdapter = new OngoingAdapter(arrOrder);
+        ongoingAdapter = new OngoingAdapter(getActivity(), arrOrder);
         rv.setAdapter(ongoingAdapter);
 
         subtotal = view.findViewById(R.id.subtotalOngoing);
@@ -212,6 +212,7 @@ public class OrderOngoingFragment extends Fragment{
                                             , order.getInt("jumlah")
                                             , order.getString("status")
                                             , order.getInt("reward_status")
+                                            , order.getString("asset")
                                     ));
                                 }
                                 ongoingAdapter.notifyDataSetChanged();

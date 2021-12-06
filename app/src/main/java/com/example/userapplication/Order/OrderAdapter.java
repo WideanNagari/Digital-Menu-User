@@ -1,5 +1,6 @@
 package com.example.userapplication.Order;
 
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,14 +12,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.userapplication.Classes.OrderMenu;
 import com.example.userapplication.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>{
     ArrayList<OrderMenu> arrOrder;
     OnOrderItemClick onOrderItemClick;
+    Activity activity;
 
     public OnOrderItemClick getOnOrderItemClick() {
         return onOrderItemClick;
@@ -28,8 +32,9 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>{
         this.onOrderItemClick = onOrderItemClick;
     }
 
-    public OrderAdapter(ArrayList<OrderMenu> arrOrder) {
+    public OrderAdapter(Activity activity, ArrayList<OrderMenu> arrOrder) {
         this.arrOrder = arrOrder;
+        this.activity = activity;
     }
 
     public ArrayList<OrderMenu> getArrOrder() {
@@ -55,6 +60,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>{
         holder.nama.setText(o.getNama_menu());
         holder.harga.setText(currency(o.getHarga_menu()));
         holder.jumlah.setText(o.getJumlah()+"");
+        Glide.with(activity).load(o.getGambarID()).into(holder.img);
         if (o.isConfirm()) holder.check.setChecked(true);
         else holder.check.setChecked(false);
         holder.add.setOnClickListener(new View.OnClickListener() {

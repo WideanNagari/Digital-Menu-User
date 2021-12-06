@@ -1,5 +1,6 @@
 package com.example.userapplication.Menu;
 
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,14 +10,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.userapplication.Classes.Menu;
 import com.example.userapplication.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder> {
     private ArrayList<Menu> listMenu = new ArrayList<>();
     OnItemClick onItemClick;
+    Activity activity;
 
     public OnItemClick getOnItemClick() {
         return onItemClick;
@@ -29,8 +33,9 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         void onDetailClick(Menu m);
     }
 
-    public SearchAdapter(ArrayList<Menu> listMenu) {
+    public SearchAdapter(Activity activity, ArrayList<Menu> listMenu) {
         this.listMenu = listMenu;
+        this.activity = activity;
     }
 
     @NonNull
@@ -51,6 +56,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         holder.nama.setText(m.getNama_menu());
         holder.Rate.setText(m.getRating()+"");
         holder.price.setText(currency(m.getHarga_menu()));
+        Glide.with(activity).load(m.getGambar()).into(holder.img);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,11 +72,11 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageView;
+        ImageView img;
         TextView jenis, nama, Rate, price;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            imageView = itemView.findViewById(R.id.food_image);
+            img = itemView.findViewById(R.id.food_image);
             jenis = itemView.findViewById(R.id.jenis_name);
             nama = itemView.findViewById(R.id.name_makanan);
             Rate = itemView.findViewById(R.id.rating);

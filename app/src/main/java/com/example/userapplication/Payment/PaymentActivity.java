@@ -56,6 +56,8 @@ public class PaymentActivity extends AppCompatActivity {
     PaymentAdapter paymentAdapter;
     int totals, diskon, max, subtotals, disc;
 
+    int counter, maxx;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +70,7 @@ public class PaymentActivity extends AppCompatActivity {
             }
         }
 
+        counter = 0;
         rv = findViewById(R.id.rvMenuBayar);
         pay = findViewById(R.id.btnPay);
         promo = findViewById(R.id.spinnerPromo);
@@ -101,7 +104,7 @@ public class PaymentActivity extends AppCompatActivity {
         getAllPromo();
 
         rv.setLayoutManager(new LinearLayoutManager(this));
-        paymentAdapter = new PaymentAdapter(arrOrder);
+        paymentAdapter = new PaymentAdapter(this, arrOrder);
         rv.setAdapter(paymentAdapter);
 
         alertDialogBuilder = new AlertDialog.Builder(this);
@@ -197,12 +200,19 @@ public class PaymentActivity extends AppCompatActivity {
             alertDialogBuilder.setPositiveButton("Pay", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick (DialogInterface dialogInterface,int j){
+                    maxx = arrOrder.size();
                     addHJual(user.getId()+"",usePromo,arrOrder.size()+"", disc+"", subtotals+"",totals/20000);
                     for (int i = 0; i < arrOrder.size(); i++) {
                         addDJual(arrOrder.get(i).getId(),arrOrder.get(i).getJumlah()+"", arrOrder.get(i).getReward_status()+"");
                     }
                 }
+            }).setNegativeButton("Back", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                }
             });
+
         }
 
         AlertDialog alertDialog = alertDialogBuilder.create();
@@ -225,12 +235,6 @@ public class PaymentActivity extends AppCompatActivity {
                             user.setSaldo(jsonObject.getInt("saldo"));
                             if(jsonObject.getString("checkin")!=null)
                                 user.setCheckIn(jsonObject.getString("checkin"));
-
-                            Toast.makeText(PaymentActivity.this, "Thank You!", Toast.LENGTH_SHORT).show();
-                            i.putExtra("done","done");
-                            i.putExtra("customer", user);
-                            setResult(Activity.RESULT_OK, i);
-                            finish();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -276,6 +280,15 @@ public class PaymentActivity extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(response);
 //                            String pesan  = jsonObject.getString("message");
 //                            int kode = jsonObject.getInt("code");
+                            counter++;
+                            if (counter==maxx){
+                                Toast.makeText(PaymentActivity.this, "Thank You!", Toast.LENGTH_SHORT).show();
+                                i.putExtra("done","done");
+                                i.putExtra("customer", user);
+                                System.out.println(user.getCheckIn());
+                                setResult(Activity.RESULT_OK, i);
+                                finish();
+                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -337,6 +350,7 @@ public class PaymentActivity extends AppCompatActivity {
                                                 , order.getInt("jumlah")
                                                 , order.getString("status")
                                                 , order.getInt("reward_status")
+                                                , order.getString("asset")
                                         ));
                                     }
                                 }

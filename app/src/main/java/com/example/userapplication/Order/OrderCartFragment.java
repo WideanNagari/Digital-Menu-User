@@ -1,5 +1,6 @@
 package com.example.userapplication.Order;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -71,13 +72,18 @@ public class OrderCartFragment extends Fragment implements LoadCartAsync.LoadCar
     BottomSheetDialog bottomSheetDialog;
     View bottomSheetView;
     Spinner spin;
+    String url;
 
-    public OrderCartFragment() {
+    Context context;
+
+    public OrderCartFragment(Context context, String url) {
         // Required empty public constructor
+        this.context = context;
+        this.url = url;
     }
 
-    public static OrderCartFragment newInstance(UserApp user) {
-        OrderCartFragment fragment = new OrderCartFragment();
+    public static OrderCartFragment newInstance(UserApp user, Context context, String url) {
+        OrderCartFragment fragment = new OrderCartFragment(context, url);
         Bundle args = new Bundle();
         args.putParcelable("user", user);
         fragment.setArguments(args);
@@ -110,7 +116,7 @@ public class OrderCartFragment extends Fragment implements LoadCartAsync.LoadCar
         subtotal.setText("Rp. 0");
 
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
-        orderAdapter = new OrderAdapter(arrOrder);
+        orderAdapter = new OrderAdapter(getActivity(), arrOrder);
         rv.setAdapter(orderAdapter);
         orderAdapter.setOnOrderItemClick(new OrderAdapter.OnOrderItemClick() {
             @Override
@@ -311,7 +317,7 @@ public class OrderCartFragment extends Fragment implements LoadCartAsync.LoadCar
     public void checkIn(String meja, String userId, String kode){
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
-                getResources().getString(R.string.url)+"table/updateTable",
+                url+"table/updateTable",
 
                 new Response.Listener<String>() {
                     @Override
@@ -321,7 +327,7 @@ public class OrderCartFragment extends Fragment implements LoadCartAsync.LoadCar
                             JSONObject jsonObject = new JSONObject(response);
                             String pesan  = jsonObject.getString("message");
                             int kode = jsonObject.getInt("code");
-                            Toast.makeText(getContext(), pesan, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, pesan, Toast.LENGTH_SHORT).show();
                             if (kode==1) {
                                 user.setCheckIn(jsonObject.getString("meja"));
                                 user.setIdMeja(jsonObject.getString("idMeja"));
@@ -356,7 +362,7 @@ public class OrderCartFragment extends Fragment implements LoadCartAsync.LoadCar
             }
         };
 
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(stringRequest);
     }
 

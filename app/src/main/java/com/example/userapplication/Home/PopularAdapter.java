@@ -1,5 +1,6 @@
 package com.example.userapplication.Home;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,17 +12,21 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.userapplication.Classes.Menu;
 import com.example.userapplication.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.PopularViewHolder> {
     private ArrayList<Menu> listpopular = new ArrayList<>();
     OnPilihListener onPilihListener;
+    Activity activity;
 
-    public PopularAdapter(ArrayList<Menu> listpopular) {
+    public PopularAdapter(Activity activity, ArrayList<Menu> listpopular) {
         this.listpopular = listpopular;
+        this.activity = activity;
     }
 
     public OnPilihListener getOnPilihListener() {
@@ -49,6 +54,8 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.PopularV
         holder.rate.setText(menu.getRating()+"");
         holder.price.setText(currency(menu.getHarga_menu()));
         holder.jenis.setText(menu.getJenis_menu());
+        Glide.with(activity).load(menu.getGambar()).into(holder.foodImage);
+//        Picasso.get().load(menu.getGambar()).into(holder.foodImage);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

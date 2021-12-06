@@ -202,6 +202,7 @@ public class HistoryFragment extends Fragment {
                                             , djual.getDouble("rating")
                                             , djual.getInt("jumlah")
                                             , djual.getInt("harga_menu")
+                                            , djual.getString("asset")
                                     ));
                                 }
                                 historyAdp.notifyDataSetChanged();

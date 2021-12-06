@@ -181,6 +181,7 @@ public class SearchFragment extends Fragment {
                                             , order.getString("deskripsi_menu")
                                             , order.getString("jenis_menu")
                                             , order.getString("status_menu")
+                                            , order.getString("asset")
                                             , order.getDouble("rating")
                                     ));
                                 }
@@ -247,8 +248,10 @@ public class SearchFragment extends Fragment {
                                             , order.getString("deskripsi_menu")
                                             , order.getString("jenis_menu")
                                             , order.getString("status_menu")
+                                            , order.getString("asset")
                                             , order.getDouble("rating")
                                     ));
+//                                    System.out.println(arrMenu.get(arrMenu.size()-1).getGambar());
                                 }
 
                                 JSONArray jen = jsonObject.getJSONArray("dataJenis");

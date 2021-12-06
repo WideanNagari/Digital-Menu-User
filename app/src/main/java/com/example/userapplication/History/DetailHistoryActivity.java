@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -41,7 +42,8 @@ import java.util.Map;
 public class DetailHistoryActivity extends AppCompatActivity {
 
     TextView promo, total, potongan, subtotal, stamp;
-    Button review, back;
+    Button review;
+    ImageView back;
     RecyclerView rv;
     Intent i;
     HJual hjual;
@@ -83,7 +85,7 @@ public class DetailHistoryActivity extends AppCompatActivity {
         arrOrder = new ArrayList<>();
         rv = findViewById(R.id.rvMenuHistory);
         rv.setLayoutManager(new LinearLayoutManager(this));
-        paymentAdapter = new PaymentAdapter(arrOrder);
+        paymentAdapter = new PaymentAdapter(this, arrOrder);
         rv.setAdapter(paymentAdapter);
 
         promo.setText(hjual.getPromo()+"");
@@ -192,6 +194,7 @@ public class DetailHistoryActivity extends AppCompatActivity {
                                             , djual.getInt("jumlah")
                                             , djual.getString("status")
                                             , djual.getInt("reward_status")
+                                            , djual.getString("asset")
                                     ));
                                 }
                                 hitungTotal();

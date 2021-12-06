@@ -61,7 +61,7 @@ public class GroupSearchAdp extends RecyclerView.Adapter<GroupSearchAdp.ViewHold
                 arrMenu.add(list.get(i));
         }
 
-        SearchAdapter searchAdapter = new SearchAdapter(arrMenu);
+        SearchAdapter searchAdapter = new SearchAdapter(activity, arrMenu);
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
         holder.rvMember.setLayoutManager(layoutManager);
         holder.rvMember.setAdapter(searchAdapter);

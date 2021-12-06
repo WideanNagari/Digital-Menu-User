@@ -1,5 +1,6 @@
 package com.example.userapplication.History;
 
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,19 +10,23 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.userapplication.Classes.DJual;
 import com.example.userapplication.Classes.HJual;
 import com.example.userapplication.Classes.Menu;
 import com.example.userapplication.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class NestedHistoryAdapter extends RecyclerView.Adapter<NestedHistoryAdapter.ViewHolder> {
 
     private ArrayList<DJual> list;
+    Activity activity;
 
-    public NestedHistoryAdapter(ArrayList<DJual> list) {
+    public NestedHistoryAdapter(Activity activity, ArrayList<DJual> list) {
         this.list = list;
+        this.activity = activity;
     }
 
     @NonNull
@@ -41,6 +46,8 @@ public class NestedHistoryAdapter extends RecyclerView.Adapter<NestedHistoryAdap
         holder.txtPrice.setText(currency(dJual.getHarga()+""));
         holder.txtRate.setText(dJual.getRating()+"");
         holder.txtJum.setText(dJual.getQuantity()+"");
+        Glide.with(activity).load(dJual.getGambar()).into(holder.imgFood);
+
     }
 
     private String currency(String angkaAwal){

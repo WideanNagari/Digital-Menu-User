@@ -4,16 +4,17 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Menu implements Parcelable {
-    protected String id, nama_menu, harga_menu, deskripsi_menu, jenis_menu, status_menu;
+    protected String id, nama_menu, harga_menu, deskripsi_menu, jenis_menu, status_menu, gambar;
     protected double rating;
 
-    public Menu(String id, String nama_menu, String harga_menu, String deskripsi_menu, String jenis_menu, String status_menu, double rating) {
+    public Menu(String id, String nama_menu, String harga_menu, String deskripsi_menu, String jenis_menu, String status_menu, String gambar, double rating) {
         this.id = id;
         this.nama_menu = nama_menu;
         this.harga_menu = harga_menu;
         this.deskripsi_menu = deskripsi_menu;
         this.jenis_menu = jenis_menu;
         this.status_menu = status_menu;
+        this.gambar = gambar;
         this.rating = rating;
     }
 
@@ -24,6 +25,7 @@ public class Menu implements Parcelable {
         deskripsi_menu = in.readString();
         jenis_menu = in.readString();
         status_menu = in.readString();
+        gambar = in.readString();
         rating = in.readDouble();
     }
 
@@ -87,6 +89,18 @@ public class Menu implements Parcelable {
         this.status_menu = status_menu;
     }
 
+    public String getGambar() {
+        return "https://drive.google.com/uc?id="+gambar;
+    }
+
+    public String getGambarID() {
+        return gambar;
+    }
+
+    public void setGambar(String gambar) {
+        this.gambar = gambar;
+    }
+
     public double getRating() {
         return rating;
     }
@@ -108,6 +122,7 @@ public class Menu implements Parcelable {
         parcel.writeString(deskripsi_menu);
         parcel.writeString(jenis_menu);
         parcel.writeString(status_menu);
+        parcel.writeString(gambar);
         parcel.writeDouble(rating);
     }
 }

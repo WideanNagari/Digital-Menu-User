@@ -93,10 +93,10 @@ public class OrderFragment extends Fragment  {
                 Fragment frag;
                 switch (item.getItemId()){
                     default:
-                        frag = OrderCartFragment.newInstance(user);
+                        frag = OrderCartFragment.newInstance(user, getContext(), getResources().getString(R.string.url));
                         break;
                     case R.id.item_cart:
-                        frag = OrderCartFragment.newInstance(user);
+                        frag = OrderCartFragment.newInstance(user, getContext(), getResources().getString(R.string.url));
                         break;
                     case R.id.item_ongoing:
                         frag = OrderOngoingFragment.newInstance(user);
@@ -124,6 +124,7 @@ public class OrderFragment extends Fragment  {
                         @Override
                         public void onBack(UserApp u) {
                             user = u;
+                            System.out.println("order"+user.getCheckIn());
                             if (onActionListener!=null) onActionListener.onBack(user);
                         }
                     });

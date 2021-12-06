@@ -23,6 +23,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.example.userapplication.Classes.OrderMenu;
 import com.example.userapplication.Classes.Type;
 import com.example.userapplication.DAO.AppDatabase;
@@ -31,6 +32,7 @@ import com.example.userapplication.Classes.Menu;
 import com.example.userapplication.Classes.UserApp;
 import com.example.userapplication.Order.OrderCartFragment;
 import com.example.userapplication.R;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -97,7 +99,8 @@ public class DetailMenuActivity extends AppCompatActivity implements AddLikeAsyn
                 }else{
                     new AddOrderAsync(DetailMenuActivity.this, DetailMenuActivity.this,
                             new OrderMenu(menu.getId(), menu.getNama_menu(), menu.getHarga_menu(), menu.getDeskripsi_menu(),
-                                    menu.getJenis_menu(), menu.getStatus_menu(),menu.getRating(), user.getId(), jum,"-",0)).execute();
+                                    menu.getJenis_menu(), menu.getStatus_menu(),menu.getRating(), user.getId(), jum,"-",
+                                    0, menu.getGambarID())).execute();
                 }
             }
         });
@@ -121,6 +124,8 @@ public class DetailMenuActivity extends AppCompatActivity implements AddLikeAsyn
         txtHrg.setText(currency(menu.getHarga_menu()+""));
         txtDesc.setText(menu.getDeskripsi_menu());
         txtRating.setText(menu.getRating()+"");
+//        System.out.println(menu.getGambar());
+        Glide.with(this).load(menu.getGambar()).into(imgV);
 
         getJumOrder(menu.getId());
 
@@ -304,6 +309,9 @@ public class DetailMenuActivity extends AppCompatActivity implements AddLikeAsyn
     public void postExecuteLoadO(List<OrderMenu> listMenu) {
         cartMenu.clear();
         cartMenu.addAll(listMenu);
+//        for (int i = 0; i < listMenu.size(); i++) {
+//            System.out.println(listMenu.get(i).getGambarID());
+//        }
     }
 }
 

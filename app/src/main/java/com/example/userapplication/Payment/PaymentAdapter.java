@@ -1,5 +1,6 @@
 package com.example.userapplication.Payment;
 
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,16 +10,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.userapplication.Classes.OrderMenu;
 import com.example.userapplication.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.ViewHolder>{
     ArrayList<OrderMenu> arrOrder;
-
-    public PaymentAdapter(ArrayList<OrderMenu> arrOrder) {
+    Activity activity;
+    public PaymentAdapter(Activity activity, ArrayList<OrderMenu> arrOrder) {
         this.arrOrder = arrOrder;
+        this.activity = activity;
     }
 
     @NonNull
@@ -34,9 +38,10 @@ public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         OrderMenu o = arrOrder.get(position);
         holder.nama.setText(o.getNama_menu());
-        holder.jum.setText(o.getJumlah()+" x");
-        holder.harga.setText(currency(o.getHarga_menu()));
+        holder.harga.setText(o.getJumlah()+" x "+currency(o.getHarga_menu()));
         holder.total.setText(currency(o.getJumlah()*Integer.parseInt(o.getHarga_menu())+""));
+        holder.jenis.setText(o.getJenis_menu());
+        Glide.with(activity).load(o.getGambar()).into(holder.img);
     }
 
     @Override
@@ -61,14 +66,14 @@ public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView img;
-        TextView nama, harga, total, jum;
+        TextView nama, harga, total, jenis;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             img = itemView.findViewById(R.id.imgMenuPurchase);
             nama = itemView.findViewById(R.id.namaMenuPurchase);
             harga = itemView.findViewById(R.id.hargaMenuPurchase);
             total = itemView.findViewById(R.id.totalHargaPurchase);
-            jum  = itemView.findViewById(R.id.txtJum);
+            jenis = itemView.findViewById(R.id.history_jenis);
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.example.userapplication.Order;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
@@ -11,16 +12,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.userapplication.Classes.OrderMenu;
 import com.example.userapplication.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class OngoingAdapter  extends RecyclerView.Adapter<OngoingAdapter.ViewHolder>{
     ArrayList<OrderMenu> arrOrder;
+    Activity activity;
 
-    public OngoingAdapter(ArrayList<OrderMenu> arrOrder) {
+    public OngoingAdapter(Activity activity, ArrayList<OrderMenu> arrOrder) {
         this.arrOrder = arrOrder;
+        this.activity = activity;
     }
 
     public ArrayList<OrderMenu> getArrOrder() {
@@ -46,6 +51,7 @@ public class OngoingAdapter  extends RecyclerView.Adapter<OngoingAdapter.ViewHol
         holder.nama.setText(o.getNama_menu());
         holder.harga.setText(o.getJumlah()+" x "+currency(o.getHarga_menu()));
         holder.status.setText(o.getStatus());
+        Glide.with(activity).load(o.getGambar()).into(holder.img);
 
         int warna = Color.parseColor("#FF8FA3");
         if (o.getStatus().equals("Confirmed")) warna = Color.parseColor("#FF4D6D");

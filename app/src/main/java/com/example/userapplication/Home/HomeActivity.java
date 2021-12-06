@@ -177,6 +177,16 @@ public class HomeActivity extends AppCompatActivity implements LoadCartAsync.Loa
                             homeFragment.setListAgain(again);
                         }
                     });
+                }else if (fragment instanceof OrderFragment){
+                    OrderFragment orderFragment = (OrderFragment) fragment;
+                    orderFragment.setOnActionListener(new OrderFragment.OnActionListener() {
+                        @Override
+                        public void onBack(UserApp user) {
+                            loggedIn = user;
+                            System.out.println("home"+loggedIn.getCheckIn());
+                            bottomNavigation.show(ID_HOME, true);
+                        }
+                    });
                 }
             }
         });
@@ -222,6 +232,7 @@ public class HomeActivity extends AppCompatActivity implements LoadCartAsync.Loa
                                             , order.getString("deskripsi_menu")
                                             , order.getString("jenis_menu")
                                             , order.getString("status_menu")
+                                            , order.getString("asset")
                                             , order.getDouble("rating")
                                     ));
                                 }
@@ -274,6 +285,7 @@ public class HomeActivity extends AppCompatActivity implements LoadCartAsync.Loa
                                             , order.getString("deskripsi_menu")
                                             , order.getString("jenis_menu")
                                             , order.getString("status_menu")
+                                            , order.getString("asset")
                                             , order.getDouble("rating")
                                     ));
                                 }
@@ -326,6 +338,7 @@ public class HomeActivity extends AppCompatActivity implements LoadCartAsync.Loa
                                             , order.getString("deskripsi_menu")
                                             , order.getString("jenis_menu")
                                             , order.getString("status_menu")
+                                            , order.getString("asset")
                                             , order.getDouble("rating")
                                     ));
                                 }
@@ -349,6 +362,7 @@ public class HomeActivity extends AppCompatActivity implements LoadCartAsync.Loa
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
+                params.put("id",loggedIn.getId()+"");
                 return params;
             }
         };

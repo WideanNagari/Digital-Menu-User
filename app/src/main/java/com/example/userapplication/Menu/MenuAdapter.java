@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.userapplication.Classes.Menu;
 import com.example.userapplication.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -47,6 +48,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder>{
         holder.tvNama.setText(m.getNama_menu());
         holder.tvHarga.setText(currency(m.getHarga_menu()));
         holder.tvDesc.setText(m.getDeskripsi_menu());
+        Picasso.get().load(m.getGambar()).into(holder.img);
 
         holder.detail.setOnClickListener(new View.OnClickListener() {
             @Override

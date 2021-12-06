@@ -33,6 +33,12 @@ public class GroupHistoryAdp extends RecyclerView.Adapter<GroupHistoryAdp.ViewHo
         this.onItemClick = onItemClick;
     }
 
+    public GroupHistoryAdp(Activity activity, ArrayList<HJual> arrHistory, ArrayList<DJual> arrD) {
+        this.activity = activity;
+        this.arrHistory = arrHistory;
+        this.arrItem = arrD;
+    }
+
     @NonNull
     @Override
     public GroupHistoryAdp.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -67,7 +73,7 @@ public class GroupHistoryAdp extends RecyclerView.Adapter<GroupHistoryAdp.ViewHo
                 arrPass.add(arrItem.get(i));
             }
         }
-        NestedHistoryAdapter adapter = new NestedHistoryAdapter(arrPass);
+        NestedHistoryAdapter adapter = new NestedHistoryAdapter(activity, arrPass);
         holder.rvMember.setLayoutManager(new LinearLayoutManager(holder.itemView.getContext()));
         holder.rvMember.setHasFixedSize(true);
         holder.rvMember.setAdapter(adapter);
@@ -87,11 +93,7 @@ public class GroupHistoryAdp extends RecyclerView.Adapter<GroupHistoryAdp.ViewHo
         });
     }
 
-    public GroupHistoryAdp(Activity activity, ArrayList<HJual> arrHistory, ArrayList<DJual> arrD) {
-        this.activity = activity;
-        this.arrHistory = arrHistory;
-        this.arrItem = arrD;
-    }
+
 
     @Override
     public int getItemCount() {
