@@ -24,6 +24,7 @@ import com.example.userapplication.Classes.UserApp;
 import com.example.userapplication.Home.HomeActivity;
 import com.example.userapplication.LoginActivity;
 import com.example.userapplication.R;
+import com.example.userapplication.Reward.ClaimRewardActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -117,7 +118,19 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-
+        btn_topup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //halaman top up
+            }
+        });
+        btn_reward.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getContext(), ClaimRewardActivity.class);
+                launcher.launch(i);
+            }
+        });
         btn_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

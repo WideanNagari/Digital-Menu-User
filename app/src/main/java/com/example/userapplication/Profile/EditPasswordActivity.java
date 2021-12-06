@@ -35,6 +35,7 @@ public class EditPasswordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_password);
+
         btnConf = findViewById(R.id.btn_changepassword);
         edOld = findViewById(R.id.ed_previouspass);
         edNew = findViewById(R.id.ed_newpass);
