@@ -1,99 +1,210 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    app:cardCornerRadius="15dp"
+    android:elevation="5dp"
+    android:layout_marginTop="15dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="3dp"
+    android:layout_marginBottom="1dp"
+    android:layout_height="wrap_content">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
         <CheckBox
             android:id="@+id/checkboxPilihOrder"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="31dp"
+            android:layout_height="83dp"
+            android:minWidth="48dp"
             android:scaleX="1.5"
             android:scaleY="1.5"
-            android:minWidth="0dp"
-            android:layout_marginLeft="10dp"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/imgMenu"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_weight="0"
+            android:layout_width="102dp"
+            android:layout_height="84dp"
+            android:adjustViewBounds="true"
+            app:layout_constraintStart_toEndOf="@+id/checkboxPilihOrder"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/popularfood2" />
+
+        <TextView
+            android:id="@+id/namaMenuOrder"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:text="Nama Makanan"
+            android:textColor="#091020"
+            android:textSize="15sp"
+            app:layout_constraintStart_toEndOf="@+id/imgMenu"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/btnDeleteOrder"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="15dp"
+            android:onClick="add"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_remove"
+            app:tint="@color/red1" />
+
+        <TextView
+            android:id="@+id/hargaMenuOrder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="45dp"
+            android:layout_marginEnd="16dp"
+            android:text="Rp 20.000"
+            android:textColor="#FF6813"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/btnMinOrder"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            app:srcCompat="@drawable/inverse_logo"/>
+            android:onClick="sub"
+            app:layout_constraintStart_toEndOf="@+id/imgMenu"
+            app:layout_constraintTop_toBottomOf="@+id/namaMenuOrder"
+            app:srcCompat="@drawable/ic_minus_white" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="10dp"
-            android:orientation="vertical">
+        <TextView
+            android:id="@+id/jumlahOrder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="01"
+            android:textColor="@color/red1"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@+id/btnMinOrder"
+            app:layout_constraintStart_toEndOf="@+id/btnMinOrder"
+            app:layout_constraintTop_toTopOf="@+id/btnMinOrder" />
 
-            <TextView
-                android:id="@+id/namaMenuOrder"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Egg Fried Rice"
-                android:textColor="@color/black"
-                android:textSize="20dp"/>
+        <ImageView
+            android:id="@+id/btnAddOrder"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="4dp"
+            android:onClick="add"
+            app:layout_constraintBottom_toBottomOf="@+id/jumlahOrder"
+            app:layout_constraintStart_toEndOf="@+id/jumlahOrder"
+            app:layout_constraintTop_toTopOf="@+id/jumlahOrder"
+            app:srcCompat="@drawable/ic_plus_white" />
 
-            <TextView
-                android:id="@+id/hargaMenuOrder"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-black"
-                android:text="Rp 50.000,-"
-                android:textColor="#0A8332"
-                android:textSize="16dp"
-                android:layout_marginTop="10dp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal">
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:orientation="vertical">-->
 
-                <Button
-                    android:id="@+id/btnMinOrder"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/ic_minus"/>
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:orientation="horizontal">-->
 
-                <TextView
-                    android:id="@+id/jumlahOrder"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="1"
-                    android:textSize="20dp"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"/>
+<!--        <CheckBox-->
+<!--            android:id="@+id/checkboxPilihOrder"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:scaleX="1.5"-->
+<!--            android:scaleY="1.5"-->
+<!--            android:minWidth="0dp"-->
+<!--            android:layout_marginLeft="10dp"/>-->
 
-                <Button
-                    android:id="@+id/btnAddOrder"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/ic_add"/>
+<!--        <ImageView-->
+<!--            android:id="@+id/imgMenu"-->
+<!--            android:layout_width="100dp"-->
+<!--            android:layout_height="100dp"-->
+<!--            android:layout_weight="0"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:layout_marginBottom="10dp"-->
+<!--            app:srcCompat="@drawable/inverse_logo"/>-->
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"/>
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:padding="10dp"-->
+<!--            android:orientation="vertical">-->
 
-                <Button
-                    android:id="@+id/btnDeleteOrder"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/pink2"
-                    android:text="Remove"
-                    android:textSize="12dp"/>
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
-</LinearLayout>
+<!--            <TextView-->
+<!--                android:id="@+id/namaMenuOrder"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Egg Fried Rice"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="20dp"/>-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/hargaMenuOrder"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:fontFamily="sans-serif-black"-->
+<!--                android:text="Rp 50.000,-"-->
+<!--                android:textColor="#0A8332"-->
+<!--                android:textSize="16dp"-->
+<!--                android:layout_marginTop="10dp"/>-->
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="5dp"-->
+<!--                android:orientation="horizontal">-->
+
+<!--                <Button-->
+<!--                    android:id="@+id/btnMinOrder"-->
+<!--                    android:layout_width="30dp"-->
+<!--                    android:layout_height="30dp"-->
+<!--                    android:background="@drawable/ic_minus"/>-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/jumlahOrder"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:text="1"-->
+<!--                    android:textSize="20dp"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:layout_marginLeft="10dp"-->
+<!--                    android:layout_marginRight="10dp"/>-->
+
+<!--                <Button-->
+<!--                    android:id="@+id/btnAddOrder"-->
+<!--                    android:layout_width="30dp"-->
+<!--                    android:layout_height="30dp"-->
+<!--                    android:background="@drawable/ic_add"/>-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1"/>-->
+
+<!--                <Button-->
+<!--                    android:id="@+id/btnDeleteOrder"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:backgroundTint="@color/pink2"-->
+<!--                    android:text="Remove"-->
+<!--                    android:textSize="12dp"/>-->
+<!--            </LinearLayout>-->
+<!--        </LinearLayout>-->
+<!--    </LinearLayout>-->
+<!--</LinearLayout>-->

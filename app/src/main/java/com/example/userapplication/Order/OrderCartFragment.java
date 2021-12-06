@@ -9,6 +9,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -63,7 +64,6 @@ public class OrderCartFragment extends Fragment implements LoadCartAsync.LoadCar
     RecyclerView rv;
     OrderAdapter orderAdapter;
     TextView subtotal;
-    Button btnOrder, btnCheckin;
     UserApp user;
     AlertDialog.Builder alertDialogBuilder;
     ArrayList<Table> arrMeja;
@@ -105,6 +105,8 @@ public class OrderCartFragment extends Fragment implements LoadCartAsync.LoadCar
         return inflater.inflate(R.layout.fragment_order_cart, container, false);
     }
 
+    TextView jumOrder, txtCheck;
+    CardView btnOrder, btnCheckin;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -114,6 +116,7 @@ public class OrderCartFragment extends Fragment implements LoadCartAsync.LoadCar
         rv = view.findViewById(R.id.rvOrder);
         subtotal = view.findViewById(R.id.subtotalCart);
         subtotal.setText("Rp. 0");
+        jumOrder = view.findViewById(R.id.jumOrder);
 
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
         orderAdapter = new OrderAdapter(getActivity(), arrOrder);
@@ -166,9 +169,10 @@ public class OrderCartFragment extends Fragment implements LoadCartAsync.LoadCar
 
         sheetDialogNew();
         btnCheckin = view.findViewById(R.id.btnCheckin);
+        txtCheck = view.findViewById(R.id.txtCheck);
         if (!user.getCheckIn().equals("-")){
             btnCheckin.setEnabled(false);
-            btnCheckin.setText(user.getCheckIn());
+            txtCheck.setText(user.getCheckIn());
         }
         btnCheckin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -334,7 +338,7 @@ public class OrderCartFragment extends Fragment implements LoadCartAsync.LoadCar
                                 System.out.println(user.getCheckIn());
                                 System.out.println(user.getIdMeja());
                                 btnCheckin.setEnabled(false);
-                                btnCheckin.setText(user.getCheckIn());
+                                txtCheck.setText(user.getCheckIn());
                                 bottomSheetDialog.dismiss();
                             }
                         } catch (JSONException e) {

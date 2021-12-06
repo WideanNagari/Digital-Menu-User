@@ -22,6 +22,7 @@ import com.example.userapplication.Classes.OrderMenu;
 import com.example.userapplication.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.android.material.tabs.TabLayout;
 
 import java.lang.ref.WeakReference;
 import java.util.concurrent.ExecutorService;

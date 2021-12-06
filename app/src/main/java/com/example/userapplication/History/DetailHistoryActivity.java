@@ -39,10 +39,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
+
 public class DetailHistoryActivity extends AppCompatActivity {
 
     TextView promo, total, potongan, subtotal, stamp;
-    Button review;
+    CircularProgressButton review;
     ImageView back;
     RecyclerView rv;
     Intent i;

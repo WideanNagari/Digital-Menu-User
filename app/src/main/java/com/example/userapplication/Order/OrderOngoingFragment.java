@@ -41,6 +41,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link OrderOngoingFragment#newInstance} factory method to
@@ -51,7 +53,7 @@ public class OrderOngoingFragment extends Fragment{
     ArrayList<OrderMenu> arrOrder;
     RecyclerView rv;
     OngoingAdapter ongoingAdapter;
-    Button btnPay;
+    CircularProgressButton btnPay;
     TextView subtotal;
     UserApp user;
     OnActionListener onActionListener;

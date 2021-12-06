@@ -1,68 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
 
-    <LinearLayout
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    app:cardCornerRadius="15dp"
+    android:elevation="5dp"
+    android:layout_marginTop="15dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="3dp"
+    android:layout_marginBottom="1dp"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/imgMenuOngoing"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_weight="0"
+            android:layout_width="102dp"
+            android:layout_height="84dp"
+            android:adjustViewBounds="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/popularfood2" />
+
+        <TextView
+            android:id="@+id/namaMenuOngoing"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
             android:layout_marginTop="10dp"
+            android:text="Nama Makanan"
+            android:textColor="#091020"
+            android:textSize="15sp"
+            app:layout_constraintStart_toEndOf="@+id/imgMenuOngoing"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/hargaMenuOngoing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="15dp"
+            android:text="Rp 20.000"
+            android:textColor="#FF6813"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@+id/jumOrder"
+            app:layout_constraintTop_toBottomOf="@+id/namaMenuOngoing" />
+
+        <TextView
+            android:id="@+id/jumOrder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="10dp"
+            android:text="4 x"
+            android:textColor="#091020"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/hargaMenuOngoing"
+            app:layout_constraintStart_toEndOf="@+id/imgMenuOngoing"
+            app:layout_constraintTop_toBottomOf="@+id/namaMenuOngoing" />
+
+        <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
+            android:id="@+id/statusMenu"
+            style="@style/loginButton"
+            android:layout_width="100dp"
+            android:layout_marginEnd="5dp"
             android:layout_marginBottom="10dp"
-            app:srcCompat="@drawable/inverse_logo"/>
+            android:background="@drawable/bg_rounded"
+            android:text="Status"
+            app:initialCornerAngle="27dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:spinning_bar_color="#FFF"
+            app:spinning_bar_padding="6dp"
+            app:spinning_bar_width="4dp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="10dp"
-            android:orientation="vertical">
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:orientation="vertical">-->
 
-            <TextView
-                android:id="@+id/namaMenuOngoing"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Egg Fried Rice"
-                android:textColor="@color/black"
-                android:textSize="20dp"/>
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:orientation="horizontal">-->
 
-            <TextView
-                android:id="@+id/hargaMenuOngoing"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-black"
-                android:text="2 x Rp 50.000,-"
-                android:textColor="#0A8332"
-                android:textSize="16dp"
-                android:layout_marginTop="10dp"/>
+<!--        <ImageView-->
+<!--            android:id="@+id/imgMenuOngoing"-->
+<!--            android:layout_width="100dp"-->
+<!--            android:layout_height="100dp"-->
+<!--            android:layout_weight="0"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:layout_marginBottom="10dp"-->
+<!--            app:srcCompat="@drawable/inverse_logo"/>-->
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    />
-                <TextView
-                    android:id="@+id/statusMenu"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Pending"
-                    android:textColor="@color/white"
-                    android:textSize="16dp"
-                    android:padding="5dp"
-                    android:background="@drawable/bg_rounded"/>
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
-</LinearLayout>
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:padding="10dp"-->
+<!--            android:orientation="vertical">-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/namaMenuOngoing"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Egg Fried Rice"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="20dp"/>-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/hargaMenuOngoing"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:fontFamily="sans-serif-black"-->
+<!--                android:text="2 x Rp 50.000,-"-->
+<!--                android:textColor="#0A8332"-->
+<!--                android:textSize="16dp"-->
+<!--                android:layout_marginTop="10dp"/>-->
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="10dp">-->
+<!--                <TextView-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    />-->
+<!--                <TextView-->
+<!--                    android:id="@+id/statusMenu"-->
+<!--                    android:layout_width="100dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:gravity="center"-->
+<!--                    android:text="Pending"-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:textSize="16dp"-->
+<!--                    android:padding="5dp"-->
+<!--                    android:background="@drawable/bg_rounded"/>-->
+<!--            </LinearLayout>-->
+<!--        </LinearLayout>-->
+<!--    </LinearLayout>-->
+<!--</LinearLayout>-->

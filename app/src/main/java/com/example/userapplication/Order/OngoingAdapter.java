@@ -19,6 +19,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
+
 public class OngoingAdapter  extends RecyclerView.Adapter<OngoingAdapter.ViewHolder>{
     ArrayList<OrderMenu> arrOrder;
     Activity activity;
@@ -66,12 +68,14 @@ public class OngoingAdapter  extends RecyclerView.Adapter<OngoingAdapter.ViewHol
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView img;
-        TextView nama, harga, status;
+        TextView nama, harga, jumOrder;
+        CircularProgressButton status;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             img = itemView.findViewById(R.id.imgMenuOngoing);
             nama = itemView.findViewById(R.id.namaMenuOngoing);
             harga = itemView.findViewById(R.id.hargaMenuOngoing);
+            jumOrder = itemView.findViewById(R.id.jumOrder);
             status = itemView.findViewById(R.id.statusMenu);
         }
     }
