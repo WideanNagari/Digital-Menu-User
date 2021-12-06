@@ -8,7 +8,7 @@
     android:layout_gravity="center"
     android:background="@color/red2"
     android:focusableInTouchMode="true"
-    android:gravity="center">>
+    android:gravity="center">
 
     <ScrollView
         android:layout_width="match_parent"

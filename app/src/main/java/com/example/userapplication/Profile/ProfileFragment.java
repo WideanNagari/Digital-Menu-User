@@ -9,6 +9,9 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -19,6 +22,7 @@ import android.widget.TextView;
 
 import com.example.userapplication.Classes.UserApp;
 import com.example.userapplication.Home.HomeActivity;
+import com.example.userapplication.LoginActivity;
 import com.example.userapplication.R;
 
 /**
@@ -66,7 +70,10 @@ public class ProfileFragment extends Fragment {
     }
 
     TextView name, email, cash, phone, stamps;
-    Button btnEdit, btnPass;
+    //Button btnEdit, btnPass;
+    CardView btn_topup, btn_reward, btn_edit;
+    AppCompatImageView btn_pass;
+    ConstraintLayout logout;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -74,14 +81,22 @@ public class ProfileFragment extends Fragment {
         email = view.findViewById(R.id.tv_profileemail);
         cash = view.findViewById(R.id.tv_profilesaldo);
         phone = view.findViewById(R.id.tv_profilephonenum);
-        stamps = view.findViewById(R.id.tv_profilestamps);
-        btnEdit = view.findViewById(R.id.btn_profileedit);
-        btnPass = view.findViewById(R.id.btn_updpass);
+
+        //stamps = view.findViewById(R.id.tv_profilestamps);
+        //btnEdit = view.findViewById(R.id.btn_profileedit);
+        //btnPass = view.findViewById(R.id.btn_updpass);
+
+        btn_edit = view.findViewById(R.id.card_edit);
+        btn_reward = view.findViewById(R.id.card_reward);
+        btn_topup = view.findViewById(R.id.card_topup);
+        btn_pass = view.findViewById(R.id.img_edit_pass);
+        logout = view.findViewById(R.id.layout_logout);
+
         name.setText(loggedIn.getName());
         email.setText(loggedIn.getEmail());
         cash.setText("Rp "+String.format("%,.2f", new Double(loggedIn.getSaldo())));
         phone.setText(loggedIn.getTelp());
-        stamps.setText(loggedIn.getStamp()+" stamps");
+        //stamps.setText(loggedIn.getStamp()+" stamps");
 
         ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
@@ -103,7 +118,7 @@ public class ProfileFragment extends Fragment {
         });
 
 
-        btnEdit.setOnClickListener(new View.OnClickListener() {
+        btn_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent edit = new Intent(getActivity(), EditProfileActivity.class);
@@ -111,12 +126,20 @@ public class ProfileFragment extends Fragment {
                 launcher.launch(edit);
             }
         });
-        btnPass.setOnClickListener(new View.OnClickListener() {
+        btn_pass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent edit = new Intent(getActivity(), EditPasswordActivity.class);
                 edit.putExtra("loggedIn",loggedIn);
                 launcher.launch(edit);
+            }
+        });
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //logout
+                Intent i = new Intent(getContext(), LoginActivity.class);
+                launcher.launch(i);
             }
         });
     }

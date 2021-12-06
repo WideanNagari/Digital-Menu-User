@@ -48,13 +48,16 @@
         <entry key="..\:/Files/Collage/2. Mobile Device Programming/Digital-Menu-User/app/src/main/res/drawable/ic_plus_white.xml" value="0.19166666666666668" />
         <entry key="..\:/Files/Collage/2. Mobile Device Programming/Digital-Menu-User/app/src/main/res/drawable/ic_star.xml" value="0.19166666666666668" />
         <entry key="..\:/Files/Collage/2. Mobile Device Programming/Digital-Menu-User/app/src/main/res/drawable/round_bg.xml" value="0.19166666666666668" />
+        <entry key="..\:/Files/Collage/2. Mobile Device Programming/Digital-Menu-User/app/src/main/res/drawable/round_container.xml" value="0.19166666666666668" />
+        <entry key="..\:/Files/Collage/2. Mobile Device Programming/Digital-Menu-User/app/src/main/res/drawable/shape_bg.xml" value="0.19166666666666668" />
+        <entry key="..\:/Files/Collage/2. Mobile Device Programming/Digital-Menu-User/app/src/main/res/drawable/top_btn_bg.xml" value="0.19166666666666668" />
         <entry key="..\:/Files/Collage/2. Mobile Device Programming/Digital-Menu-User/app/src/main/res/layout/activity_claim_reward.xml" value="0.22" />
         <entry key="..\:/Files/Collage/2. Mobile Device Programming/Digital-Menu-User/app/src/main/res/layout/activity_detail_history.xml" value="0.22" />
         <entry key="..\:/Files/Collage/2. Mobile Device Programming/Digital-Menu-User/app/src/main/res/layout/activity_detail_menu.xml" value="0.22" />
         <entry key="..\:/Files/Collage/2. Mobile Device Programming/Digital-Menu-User/app/src/main/res/layout/activity_edit_password.xml" value="0.17552083333333332" />
         <entry key="..\:/Files/Collage/2. Mobile Device Programming/Digital-Menu-User/app/src/main/res/layout/activity_edit_profile.xml" value="0.17552083333333332" />
         <entry key="..\:/Files/Collage/2. Mobile Device Programming/Digital-Menu-User/app/src/main/res/layout/activity_home.xml" value="0.16666666666666666" />
-        <entry key="..\:/Files/Collage/2. Mobile Device Programming/Digital-Menu-User/app/src/main/res/layout/activity_login.xml" value="0.22" />
+        <entry key="..\:/Files/Collage/2. Mobile Device Programming/Digital-Menu-User/app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="..\:/Files/Collage/2. Mobile Device Programming/Digital-Menu-User/app/src/main/res/layout/activity_main.xml" value="0.17552083333333332" />
         <entry key="..\:/Files/Collage/2. Mobile Device Programming/Digital-Menu-User/app/src/main/res/layout/activity_payment.xml" value="0.22" />
         <entry key="..\:/Files/Collage/2. Mobile Device Programming/Digital-Menu-User/app/src/main/res/layout/activity_register.xml" value="0.22" />
@@ -64,7 +67,7 @@
         <entry key="..\:/Files/Collage/2. Mobile Device Programming/Digital-Menu-User/app/src/main/res/layout/fragment_order.xml" value="0.17552083333333332" />
         <entry key="..\:/Files/Collage/2. Mobile Device Programming/Digital-Menu-User/app/src/main/res/layout/fragment_order_cart.xml" value="0.17552083333333332" />
         <entry key="..\:/Files/Collage/2. Mobile Device Programming/Digital-Menu-User/app/src/main/res/layout/fragment_order_ongoing.xml" value="0.17552083333333332" />
-        <entry key="..\:/Files/Collage/2. Mobile Device Programming/Digital-Menu-User/app/src/main/res/layout/fragment_profile.xml" value="0.17552083333333332" />
+        <entry key="..\:/Files/Collage/2. Mobile Device Programming/Digital-Menu-User/app/src/main/res/layout/fragment_profile.xml" value="0.22" />
         <entry key="..\:/Files/Collage/2. Mobile Device Programming/Digital-Menu-User/app/src/main/res/layout/fragment_search.xml" value="0.3333333333333333" />
         <entry key="..\:/Files/Collage/2. Mobile Device Programming/Digital-Menu-User/app/src/main/res/layout/item_each_history.xml" value="0.22" />
         <entry key="..\:/Files/Collage/2. Mobile Device Programming/Digital-Menu-User/app/src/main/res/layout/item_history.xml" value="0.22" />
