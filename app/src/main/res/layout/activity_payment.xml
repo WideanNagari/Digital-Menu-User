@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".Payment.PaymentActivity"
     android:orientation="vertical"
-    android:background="#E5E5E5">
+    android:background="@color/white">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/header_detail"
@@ -27,18 +27,16 @@
             app:srcCompat="@drawable/ic_left" />
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
             android:layout_marginTop="15dp"
-            android:layout_marginEnd="50dp"
             android:text="Ordered Menu"
             android:textAlignment="center"
             android:textColor="@color/pink1"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/detailLogo"
-            app:layout_constraintStart_toEndOf="@+id/detail_back"
+            app:layout_constraintStart_toEndOf="@+id/pay_back"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatImageView

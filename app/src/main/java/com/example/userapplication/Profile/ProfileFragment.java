@@ -71,7 +71,7 @@ public class ProfileFragment extends Fragment {
 
     TextView name, email, cash, phone, stamps;
     //Button btnEdit, btnPass;
-    CardView btn_topup, btn_reward, btn_edit;
+    CardView btn_topup, btn_reward, btn_edit, btn_like;
     AppCompatImageView btn_pass;
     ConstraintLayout logout;
     @Override
@@ -91,6 +91,7 @@ public class ProfileFragment extends Fragment {
         btn_topup = view.findViewById(R.id.card_topup);
         btn_pass = view.findViewById(R.id.img_edit_pass);
         logout = view.findViewById(R.id.layout_logout);
+        btn_like = view.findViewById(R.id.card_like);
 
         name.setText(loggedIn.getName());
         email.setText(loggedIn.getEmail());
@@ -158,6 +159,12 @@ public class ProfileFragment extends Fragment {
                 //logout
                 Intent i = new Intent(getContext(), LoginActivity.class);
                 launcher.launch(i);
+            }
+        });
+        btn_like.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //halaman like
             }
         });
     }
