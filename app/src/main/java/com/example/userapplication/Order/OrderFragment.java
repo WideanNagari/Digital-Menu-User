@@ -125,7 +125,6 @@ public class OrderFragment extends Fragment  {
                         @Override
                         public void onBack(UserApp u) {
                             user = u;
-                            System.out.println("order"+user.getCheckIn());
                             if (onActionListener!=null) onActionListener.onBack(user);
                         }
                     });

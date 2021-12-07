@@ -8,8 +8,11 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentOnAttachListener;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -188,8 +191,17 @@ public class HomeActivity extends AppCompatActivity implements LoadCartAsync.Loa
                         @Override
                         public void onBack(UserApp user) {
                             loggedIn = user;
-                            System.out.println("home"+loggedIn.getCheckIn());
                             bottomNavigation.show(ID_HOME, true);
+                        }
+                    });
+                }else if (fragment instanceof ProfileFragment){
+                    ProfileFragment profileFragment = (ProfileFragment) fragment;
+                    profileFragment.setOnActionListener(new ProfileFragment.OnActionListener() {
+                        @Override
+                        public void onBack(UserApp user) {
+                            loggedIn = user;
+                            System.out.println(loggedIn.getStamp()+"a");
+                            bottomNavigation.show(ID_PROFILE, true);
                         }
                     });
                 }

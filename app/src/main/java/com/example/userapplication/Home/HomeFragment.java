@@ -1,7 +1,10 @@
 package com.example.userapplication.Home;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResult;
@@ -58,6 +61,7 @@ public class HomeFragment extends Fragment {
     RecyclerView rv_reward, rv_popular, rv_recommended,  rv_again;
     PromoRewardAdapter rewardAdapter;
     PopularAdapter popularAdapter, recommendAdapter, againAdapter;
+    AlertDialog.Builder alertDialogBuilder;
 
     private ArrayList<PromoXReward> listReward = new ArrayList<>();
     private ArrayList<Menu> listPopular = new ArrayList<>();
@@ -136,7 +140,16 @@ public class HomeFragment extends Fragment {
         rewardAdapter.setOnClaimClick(new PromoRewardAdapter.OnClaimClick() {
             @Override
             public void onClaim(PromoXReward reward) {
-                Toast.makeText(getContext(), "A", Toast.LENGTH_SHORT).show();
+                if (user.getCheckIn().equals("-"))
+                    showDialog("Please Check In.",getResources().getDrawable(R.drawable.exclamation)
+                            ,"failed", reward.getId_menu(), reward.getStamp()+"");
+                else if (user.getStamp()<reward.getStamp())
+                    showDialog("Insufficient Stamp.",getResources().getDrawable(R.drawable.exclamation)
+                            ,"failed", reward.getId_menu(), reward.getStamp()+"");
+                else
+                    showDialog("Claim "+reward.getReward()+" with "+reward.getStamp()+" stamp(s).",
+                            getResources().getDrawable(R.drawable.exclamation),"success"
+                            , reward.getId_menu(), reward.getStamp()+"");
             }
         });
 
@@ -195,11 +208,13 @@ public class HomeFragment extends Fragment {
                 //pindah ke activity reward
                 Intent i = new Intent(getContext(), ClaimRewardActivity.class);
                 i.putExtra("user", user);
-                startActivity(i);
+                activityResultLauncher.launch(i);
             }
         });
 
         if (onActionListener!=null) onActionListener.onReady(this);
+        alertDialogBuilder = new AlertDialog.Builder(getContext());
+
     }
 
     ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
@@ -223,5 +238,85 @@ public class HomeFragment extends Fragment {
     public interface OnActionListener{
         void onBack(UserApp user);
         void onReady(HomeFragment homeFragment);
+    }
+
+    private void showDialog(String message, Drawable drawable, String action, String idMenu, String stamp){
+        alertDialogBuilder.setTitle("Alert!");
+        alertDialogBuilder
+                .setMessage(message)
+                .setIcon(drawable)
+                .setCancelable(false);
+        if (action.equals("failed")){
+            alertDialogBuilder.setPositiveButton("Back", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick (DialogInterface dialogInterface,int j){
+
+                }
+            });
+        }else if (action.equals("success")){
+            alertDialogBuilder.setPositiveButton("Claim", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick (DialogInterface dialogInterface,int j){
+                    addOrder(user.getId()+"",idMenu,"1", stamp);
+                }
+            }).setNegativeButton("Back", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                }
+            });
+        }
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    public void addOrder(String customer, String menu, String jumlah, String stamp){
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.POST,
+                getResources().getString(R.string.url)+"order/addOrder",
+
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        System.out.println(response);
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String pesan  = jsonObject.getString("message");
+                            int kode  = jsonObject.getInt("code");
+                            Toast.makeText(getContext(), pesan, Toast.LENGTH_SHORT).show();
+                            if (kode==1) {
+                                user.setStamp(jsonObject.getInt("stamp"));
+                                if (onActionListener!=null) onActionListener.onBack(user);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+
+                //untuk handle error
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println(error.getMessage());
+                    }
+                }
+        ){
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("customer",customer);
+                params.put("menu",menu);
+                params.put("jumlah",jumlah);
+                params.put("reward","1");
+                params.put("stamp",stamp);
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(stringRequest);
     }
 }

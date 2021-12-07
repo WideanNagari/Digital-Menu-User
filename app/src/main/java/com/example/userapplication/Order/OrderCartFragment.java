@@ -177,7 +177,6 @@ public class OrderCartFragment extends Fragment implements LoadCartAsync.LoadCar
         });
 
         //check-in
-        //check-in
         Check_Name = view.findViewById(R.id.Check_Name);
         Check_Phone = view.findViewById(R.id.Check_Phone);
         kodeCheckIn = view.findViewById(R.id.kodeCheckIn);

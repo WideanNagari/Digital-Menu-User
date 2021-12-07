@@ -7,7 +7,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -43,6 +46,7 @@ public class ClaimRewardActivity extends AppCompatActivity {
     RecyclerView rv;
     ArrayList<Reward> arrReward;
     boolean sudah;
+    AlertDialog.Builder alertDialogBuilder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +67,7 @@ public class ClaimRewardActivity extends AppCompatActivity {
                 if (sudah){
                     i.putExtra("done","done");
                     i.putExtra("customer", user);
+                    i.putExtra("loggedIn", user);
                     setResult(Activity.RESULT_OK, i);
                     finish();
                 }
@@ -76,19 +81,59 @@ public class ClaimRewardActivity extends AppCompatActivity {
             }
         }
 
-        //jumlahStamp.setText(user.getStamp()>1 ? user.getStamp()+" Stamps":user.getStamp()+" Stamp");
+        jumlahStamp.setText(user.getStamp()>1 ? user.getStamp()+" Stamps":user.getStamp()+" Stamp");
 
         rv.setLayoutManager(new LinearLayoutManager(this));
         //rewardAdapter = new RewardAdapter(arrReward, user.getStamp());
-        rewardAdapter = new RewardAdapter(arrReward, 5);
+        rewardAdapter = new RewardAdapter(arrReward, user.getStamp());
         rv.setAdapter(rewardAdapter);
         rewardAdapter.setOnClaimClick(new RewardAdapter.OnClaimClick() {
             @Override
             public void onClaim(Reward reward) {
                 sudah = false;
-                addOrder(user.getId()+"",reward.getId_menu(),"1", reward.getStamp()+"");
+                if (user.getCheckIn().equals("-"))
+                    showDialog("Please Check In.",getResources().getDrawable(R.drawable.exclamation)
+                            ,"failed", reward.getId_menu(), reward.getStamp()+"");
+                else
+                    showDialog("Claim "+reward.getReward()+" with "+reward.getStamp()+" stamp(s).",
+                            getResources().getDrawable(R.drawable.exclamation),"success"
+                            , reward.getId_menu(), reward.getStamp()+"");
             }
         });
+
+        alertDialogBuilder = new AlertDialog.Builder(ClaimRewardActivity.this);
+    }
+
+    private void showDialog(String message, Drawable drawable, String action, String idMenu, String stamp){
+        alertDialogBuilder.setTitle("Alert!");
+        alertDialogBuilder
+                .setMessage(message)
+                .setIcon(drawable)
+                .setCancelable(false);
+        if (action.equals("failed")){
+            alertDialogBuilder.setPositiveButton("Back", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick (DialogInterface dialogInterface,int j){
+
+                }
+            });
+        }else if (action.equals("success")){
+            alertDialogBuilder.setPositiveButton("Claim", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick (DialogInterface dialogInterface,int j){
+                    addOrder(user.getId()+"",idMenu,"1", stamp);
+                }
+            }).setNegativeButton("Back", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                }
+            });
+        }
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+
     }
 
     private void getAllReward(){

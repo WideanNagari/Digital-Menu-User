@@ -1,5 +1,6 @@
 package com.example.userapplication.Profile;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -33,23 +34,22 @@ import com.example.userapplication.Reward.ClaimRewardActivity;
  */
 public class ProfileFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    private static final String ARG_PARAM1 = "param1";
-//    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
     private UserApp loggedIn;
-//    private String mParam2;
+    OnActionListener onActionListener;
 
-    //SEMUA VARIABEL SEMENTARA DIREMARK, SAAT INI BELUM DIPAKAI
+    public OnActionListener getOnActionListener() {
+        return onActionListener;
+    }
 
+    public void setOnActionListener(OnActionListener onActionListener) {
+        this.onActionListener = onActionListener;
+    }
 
-    // TODO: Rename and change types and number of parameters
     public static ProfileFragment newInstance(UserApp loggedIn) {
         ProfileFragment fragment = new ProfileFragment();
         Bundle args = new Bundle();
-        args.putParcelable(ARG_PARAM1, loggedIn);
-//        args.putString(ARG_PARAM2, param2);
+        args.putParcelable("loggedIn", loggedIn);
+        System.out.println(" stamp "+loggedIn.getStamp());
         fragment.setArguments(args);
         return fragment;
     }
@@ -58,8 +58,7 @@ public class ProfileFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            loggedIn = getArguments().getParcelable(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
+            loggedIn = getArguments().getParcelable("loggedIn");
         }
     }
 
@@ -102,7 +101,7 @@ public class ProfileFragment extends Fragment {
         ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult result) {
-                if(result.getResultCode() == 110){
+                if(result.getResultCode() == Activity.RESULT_OK){
                     Intent i = result.getData();
                     if(i.hasExtra("loggedIn")){
                         loggedIn = i.getParcelableExtra("loggedIn");
@@ -113,6 +112,11 @@ public class ProfileFragment extends Fragment {
                         //set obyek user di home supaya baru
                         HomeActivity par = (HomeActivity) getActivity();
                         par.setLoggedIn(loggedIn);
+                        System.out.println("c"+loggedIn.getStamp());
+                    }
+
+                    if (i.hasExtra("done")){
+                        if (onActionListener!=null) onActionListener.onBack(loggedIn);
                     }
                 }
             }
@@ -128,6 +132,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getContext(), ClaimRewardActivity.class);
+                i.putExtra("user",loggedIn);
                 launcher.launch(i);
             }
         });
@@ -155,5 +160,9 @@ public class ProfileFragment extends Fragment {
                 launcher.launch(i);
             }
         });
+    }
+
+    public interface OnActionListener{
+        void onBack(UserApp user);
     }
 }
