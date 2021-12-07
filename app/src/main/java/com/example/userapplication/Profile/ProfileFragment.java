@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import com.example.userapplication.Classes.UserApp;
 import com.example.userapplication.Home.HomeActivity;
+import com.example.userapplication.Liked.LikedActivity;
 import com.example.userapplication.LoginActivity;
 import com.example.userapplication.R;
 import com.example.userapplication.Reward.ClaimRewardActivity;
@@ -165,6 +166,8 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //halaman like
+                Intent liked = new Intent(getActivity(), LikedActivity.class);
+                launcher.launch(liked);
             }
         });
     }

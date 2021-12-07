@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UserApplication">
         <activity
+            android:name=".Liked.LikedActivity"
+            android:exported="true" />
+        <activity
             android:name=".Profile.EditPasswordActivity"
             android:exported="true" />
         <activity
@@ -42,12 +45,13 @@
         <activity
             android:name=".Home.HomeActivity"
             android:exported="true"
-            android:theme="@style/FullScreen"/>
+            android:theme="@style/FullScreen" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
