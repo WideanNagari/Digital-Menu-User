@@ -99,7 +99,7 @@ public class SearchFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         btn_src = view.findViewById(R.id.btn_search);
-        btn_detail = view.findViewById(R.id.btnDetail);
+//        btn_detail = view.findViewById(R.id.btnDetail);
         edtSearch = view.findViewById(R.id.edt_SearchBar);
         edtSearch.requestFocus();
 

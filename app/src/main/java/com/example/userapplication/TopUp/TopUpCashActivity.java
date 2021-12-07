@@ -1,16 +1,7 @@
-package com.example.userapplication.Profile;
+package com.example.userapplication.TopUp;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatImageView;
-
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -20,7 +11,16 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.userapplication.Classes.UserApp;
+import com.example.userapplication.Profile.EditPasswordActivity;
 import com.example.userapplication.R;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,41 +28,33 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EditPasswordActivity extends AppCompatActivity {
+public class TopUpCashActivity extends AppCompatActivity {
 
-    Button btnConf;
-    EditText edOld, edNew, edConfirmNew;
+    Button btnTopUp;
+    EditText edNominal, edPass;
     UserApp loggedIn;
-    AppCompatImageView btnBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_password);
-
-        btnConf = findViewById(R.id.btn_changepassword);
-        edOld = findViewById(R.id.ed_previouspass);
-        edNew = findViewById(R.id.ed_newpass);
-        edConfirmNew = findViewById(R.id.ed_confirmnewpass);
+        setContentView(R.layout.activity_top_up_cash);
+        btnTopUp = findViewById(R.id.btn_topupadd);
+        edNominal = findViewById(R.id.ed_topupcash);
+        edPass = findViewById(R.id.ed_topuppass);
         Intent par = getIntent();
         if(par.hasExtra("loggedIn")){
             loggedIn = par.getParcelableExtra("loggedIn");
+            System.out.println("=="+loggedIn.toString());
         }
-        btnConf.setOnClickListener(this::doUpdatePassword);
-        btnBack = findViewById(R.id.btnBack);
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-    }
 
-    public void doUpdatePassword(View view) {
-        if (edOld.getText().length() > 0 && edNew.getText().length() > 0 && edConfirmNew.getText().length() > 0) {
-//            if(edOld.getText().toString().equals(loggedIn.getPassword())){
+        btnTopUp.setOnClickListener(this::doTopUp);
+    }
+    public void doTopUp(View view){
+        if(edNominal.getText().toString().isEmpty()==false && edPass.getText().toString().isEmpty()==false){
+            if(Integer.parseInt(edNominal.getText().toString()) > 0){
+                //doTopUp
                 StringRequest stringRequest = new StringRequest(
                         Request.Method.POST,
-                        getResources().getString(R.string.url)+"user/updatePassword",
+                        getResources().getString(R.string.url)+"user/topup",
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
@@ -71,13 +63,9 @@ public class EditPasswordActivity extends AppCompatActivity {
                                     JSONObject jsonObject = new JSONObject(response);
                                     int kode = jsonObject.getInt("code");
                                     String pesan  = jsonObject.getString("message");
-//                                    JSONObject user = jsonObject.getJSONObject("user");
                                     System.out.println(kode+" ========");
-                                    if (kode == 2){
 
-                                    }
-
-                                    Toast.makeText(EditPasswordActivity.this, pesan, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(TopUpCashActivity.this, pesan, Toast.LENGTH_SHORT).show();
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -97,8 +85,8 @@ public class EditPasswordActivity extends AppCompatActivity {
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String, String> params = new HashMap<>();
                         params.put("id",loggedIn.getId()+"");
-                        params.put("oldPass",edOld.getText().toString());
-                        params.put("newPass",edNew.getText().toString());
+                        params.put("pass",edPass.getText().toString());
+                        params.put("nominal",edNominal.getText().toString());
                         System.out.println();
                         return params;
                     }
@@ -106,16 +94,17 @@ public class EditPasswordActivity extends AppCompatActivity {
 
                 RequestQueue requestQueue = Volley.newRequestQueue(this);
                 requestQueue.add(stringRequest);
-//            }else{
-//                Toast.makeText(getApplicationContext(), "Wrong old password, no change made", Toast.LENGTH_SHORT).show();
-//            }
-            loggedIn.setPassword(edNew.getText().toString());
 
-            Intent i = new Intent();
-            i.putExtra("loggedIn", loggedIn);
-            setResult(Activity.RESULT_OK, i);
-            finish();
-        } else {
+                loggedIn.setSaldo(loggedIn.getSaldo() + Integer.parseInt(edNominal.getText().toString()));
+
+                Intent i = new Intent();
+                i.putExtra("loggedIn", loggedIn);
+                setResult(Activity.RESULT_OK, i);
+                finish();
+            }else{
+                Toast.makeText(getApplicationContext(), "Value must be bigger than 0", Toast.LENGTH_SHORT).show();
+            }
+        }else{
             Toast.makeText(getApplicationContext(), "Empty field!", Toast.LENGTH_SHORT).show();
         }
     }
