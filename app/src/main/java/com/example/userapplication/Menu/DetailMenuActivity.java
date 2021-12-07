@@ -32,6 +32,7 @@ import com.example.userapplication.Classes.Menu;
 import com.example.userapplication.Classes.UserApp;
 import com.example.userapplication.Order.OrderCartFragment;
 import com.example.userapplication.R;
+import com.skydoves.expandablelayout.ExpandableLayout;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -70,6 +71,23 @@ public class DetailMenuActivity extends AppCompatActivity implements AddLikeAsyn
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_menu);
 
+        //review
+        ExpandableLayout ex = findViewById(R.id.expandable);
+        final int[] g = {0};
+        ex.parentLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(g[0] ==0) {
+                    g[0] = 1;
+                    ex.expand();
+                } else {
+                    g[0] = 0;
+                    ex.collapse();
+                }
+            }
+        });
+
+
         imgV=findViewById(R.id.detailImage);
         imgLike=findViewById(R.id.detail_btn_like);
         txtNama=findViewById(R.id.detail_name);
@@ -104,7 +122,6 @@ public class DetailMenuActivity extends AppCompatActivity implements AddLikeAsyn
                 }
             }
         });
-
 
         btnBack=findViewById(R.id.detail_back);
 

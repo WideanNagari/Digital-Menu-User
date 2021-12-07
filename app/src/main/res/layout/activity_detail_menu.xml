@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,247 +9,248 @@
     tools:context=".Menu.DetailMenuActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/header_detail"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/header_detail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/detail_back"
-                android:layout_width="@dimen/_30sdp"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/round_bg"
-                android:onClick="back"
-                android:padding="5dp"
-                android:tint="@color/white"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/detail_back"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/round_bg"
+            android:onClick="back"
+            android:padding="5dp"
+            android:tint="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_left" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/detailLogo"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/round_bg"
+            android:padding="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/inverse_logo" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView3"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/detail_add_cart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/header_detail">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/detailImage"
+                android:layout_width="285dp"
+                android:layout_height="305dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_left" />
+                app:srcCompat="@drawable/popularfood2" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="25dp"
+                android:src="@drawable/ic_star"
+                app:layout_constraintBottom_toTopOf="@+id/detail_jenis"
+                app:layout_constraintEnd_toStartOf="@+id/detail_rate" />
+
+            <TextView
+                android:id="@+id/detail_rate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="4.8"
+                android:textColor="@color/pink1"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toStartOf="@+id/detail_jum_orders"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/detailImage" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="22dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="25dp"
+                android:src="@drawable/liked"
+                app:layout_constraintBottom_toTopOf="@+id/detail_jenis"
+                app:layout_constraintEnd_toStartOf="@+id/detail_jum_orders" />
+
+            <TextView
+                android:id="@+id/detail_jum_orders"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="105"
+                android:textColor="@color/pink1"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/detail_rate"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/detail_rate"
+                app:layout_constraintTop_toTopOf="@+id/detail_rate" />
+
+            <TextView
+                android:id="@+id/detail_jenis"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:text="VEGITARIAN FOOD"
+                android:textColor="#FF6813"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/detail_rate" />
+
+            <TextView
+                android:id="@+id/detail_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Nama Makanan"
+                android:textColor="#091020"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="@+id/detail_jenis"
+                app:layout_constraintTop_toBottomOf="@+id/detail_jenis" />
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/detailLogo"
+                android:id="@+id/detail_btn_like"
                 android:layout_width="@dimen/_30sdp"
                 android:layout_height="@dimen/_30sdp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/round_bg"
                 android:padding="5dp"
+                android:tint="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/inverse_logo" />
+                app:layout_constraintTop_toTopOf="@+id/detail_jenis"
+                app:srcCompat="@drawable/like" />
 
+            <TextView
+                android:id="@+id/detail_desc"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="16dp"
+                android:lineSpacingExtra="2dp"
+                android:text="Banh troi are smm the way it is actually cooked."
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/detail_name" />
+
+            <ImageView
+                android:id="@+id/btn_minus"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="21dp"
+                android:onClick="sub"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/detail_desc"
+                app:srcCompat="@drawable/ic_minus_white" />
+
+            <TextView
+                android:id="@+id/detail_jum_order"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="01"
+                android:textColor="@color/red1"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_minus"
+                app:layout_constraintStart_toEndOf="@+id/btn_minus"
+                app:layout_constraintTop_toTopOf="@+id/btn_minus" />
+
+            <ImageView
+                android:id="@+id/btn_plus"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="4dp"
+                android:onClick="add"
+                app:layout_constraintBottom_toBottomOf="@+id/detail_jum_order"
+                app:layout_constraintStart_toEndOf="@+id/detail_jum_order"
+                app:layout_constraintTop_toTopOf="@+id/detail_jum_order"
+                app:srcCompat="@drawable/ic_plus_white" />
+
+            <TextView
+                android:id="@+id/detail_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="15dp"
+                android:text="Rp 12.000"
+                android:textColor="@color/red1"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_plus"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/btn_plus" />
+
+            <TextView
+                android:id="@+id/detail_sub_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="15dp"
+                android:text="Rp 12.000"
+                android:textColor="@color/pink1"
+                android:textSize="14sp"
+                android:textStyle="bold|italic"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/detail_price" />
+
+            <com.skydoves.expandablelayout.ExpandableLayout
+                android:id="@+id/expandable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_20sdp"
+                app:expandable_duration="300"
+                app:expandable_isExpanded="false"
+                app:expandable_parentLayout="@layout/layout_parent_like"
+                app:expandable_secondLayout="@layout/layout_second_like"
+                app:expandable_showSpinner="true"
+                app:expandable_spinner="@drawable/ic_down"
+                app:expandable_spinner_animate="true"
+                app:expandable_spinner_gravity="start"
+                app:expandable_spinner_margin="14dp"
+                app:expandable_spinner_size="32dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/detail_sub_price" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
-        <ImageView
-            android:id="@+id/detailImage"
-            android:layout_width="285dp"
-            android:layout_height="305dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/header_detail"
-            app:srcCompat="@drawable/popularfood2" />
-
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="25dp"
-            android:src="@drawable/ic_star"
-            app:layout_constraintBottom_toTopOf="@+id/detail_jenis"
-            app:layout_constraintEnd_toStartOf="@+id/detail_rate" />
-
-        <TextView
-            android:id="@+id/detail_rate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="4.8"
-            android:textColor="@color/pink1"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toStartOf="@+id/detail_jum_orders"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/detailImage" />
-
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="22dp"
-            android:layout_marginBottom="25dp"
-            android:layout_marginRight="8dp"
-            android:src="@drawable/liked"
-            app:layout_constraintBottom_toTopOf="@+id/detail_jenis"
-            app:layout_constraintEnd_toStartOf="@+id/detail_jum_orders" />
-
-        <TextView
-            android:id="@+id/detail_jum_orders"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="105"
-            android:textColor="@color/pink1"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="@+id/detail_rate"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/detail_rate"
-            app:layout_constraintTop_toTopOf="@+id/detail_rate" />
-
-<!--        <ImageView-->
-<!--            android:layout_width="20dp"-->
-<!--            android:layout_height="22dp"-->
-<!--            android:layout_marginEnd="10dp"-->
-<!--            android:layout_marginBottom="25dp"-->
-<!--            android:src="@drawable/ic_order"-->
-<!--            app:layout_constraintBottom_toTopOf="@+id/detail_jenis"-->
-<!--            app:layout_constraintEnd_toStartOf="@+id/detail_order"-->
-<!--            app:tint="@color/red1" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/detail_order"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="375"-->
-<!--            android:textColor="@color/pink1"-->
-<!--            android:textSize="18sp"-->
-<!--            app:layout_constraintBottom_toBottomOf="@+id/detail_jum_like"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintHorizontal_bias="0.5"-->
-<!--            app:layout_constraintStart_toEndOf="@+id/detail_jum_like"-->
-<!--            app:layout_constraintTop_toTopOf="@+id/detail_jum_like" />-->
-
-        <TextView
-            android:id="@+id/detail_jenis"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
-            android:text="VEGITARIAN FOOD"
-            android:textColor="#FF6813"
-            android:textSize="15sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/detail_rate" />
-
-        <TextView
-            android:id="@+id/detail_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="Nama Makanan"
-            android:textColor="#091020"
-            android:textSize="24sp"
-            app:layout_constraintStart_toStartOf="@+id/detail_jenis"
-            app:layout_constraintTop_toBottomOf="@+id/detail_jenis" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/detail_btn_like"
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:background="@drawable/round_bg"
-            android:tint="@color/white"
-            android:padding="5dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/detail_jenis"
-            app:srcCompat="@drawable/like" />
-
-        <TextView
-            android:id="@+id/detail_desc"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="16dp"
-            android:lineSpacingExtra="2dp"
-            android:text="Banh troi are smm the way it is actually cooked."
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/detail_name" />
-
-        <ImageView
-            android:id="@+id/btn_minus"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="21dp"
-            android:layout_marginTop="96dp"
-            android:layout_marginBottom="37dp"
-            android:onClick="sub"
-            app:layout_constraintBottom_toTopOf="@+id/detail_add_cart"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/detail_name"
-            app:srcCompat="@drawable/ic_minus_white" />
-
-        <TextView
-            android:id="@+id/detail_jum_order"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:text="01"
-            android:textColor="@color/red1"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="@+id/btn_minus"
-            app:layout_constraintStart_toEndOf="@+id/btn_minus"
-            app:layout_constraintTop_toTopOf="@+id/btn_minus" />
-
-        <ImageView
-            android:id="@+id/btn_plus"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="4dp"
-            android:onClick="add"
-            app:layout_constraintBottom_toBottomOf="@+id/detail_jum_order"
-            app:layout_constraintStart_toEndOf="@+id/detail_jum_order"
-            app:layout_constraintTop_toTopOf="@+id/detail_jum_order"
-            app:srcCompat="@drawable/ic_plus_white" />
-
-        <TextView
-            android:id="@+id/detail_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="15dp"
-            android:text="Rp 12.000"
-            android:textColor="@color/red1"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="@+id/btn_plus"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/btn_plus" />
-
-        <TextView
-            android:id="@+id/detail_sub_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="15dp"
-            android:text="Rp 12.000"
-            android:textColor="@color/pink1"
-            android:textSize="14sp"
-            android:textStyle="bold|italic"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/detail_price" />
-
-        <ImageView
-            android:id="@+id/detail_add_cart"
-            android:layout_width="0dp"
-            android:layout_height="65dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/ic_add_cart" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</ScrollView>
+    <ImageView
+        android:id="@+id/detail_add_cart"
+        android:layout_width="0dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_add_cart" />
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 <!--<?xml version="1.0" encoding="utf-8"?>-->
 <!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
