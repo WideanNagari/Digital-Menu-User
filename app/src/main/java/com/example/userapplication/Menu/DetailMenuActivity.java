@@ -12,9 +12,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,16 +27,12 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.userapplication.Classes.OrderMenu;
 import com.example.userapplication.Classes.Review;
-import com.example.userapplication.Classes.Type;
 import com.example.userapplication.DAO.AppDatabase;
 import com.example.userapplication.Classes.Like;
 import com.example.userapplication.Classes.Menu;
 import com.example.userapplication.Classes.UserApp;
-import com.example.userapplication.Order.OrderCartFragment;
-import com.example.userapplication.Payment.PaymentAdapter;
 import com.example.userapplication.R;
 import com.skydoves.expandablelayout.ExpandableLayout;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -56,15 +51,18 @@ public class DetailMenuActivity extends AppCompatActivity implements AddLikeAsyn
     ImageView imgV, imgLike;
     TextView txtNama, txtJenis, txtHrg, txtDesc, txtJum, txtSub;
     TextView txtRating, txtOrder;
-    ImageView btnAdd, btnSub, btnAddtoCart;
+    ImageView btnAdd, btnSub, btnAddtoCart, rateImg;
     AppCompatImageView btnBack;
     Intent i;
     boolean like;
     Menu menu;
     UserApp user;
     ArrayList<Like> arrLike;
+    ArrayList<Review> arrReview;
     List<OrderMenu> cartMenu;
     Like likes;
+
+    ScrollView sv;
 
     int jum=1, subtotal;
     String nama, desc;
@@ -72,31 +70,44 @@ public class DetailMenuActivity extends AppCompatActivity implements AddLikeAsyn
 
     RecyclerView rv_review;
     ReviewAdapter reviewAdapter;
-    ArrayList<Review> listReview = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_menu);
 
         //review
-        ExpandableLayout ex = findViewById(R.id.expandable);
-        final int[] g = {0};
-        ex.parentLayout.setOnClickListener(new View.OnClickListener() {
+//        ExpandableLayout ex = findViewById(R.id.expandable);
+//        final int[] g = {0};
+//
+
+        arrReview = new ArrayList<>();
+        rv_review = findViewById(R.id.rv_review);
+        rv_review.setLayoutManager(new LinearLayoutManager(this));
+        reviewAdapter = new ReviewAdapter(arrReview);
+        rv_review.setAdapter(reviewAdapter);
+
+        sv = findViewById(R.id.scrollViewDetail);
+        rateImg = findViewById(R.id.imgRate);
+        rateImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(g[0] == 0) {
-                    g[0] = 1;
-                    ex.expand();
-                } else {
-                    g[0] = 0;
-                    ex.collapse();
+                if (rv_review.getVisibility()==View.VISIBLE){
+//                    sv.postDelayed(new Runnable() {
+//                        public void run() {
+                            sv.fullScroll(sv.FOCUS_UP);
+//                        }
+//                    }, 300);
+                    rv_review.setVisibility(View.GONE);
+                }else{
+                    rv_review.setVisibility(View.VISIBLE);
+//                    sv.postDelayed(new Runnable() {
+//                        public void run() {
+                            sv.scrollTo(0,(int)rv_review.getY());
+//                        }
+//                    }, 300);
                 }
             }
         });
-        rv_review = findViewById(R.id.rv_review);
-        rv_review.setLayoutManager(new LinearLayoutManager(this));
-        reviewAdapter = new ReviewAdapter(listReview);
-        rv_review.setAdapter(reviewAdapter);
 
         imgV=findViewById(R.id.detailImage);
         imgLike=findViewById(R.id.detail_btn_like);
@@ -151,7 +162,7 @@ public class DetailMenuActivity extends AppCompatActivity implements AddLikeAsyn
         txtHrg.setText(currency(menu.getHarga_menu()+""));
         txtDesc.setText(menu.getDeskripsi_menu());
         txtRating.setText(menu.getRating()+"");
-//        System.out.println(menu.getGambar());
+
         Glide.with(this).load(menu.getGambar()).into(imgV);
 
         getJumOrder(menu.getId());
@@ -185,6 +196,7 @@ public class DetailMenuActivity extends AppCompatActivity implements AddLikeAsyn
 
         cartMenu = new ArrayList<>();
         new LoadCartAsync(this, DetailMenuActivity.this, user.getId()+"").execute();
+        getReview(Integer.parseInt(menu.getId()));
     }
 
     public void add(View v){
@@ -316,6 +328,58 @@ public class DetailMenuActivity extends AppCompatActivity implements AddLikeAsyn
         requestQueue.add(stringRequest);
     }
 
+    private void getReview(int id){
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.POST,
+                getResources().getString(R.string.url)+"review/",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        System.out.println(response);
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            JSONArray arr = jsonObject.getJSONArray("dataReview");
+                            int kode = jsonObject.getInt("code");
+                            if (kode == 1){
+                                arrReview.clear();
+                                for (int i = 0; i < arr.length(); i++) {
+                                    JSONObject order = arr.getJSONObject(i);
+                                    arrReview.add(new Review(id
+                                            , order.getString("name")
+                                            , order.getString("isi")
+                                            , order.getDouble("rating")
+                                    ));
+                                }
+                                reviewAdapter.notifyDataSetChanged();
+                            }else if(kode == -3){
+//                                Toast.makeText(getActivity(), "No Menu", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+
+                //untuk handle error
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println(error.getMessage());
+                    }
+                }
+        ){
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("id", id+"");
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(DetailMenuActivity.this);
+        requestQueue.add(stringRequest);
+    }
+
     @Override
     public void preExecuteAddO() {
 
@@ -403,7 +467,7 @@ class DeleteLikeAsync{
     private final WeakReference<Context> weakContext;
     private final WeakReference<DeleteLikeAsync.DeleteLikeCallback> weakCallback;
     private Like likes;
-    private AddLikeAsync addLikeAsync;
+
     DeleteLikeAsync(Context weakContext, DeleteLikeAsync.DeleteLikeCallback deleteLikeCallback, Like like) {
         this.weakContext = new WeakReference<>(weakContext);
         this.weakCallback = new WeakReference<>(deleteLikeCallback);

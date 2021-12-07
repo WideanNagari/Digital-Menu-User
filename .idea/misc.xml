@@ -113,6 +113,7 @@
         <entry key="..\:/Users/Widean Nagari/Desktop/User Application/Digital-Menu-User/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.2703125" />
         <entry key="..\:/Users/Widean Nagari/Desktop/User Application/Digital-Menu-User/app/src/main/res/drawable/ic_baseline_shopping_cart_24.xml" value="0.2703125" />
         <entry key="..\:/Users/Widean Nagari/Desktop/User Application/Digital-Menu-User/app/src/main/res/drawable/ic_clock.xml" value="0.2703125" />
+        <entry key="..\:/Users/Widean Nagari/Desktop/User Application/Digital-Menu-User/app/src/main/res/drawable/ic_code.xml" value="0.2703125" />
         <entry key="..\:/Users/Widean Nagari/Desktop/User Application/Digital-Menu-User/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2703125" />
         <entry key="..\:/Users/Widean Nagari/Desktop/User Application/Digital-Menu-User/app/src/main/res/drawable/ic_minus.xml" value="0.2703125" />
         <entry key="..\:/Users/Widean Nagari/Desktop/User Application/Digital-Menu-User/app/src/main/res/drawable/round_bg.xml" value="0.2703125" />
@@ -124,6 +125,7 @@
         <entry key="..\:/Users/Widean Nagari/Desktop/User Application/Digital-Menu-User/app/src/main/res/layout/activity_edit_password.xml" value="0.24048913043478262" />
         <entry key="..\:/Users/Widean Nagari/Desktop/User Application/Digital-Menu-User/app/src/main/res/layout/activity_edit_profile.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Widean Nagari/Desktop/User Application/Digital-Menu-User/app/src/main/res/layout/activity_home.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Widean Nagari/Desktop/User Application/Digital-Menu-User/app/src/main/res/layout/activity_liked.xml" value="0.18297101449275363" />
         <entry key="..\:/Users/Widean Nagari/Desktop/User Application/Digital-Menu-User/app/src/main/res/layout/activity_login.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Widean Nagari/Desktop/User Application/Digital-Menu-User/app/src/main/res/layout/activity_main.xml" value="0.20606884057971014" />
         <entry key="..\:/Users/Widean Nagari/Desktop/User Application/Digital-Menu-User/app/src/main/res/layout/activity_payment.xml" value="0.2" />
@@ -147,13 +149,19 @@
         <entry key="..\:/Users/Widean Nagari/Desktop/User Application/Digital-Menu-User/app/src/main/res/layout/item_popular.xml" value="0.21603260869565216" />
         <entry key="..\:/Users/Widean Nagari/Desktop/User Application/Digital-Menu-User/app/src/main/res/layout/item_purchase.xml" value="0.23097826086956522" />
         <entry key="..\:/Users/Widean Nagari/Desktop/User Application/Digital-Menu-User/app/src/main/res/layout/item_review.xml" value="0.2164855072463768" />
+        <entry key="..\:/Users/Widean Nagari/Desktop/User Application/Digital-Menu-User/app/src/main/res/layout/item_review_menu.xml" value="0.536" />
         <entry key="..\:/Users/Widean Nagari/Desktop/User Application/Digital-Menu-User/app/src/main/res/layout/item_reward.xml" value="0.4" />
+        <entry key="..\:/Users/Widean Nagari/Desktop/User Application/Digital-Menu-User/app/src/main/res/layout/item_search.xml" value="0.13903985507246377" />
         <entry key="..\:/Users/Widean Nagari/Desktop/User Application/Digital-Menu-User/app/src/main/res/layout/items_reward.xml" value="0.21603260869565216" />
         <entry key="..\:/Users/Widean Nagari/Desktop/User Application/Digital-Menu-User/app/src/main/res/layout/layout_checkin.xml" value="0.264" />
+        <entry key="..\:/Users/Widean Nagari/Desktop/User Application/Digital-Menu-User/app/src/main/res/layout/layout_parent_like.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Widean Nagari/Desktop/User Application/Digital-Menu-User/app/src/main/res/layout/layout_second_like.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Widean Nagari/Desktop/User Application/Digital-Menu-User/app/src/main/res/layout/layout_table_detail.xml" value="0.23324275362318841" />
+        <entry key="..\:/Users/Widean Nagari/Desktop/User Application/Digital-Menu-User/app/src/main/res/layout/list_dropdown.xml" value="0.24456521739130435" />
         <entry key="..\:/Users/Widean Nagari/Desktop/User Application/Digital-Menu-User/app/src/main/res/layout/recycler_menu.xml" value="0.4" />
         <entry key="..\:/Users/Widean Nagari/Desktop/User Application/Digital-Menu-User/app/src/main/res/menu/navbar_home.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Widean Nagari/Desktop/User Application/Digital-Menu-User/app/src/main/res/menu/navbar_order.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Widean Nagari/Desktop/User Application/Digital-Menu-User/app/src/main/res/xml/network_security_config.xml" value="0.24864130434782608" />
       </map>
     </option>
   </component>

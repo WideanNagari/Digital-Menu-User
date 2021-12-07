@@ -7,20 +7,27 @@ public class Review implements Parcelable {
     private int id_menu;
     private String nama_menu;
     private String isiReview;
-    private int rating;
+    private double rating;
 
     public Review(int id_menu, String nama_menu) {
         this.id_menu = id_menu;
         this.nama_menu = nama_menu;
         this.isiReview = "-";
-        this.rating = 1;
+        this.rating = 1f;
+    }
+
+    public Review(int id_menu, String nama_menu, String isiReview, double rating) {
+        this.id_menu = id_menu;
+        this.nama_menu = nama_menu;
+        this.isiReview = isiReview;
+        this.rating = rating;
     }
 
     protected Review(Parcel in) {
         id_menu = in.readInt();
         nama_menu = in.readString();
         isiReview = in.readString();
-        rating = in.readInt();
+        rating = in.readDouble();
     }
 
     public static final Creator<Review> CREATOR = new Creator<Review>() {
@@ -59,7 +66,7 @@ public class Review implements Parcelable {
         this.isiReview = isiReview;
     }
 
-    public int getRating() {
+    public double getRating() {
         return rating;
     }
 
@@ -77,7 +84,7 @@ public class Review implements Parcelable {
         parcel.writeInt(id_menu);
         parcel.writeString(nama_menu);
         parcel.writeString(isiReview);
-        parcel.writeInt(rating);
+        parcel.writeDouble(rating);
     }
 }
 

@@ -177,13 +177,13 @@ public class OrderCartFragment extends Fragment implements LoadCartAsync.LoadCar
         });
 
         //check-in
-        Check_Name = view.findViewById(R.id.Check_Name);
-        Check_Phone = view.findViewById(R.id.Check_Phone);
-        kodeCheckIn = view.findViewById(R.id.kodeCheckIn);
-        spinnerCheckin = view.findViewById(R.id.spinnerCheckin);
-        doCheckin = view.findViewById(R.id.doCheckin);
+//        Check_Name = view.findViewById(R.id.Check_Name);
+//        Check_Phone = view.findViewById(R.id.Check_Phone);
+//        kodeCheckIn = view.findViewById(R.id.kodeCheckIn);
+//        spinnerCheckin = view.findViewById(R.id.spinnerCheckin);
+//        doCheckin = view.findViewById(R.id.doCheckin);
 
-//        sheetDialogNew();
+        sheetDialogNew();
         btnCheckin = view.findViewById(R.id.btnCheckin);
         txtCheck = view.findViewById(R.id.txtCheck);
         if (!user.getCheckIn().equals("-")){
@@ -211,18 +211,18 @@ public class OrderCartFragment extends Fragment implements LoadCartAsync.LoadCar
                         (LinearLayout)getView().findViewById(R.id.bottomContainer)
                 );
 
-        EditText isiKode = bottomSheetView.findViewById(R.id.kodeCheckIn);
-        spin = bottomSheetView.findViewById(R.id.spinnerCheckin);
-        bottomSheetView.findViewById(R.id.doCheckin).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                checkIn(arrMeja.get(spin.getSelectedItemPosition()).getId()+"",user.getId()+"",isiKode.getText().toString());
-            }
-        });
+//        EditText isiKode = bottomSheetView.findViewById(R.id.kodeCheckIn);
+//        spin = bottomSheetView.findViewById(R.id.spinnerCheckin);
+//        bottomSheetView.findViewById(R.id.doCheckin).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                checkIn(arrMeja.get(spin.getSelectedItemPosition()).getId()+"",user.getId()+"",isiKode.getText().toString());
+//            }
+//        });
     }
 
     private void callSheetDialog(){
-        spin.setAdapter(spinAdapter);
+//        spin.setAdapter(spinAdapter);
 
         bottomSheetDialog.setContentView(bottomSheetView);
         bottomSheetDialog.show();

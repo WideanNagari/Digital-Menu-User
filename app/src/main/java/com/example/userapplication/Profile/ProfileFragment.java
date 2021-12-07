@@ -167,6 +167,7 @@ public class ProfileFragment extends Fragment {
             public void onClick(View view) {
                 //halaman like
                 Intent liked = new Intent(getActivity(), LikedActivity.class);
+                liked.putExtra("user",loggedIn);
                 launcher.launch(liked);
             }
         });

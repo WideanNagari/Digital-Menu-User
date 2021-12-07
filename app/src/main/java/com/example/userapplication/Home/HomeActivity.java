@@ -79,6 +79,8 @@ public class HomeActivity extends AppCompatActivity implements LoadCartAsync.Loa
     ArrayList<Menu> again;
     ArrayList<PromoXReward> promoReward;
 
+    long exitTime = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -496,6 +498,17 @@ public class HomeActivity extends AppCompatActivity implements LoadCartAsync.Loa
     public void postExecuteLoadO(List<OrderMenu> listMenu) {
         String jumlah = listMenu.size()+"";
         bottomNavigation.setCount(ID_ORDER, jumlah); //yg kasih notif
+    }
+
+    @Override
+    public void onBackPressed() {
+        if ((exitTime+2000) > System.currentTimeMillis()){
+            super.onBackPressed();
+            return;
+        }else{
+            Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT).show();
+        }
+        exitTime = System.currentTimeMillis();
     }
 }
 

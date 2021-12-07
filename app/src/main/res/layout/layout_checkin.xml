@@ -3,212 +3,117 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white">
-
-    <LinearLayout
-        android:id="@+id/bottomContainer"
-        android:layout_width="match_parent"
+    android:id="@+id/bottomContainer"
+    android:background="@drawable/round_container"
+    android:orientation="vertical"
+    android:padding="10dp">
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/round_container"
-        android:orientation="vertical"
-        android:padding="10dp">
+        android:layout_marginLeft="10dp"
+        android:layout_gravity="center_horizontal"
+        android:text="Check In"
+        android:textColor="@color/black"
+        android:textSize="25dp"
+        android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_gravity="center_horizontal"
-            android:text="Check In"
-            android:textColor="@color/black"
-            android:textSize="25dp"
-            android:textStyle="bold" />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputName"
+        style="@style/parent"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="32dp"
+        android:hint="Customer Name"
+        app:startIconDrawable="@drawable/ic_baseline_person_24"
+        android:textColorHint="@color/pink1"
+        app:startIconTint="@color/pink1">
 
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="20dp">-->
-
-<!--            <LinearLayout-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="1.2"-->
-<!--                android:orientation="vertical">-->
-
-<!--                <TextView-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:gravity="right"-->
-<!--                    android:text="Name :"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:textSize="18dp" />-->
-
-<!--                <TextView-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginTop="10dp"-->
-<!--                    android:gravity="right"-->
-<!--                    android:text="Phone Number :"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:textSize="18dp" />-->
-
-<!--&lt;!&ndash;                <TextView&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:layout_width="match_parent"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:layout_height="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:layout_marginTop="10dp"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:gravity="right"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:text="Table Number :"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:textColor="@color/black"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:textSize="18dp" />&ndash;&gt;-->
-
-<!--            </LinearLayout>-->
-
-<!--            <LinearLayout-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginLeft="5dp"-->
-<!--                android:layout_weight="2"-->
-<!--                android:orientation="vertical">-->
-
-<!--                <TextView-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="Nama Customer"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:textSize="18dp" />-->
-
-<!--                <TextView-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginTop="10dp"-->
-<!--                    android:text="08123456789"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:textSize="18dp" />-->
-
-<!--&lt;!&ndash;                <Spinner&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:id="@+id/spinnerCheckin"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:layout_width="match_parent"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:layout_height="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:layout_marginTop="10dp"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:backgroundTint="@color/black"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:popupBackground="@color/pink8" />&ndash;&gt;-->
-
-<!--                &lt;!&ndash;                <EditText&ndash;&gt;-->
-<!--                &lt;!&ndash;                    android:id="@+id/kodeCheckIn"&ndash;&gt;-->
-<!--                &lt;!&ndash;                    android:layout_width="match_parent"&ndash;&gt;-->
-<!--                &lt;!&ndash;                    android:layout_height="wrap_content"&ndash;&gt;-->
-<!--                &lt;!&ndash;                    android:layout_marginTop="10dp"&ndash;&gt;-->
-<!--                &lt;!&ndash;                    android:hint="Table Code"&ndash;&gt;-->
-<!--                &lt;!&ndash;                    android:textColor="@color/black"&ndash;&gt;-->
-<!--                &lt;!&ndash;                    android:textColorHint="@color/black" />&ndash;&gt;-->
-<!--            </LinearLayout>-->
-<!--        </LinearLayout>-->
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputName"
-            style="@style/parent"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="32dp"
-            android:hint="Customer Name"
-            app:startIconDrawable="@drawable/ic_baseline_person_24"
-            android:textColorHint="@color/pink1"
-            app:startIconTint="@color/pink1">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/Check_Name"
-                style="@style/modifiedEditText"
-                android:enabled="false"
-                android:backgroundTint="@color/pink9"
-                android:inputType="text"
-                android:text="Widean"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputPhone"
-            style="@style/parent"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="32dp"
-            android:hint="Customer Phone"
-            app:startIconDrawable="@drawable/ic_phone"
-            android:textColorHint="@color/pink1"
-            app:startIconTint="@color/pink1">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/Check_Phone"
-                style="@style/modifiedEditText"
-                android:backgroundTint="@color/pink9"
-                android:inputType="text"
-                android:text="08123456789"
-                android:enabled="false"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout"
-            android:layout_width="match_parent"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="32dp"
-            android:hint="Table Number"
-            app:endIconTint="@color/pink1"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/Check_Name"
+            style="@style/modifiedEditText"
+            android:enabled="false"
             android:backgroundTint="@color/pink9"
-            android:textColorHint="@color/pink1"
-            app:passwordToggleDrawable="@null">
+            android:inputType="text"
+            android:text="Widean"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-            <AutoCompleteTextView
-                android:id="@+id/spinnerCheckin"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textColor="@color/black"
-                android:inputType="none"/>
-        </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputPhone"
+        style="@style/parent"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="32dp"
+        android:hint="Customer Phone"
+        app:startIconDrawable="@drawable/ic_phone"
+        android:textColorHint="@color/pink1"
+        app:startIconTint="@color/pink1">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputMobile"
-            style="@style/parent"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="32dp"
-            android:hint="Table Code"
-            app:startIconDrawable="@drawable/ic_code"
-            android:textColorHint="@color/pink1"
-            app:startIconTint="@color/pink1">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/Check_Phone"
+            style="@style/modifiedEditText"
+            android:backgroundTint="@color/pink9"
+            android:inputType="text"
+            android:text="08123456789"
+            android:enabled="false"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/kodeCheckIn"
-                style="@style/modifiedEditText"
-                android:backgroundTint="@color/pink9"
-                android:inputType="text"
-                android:text="D001"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
-        </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout"
+        android:layout_width="match_parent"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="32dp"
+        android:hint="Table Number"
+        app:endIconTint="@color/pink1"
+        android:backgroundTint="@color/pink9"
+        android:textColorHint="@color/pink1"
+        app:passwordToggleDrawable="@null">
 
-        <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
-            android:id="@+id/doCheckin"
-            style="@style/loginButton"
-            android:layout_width="144dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/round_bg"
-            android:text="Review"
-            app:initialCornerAngle="27dp"
-            android:layout_gravity="right"
-            app:spinning_bar_color="#FFF"
-            app:spinning_bar_padding="6dp"
-            app:spinning_bar_width="4dp" />
+        <AutoCompleteTextView
+            android:id="@+id/spinnerCheckin"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="@color/black"
+            android:inputType="none"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
-<!--        <Button-->
-<!--            android:id="@+id/doCheckin"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_gravity="right"-->
-<!--            android:text="Check In" />-->
-    </LinearLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputMobile"
+        style="@style/parent"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="32dp"
+        android:hint="Table Code"
+        app:startIconDrawable="@drawable/ic_code"
+        android:textColorHint="@color/pink1"
+        app:startIconTint="@color/pink1">
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/kodeCheckIn"
+            style="@style/modifiedEditText"
+            android:backgroundTint="@color/pink9"
+            android:inputType="text"
+            android:text="D001"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
+        android:id="@+id/doCheckin"
+        style="@style/loginButton"
+        android:layout_width="144dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/round_bg"
+        android:text="Review"
+        app:initialCornerAngle="27dp"
+        android:layout_gravity="right"
+        app:spinning_bar_color="#FFF"
+        app:spinning_bar_padding="6dp"
+        app:spinning_bar_width="4dp" />
 </LinearLayout>

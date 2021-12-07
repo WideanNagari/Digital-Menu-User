@@ -35,7 +35,15 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ReviewAdapter.ViewHolder holder, int position) {
+        Review review = arrayListReview.get(position);
 
+        holder.namaPeopleReview.setText(review.getNama_menu());
+        holder.ratingBar.setRating((float)review.getRating());
+        holder.isiReview.setText(review.getIsiReview());
+//        holder.isiReview.setEnabled(false);
+
+        System.out.println(review.getIsiReview());
+        System.out.println(arrayListReview.size());
     }
 
     @Override
@@ -44,15 +52,12 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView namaPeopleReview, namaMenuReview;
-        ImageView img;
+        TextView namaPeopleReview;
         RatingBar ratingBar;
         EditText isiReview;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            namaMenuReview = itemView.findViewById(R.id.namaMenuReview);
             namaPeopleReview = itemView.findViewById(R.id.namaPeopleReview);
-            img = itemView.findViewById(R.id.imageView9);
             ratingBar = itemView.findViewById(R.id.ratingReview);
             isiReview = itemView.findViewById(R.id.isiReview);
         }

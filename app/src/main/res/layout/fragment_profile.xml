@@ -189,7 +189,7 @@
                             android:id="@+id/textView10"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Reward"
+                            android:text="Favourite"
                             android:textAlignment="center"
                             android:textColor="@color/pink1"
                             android:textSize="@dimen/_14ssp"
