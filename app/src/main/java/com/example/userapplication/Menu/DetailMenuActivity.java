@@ -3,6 +3,8 @@ package com.example.userapplication.Menu;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -25,12 +27,14 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.userapplication.Classes.OrderMenu;
+import com.example.userapplication.Classes.Review;
 import com.example.userapplication.Classes.Type;
 import com.example.userapplication.DAO.AppDatabase;
 import com.example.userapplication.Classes.Like;
 import com.example.userapplication.Classes.Menu;
 import com.example.userapplication.Classes.UserApp;
 import com.example.userapplication.Order.OrderCartFragment;
+import com.example.userapplication.Payment.PaymentAdapter;
 import com.example.userapplication.R;
 import com.skydoves.expandablelayout.ExpandableLayout;
 import com.squareup.picasso.Picasso;
@@ -66,6 +70,9 @@ public class DetailMenuActivity extends AppCompatActivity implements AddLikeAsyn
     String nama, desc;
     boolean canAction;
 
+    RecyclerView rv_review;
+    ReviewAdapter reviewAdapter;
+    ArrayList<Review> listReview = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,7 +84,7 @@ public class DetailMenuActivity extends AppCompatActivity implements AddLikeAsyn
         ex.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(g[0] ==0) {
+                if(g[0] == 0) {
                     g[0] = 1;
                     ex.expand();
                 } else {
@@ -86,7 +93,10 @@ public class DetailMenuActivity extends AppCompatActivity implements AddLikeAsyn
                 }
             }
         });
-
+        rv_review = findViewById(R.id.rv_review);
+        rv_review.setLayoutManager(new LinearLayoutManager(this));
+        reviewAdapter = new ReviewAdapter(listReview);
+        rv_review.setAdapter(reviewAdapter);
 
         imgV=findViewById(R.id.detailImage);
         imgLike=findViewById(R.id.detail_btn_like);
