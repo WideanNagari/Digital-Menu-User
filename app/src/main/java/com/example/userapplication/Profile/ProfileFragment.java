@@ -27,6 +27,7 @@ import com.example.userapplication.Liked.LikedActivity;
 import com.example.userapplication.LoginActivity;
 import com.example.userapplication.R;
 import com.example.userapplication.Reward.ClaimRewardActivity;
+import com.example.userapplication.TopUp.TopUpCashActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -128,6 +129,10 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //halaman top up
+                Intent i = new Intent(getContext(), TopUpCashActivity.class);
+                i.putExtra("loggedIn",loggedIn);
+                launcher.launch(i);
+
             }
         });
         btn_reward.setOnClickListener(new View.OnClickListener() {

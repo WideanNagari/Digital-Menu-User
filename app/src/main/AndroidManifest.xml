@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UserApplication">
         <activity
+            android:name=".TopUp.TopUpCashActivity"
+            android:exported="true" />
+        <activity
             android:name=".Liked.LikedActivity"
             android:exported="true" />
         <activity
