@@ -31,41 +31,42 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="5dp"
             android:text="Nama Reward / Promo"
             android:textColor="@color/black"
+            android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/image_Reward"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/jenis_promo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="206dp"
+            android:layout_height="36dp"
             android:layout_marginTop="4dp"
-            android:textColor="@color/red1"
             android:text="Reward / Promo"
-            android:textSize="12sp"
+            android:textColor="@color/black"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@+id/nama_reward"
             app:layout_constraintTop_toBottomOf="@+id/nama_reward" />
 
-        <ImageView
-            android:id="@+id/imageView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="@+id/jenis_promo"
-            app:layout_constraintTop_toBottomOf="@+id/jenis_promo"
-            app:srcCompat="@drawable/ic_star" />
+<!--        <ImageView-->
+<!--            android:id="@+id/imageView6"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            app:layout_constraintStart_toStartOf="@+id/jenis_promo"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/jenis_promo"-->
+<!--            app:srcCompat="@drawable/ic_star" />-->
 
         <TextView
             android:id="@+id/jumlah_stamp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="5dp"
             android:text="15"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView6"
-            app:layout_constraintStart_toEndOf="@+id/imageView6"
-            app:layout_constraintTop_toTopOf="@+id/imageView6" />
+            app:layout_constraintStart_toEndOf="@+id/image_Reward"
+            app:layout_constraintTop_toBottomOf="@+id/jenis_promo" />
 
         <Button
             android:id="@+id/btn_claim_reward"

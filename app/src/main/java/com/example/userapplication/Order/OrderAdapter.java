@@ -60,7 +60,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>{
         holder.nama.setText(o.getNama_menu());
         holder.harga.setText(currency(o.getHarga_menu()));
         holder.jumlah.setText(o.getJumlah()+"");
-        Glide.with(activity).load(o.getGambarID()).into(holder.img);
+        Glide.with(activity).load(o.getGambar()).into(holder.img);
         if (o.isConfirm()) holder.check.setChecked(true);
         else holder.check.setChecked(false);
         holder.add.setOnClickListener(new View.OnClickListener() {
@@ -105,9 +105,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>{
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         CheckBox check;
-        ImageView img;
+        ImageView img, add, min, delete;
         TextView nama, harga, jumlah;
-        Button add, min, delete;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             check = itemView.findViewById(R.id.checkboxPilihOrder);

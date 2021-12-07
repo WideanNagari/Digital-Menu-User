@@ -184,7 +184,7 @@ public class OrderCartFragment extends Fragment implements LoadCartAsync.LoadCar
         spinnerCheckin = view.findViewById(R.id.spinnerCheckin);
         doCheckin = view.findViewById(R.id.doCheckin);
 
-        sheetDialogNew();
+//        sheetDialogNew();
         btnCheckin = view.findViewById(R.id.btnCheckin);
         txtCheck = view.findViewById(R.id.txtCheck);
         if (!user.getCheckIn().equals("-")){

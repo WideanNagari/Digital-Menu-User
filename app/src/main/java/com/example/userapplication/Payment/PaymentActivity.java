@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,8 +55,9 @@ public class PaymentActivity extends AppCompatActivity {
     String usePromo;
 
     TextView total, potongan, subtotal, stamp, infoPromo, promoAlert, balance, balanceAlert;
-    CircularProgressButton pay, pay_back;
+    CircularProgressButton pay;
     RecyclerView rv;
+    ImageView pay_back;
     PaymentAdapter paymentAdapter;
     int totals, diskon, max, subtotals, disc;
 

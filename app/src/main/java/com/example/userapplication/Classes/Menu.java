@@ -90,10 +90,6 @@ public class Menu implements Parcelable {
     }
 
     public String getGambar() {
-        return "https://drive.google.com/uc?id="+gambar;
-    }
-
-    public String getGambarID() {
         return gambar;
     }
 

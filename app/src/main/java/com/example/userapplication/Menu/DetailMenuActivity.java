@@ -100,7 +100,7 @@ public class DetailMenuActivity extends AppCompatActivity implements AddLikeAsyn
                     new AddOrderAsync(DetailMenuActivity.this, DetailMenuActivity.this,
                             new OrderMenu(menu.getId(), menu.getNama_menu(), menu.getHarga_menu(), menu.getDeskripsi_menu(),
                                     menu.getJenis_menu(), menu.getStatus_menu(),menu.getRating(), user.getId(), jum,"-",
-                                    0, menu.getGambarID())).execute();
+                                    0, menu.getGambar())).execute();
                 }
             }
         });

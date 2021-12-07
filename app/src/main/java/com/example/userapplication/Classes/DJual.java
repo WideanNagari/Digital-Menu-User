@@ -16,7 +16,7 @@ public class DJual {
         this.rating = rating;
         this.quantity = quantity;
         this.harga = harga;
-        this.gambar = "https://drive.google.com/uc?id="+gambar;
+        this.gambar = gambar;
     }
 
     public String getGambar() {

@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -28,6 +29,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.userapplication.Classes.Menu;
+import com.example.userapplication.Classes.PromoXReward;
 import com.example.userapplication.Classes.Reward;
 import com.example.userapplication.Menu.DetailMenuActivity;
 import com.example.userapplication.Reward.ClaimRewardActivity;
@@ -54,15 +56,15 @@ public class HomeFragment extends Fragment {
     OnActionListener onActionListener;
 
     RecyclerView rv_reward, rv_popular, rv_recommended,  rv_again;
-    RewardAdapter rewardAdapter;
+    PromoRewardAdapter rewardAdapter;
     PopularAdapter popularAdapter, recommendAdapter, againAdapter;
 
-    private ArrayList<Reward> listReward = new ArrayList<>();
+    private ArrayList<PromoXReward> listReward = new ArrayList<>();
     private ArrayList<Menu> listPopular = new ArrayList<>();
     private ArrayList<Menu> listRecommended = new ArrayList<>();
     private ArrayList<Menu> listAgain = new ArrayList<>();
 
-    public void setListReward(ArrayList<Reward> listReward) {
+    public void setListReward(ArrayList<PromoXReward> listReward) {
         this.listReward.clear();
         this.listReward.addAll(listReward);
         rewardAdapter.notifyDataSetChanged();
@@ -127,15 +129,16 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         listReward = new ArrayList<>();
-        listReward.add(new Reward("menu","1",2));
-        listReward.add(new Reward("menu2","1",2));
-        listReward.add(new Reward("menu3","1",2));
-        listReward.add(new Reward("menu4","1",2));
-        listReward.add(new Reward("menu5","1",2));
-        rewardAdapter = new RewardAdapter(listReward, 5);
+        rewardAdapter = new PromoRewardAdapter(listReward, user.getStamp());
         rv_reward = view.findViewById(R.id.reward_recycler);
         rv_reward.setLayoutManager( new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rv_reward.setAdapter(rewardAdapter);
+        rewardAdapter.setOnClaimClick(new PromoRewardAdapter.OnClaimClick() {
+            @Override
+            public void onClaim(PromoXReward reward) {
+                Toast.makeText(getContext(), "A", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         listPopular = new ArrayList<>();
         popularAdapter = new PopularAdapter(getActivity(), listPopular);

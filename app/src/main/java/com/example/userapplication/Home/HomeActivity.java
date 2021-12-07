@@ -31,6 +31,8 @@ import com.android.volley.toolbox.Volley;
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.example.userapplication.Classes.Menu;
 import com.example.userapplication.Classes.OrderMenu;
+import com.example.userapplication.Classes.Promo;
+import com.example.userapplication.Classes.PromoXReward;
 import com.example.userapplication.DAO.AppDatabase;
 import com.example.userapplication.Classes.UserApp;
 import com.example.userapplication.History.HistoryFragment;
@@ -72,6 +74,7 @@ public class HomeActivity extends AppCompatActivity implements LoadCartAsync.Loa
     ArrayList<Menu> pop;
     ArrayList<Menu> recommend;
     ArrayList<Menu> again;
+    ArrayList<PromoXReward> promoReward;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,8 +158,9 @@ public class HomeActivity extends AppCompatActivity implements LoadCartAsync.Loa
         pop = new ArrayList<>();
         recommend = new ArrayList<>();
         again = new ArrayList<>();
+        promoReward = new ArrayList<>();
 
-        getPopular();
+        getPromo();
 
         getSupportFragmentManager().addFragmentOnAttachListener(new FragmentOnAttachListener() {
             @Override
@@ -172,6 +176,7 @@ public class HomeActivity extends AppCompatActivity implements LoadCartAsync.Loa
 
                         @Override
                         public void onReady(HomeFragment homeFragment) {
+                            homeFragment.setListReward(promoReward);
                             homeFragment.setListPopular(pop);
                             homeFragment.setListRecommended(recommend);
                             homeFragment.setListAgain(again);
@@ -208,6 +213,106 @@ public class HomeActivity extends AppCompatActivity implements LoadCartAsync.Loa
 
     public void setLoggedIn(UserApp loggedIn) {
         this.loggedIn = loggedIn;
+    }
+
+    private void getPromo(){
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.POST,
+                getResources().getString(R.string.url)+"promo/getPromo",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            JSONArray arr = jsonObject.getJSONArray("dataPromo");
+                            int kode = jsonObject.getInt("code");
+                            if (kode == 1){
+                                promoReward.clear();
+                                for (int i = 0; i < arr.length(); i++) {
+                                    JSONObject order = arr.getJSONObject(i);
+                                    promoReward.add(new PromoXReward("promo"
+                                            , order.getInt("id")
+                                            , order.getString("nama_promo")
+                                            , order.getInt("besar_promo")
+                                            , order.getInt("max_promo")
+                                            , order.getInt("min_spent")
+                                            , order.getString("status")
+                                            , "", "", 0
+                                    ));
+                                }
+                                getReward();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+
+                //untuk handle error
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println(error.getMessage());
+                    }
+                }
+        ){
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(HomeActivity.this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void getReward(){
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.POST,
+                getResources().getString(R.string.url)+"reward/getReward",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            JSONArray arr = jsonObject.getJSONArray("dataReward");
+                            int kode = jsonObject.getInt("code");
+                            if (kode == 1){
+                                for (int i = 0; i < arr.length(); i++) {
+                                    JSONObject order = arr.getJSONObject(i);
+                                    promoReward.add(new PromoXReward("reward"
+                                            , 0, "", 0, 0, 0, ""
+                                            , order.getString("reward")
+                                            , order.getString("id_menu")
+                                            , order.getInt("stamp")
+                                    ));
+                                }
+                                getPopular();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+
+                //untuk handle error
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println(error.getMessage());
+                    }
+                }
+        ){
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(HomeActivity.this);
+        requestQueue.add(stringRequest);
     }
 
     private void getPopular(){
