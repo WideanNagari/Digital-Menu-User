@@ -63,7 +63,14 @@ public class TopUpCashActivity extends AppCompatActivity {
                                     JSONObject jsonObject = new JSONObject(response);
                                     int kode = jsonObject.getInt("code");
                                     String pesan  = jsonObject.getString("message");
-                                    System.out.println(kode+" ========");
+
+                                    if (kode==1){
+                                        loggedIn.setSaldo(loggedIn.getSaldo() + Integer.parseInt(edNominal.getText().toString()));
+                                        Intent i = new Intent();
+                                        i.putExtra("loggedIn", loggedIn);
+                                        setResult(Activity.RESULT_OK, i);
+                                        finish();
+                                    }
 
                                     Toast.makeText(TopUpCashActivity.this, pesan, Toast.LENGTH_SHORT).show();
                                 } catch (JSONException e) {
@@ -94,13 +101,6 @@ public class TopUpCashActivity extends AppCompatActivity {
 
                 RequestQueue requestQueue = Volley.newRequestQueue(this);
                 requestQueue.add(stringRequest);
-
-                loggedIn.setSaldo(loggedIn.getSaldo() + Integer.parseInt(edNominal.getText().toString()));
-
-                Intent i = new Intent();
-                i.putExtra("loggedIn", loggedIn);
-                setResult(Activity.RESULT_OK, i);
-                finish();
             }else{
                 Toast.makeText(getApplicationContext(), "Value must be bigger than 0", Toast.LENGTH_SHORT).show();
             }

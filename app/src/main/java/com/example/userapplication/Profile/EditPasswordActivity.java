@@ -59,62 +59,64 @@ public class EditPasswordActivity extends AppCompatActivity {
 
     public void doUpdatePassword(View view) {
         if (edOld.getText().length() > 0 && edNew.getText().length() > 0 && edConfirmNew.getText().length() > 0) {
-//            if(edOld.getText().toString().equals(loggedIn.getPassword())){
-                StringRequest stringRequest = new StringRequest(
-                        Request.Method.POST,
-                        getResources().getString(R.string.url)+"user/updatePassword",
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                System.out.println(response);
-                                try {
-                                    JSONObject jsonObject = new JSONObject(response);
-                                    int kode = jsonObject.getInt("code");
-                                    String pesan  = jsonObject.getString("message");
+            if(edOld.getText().toString().equals(loggedIn.getPassword())){
+                if (edNew.getText().toString().equals(edConfirmNew.getText().toString())){
+                    StringRequest stringRequest = new StringRequest(
+                            Request.Method.POST,
+                            getResources().getString(R.string.url)+"user/updatePassword",
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    System.out.println(response);
+                                    try {
+                                        JSONObject jsonObject = new JSONObject(response);
+                                        int kode = jsonObject.getInt("code");
+                                        String pesan  = jsonObject.getString("message");
 //                                    JSONObject user = jsonObject.getJSONObject("user");
-                                    System.out.println(kode+" ========");
-                                    if (kode == 2){
+                                        System.out.println(kode+" ========");
+                                        if (kode == 1){
+                                            loggedIn.setPassword(edNew.getText().toString());
 
+                                            Intent i = new Intent();
+                                            i.putExtra("loggedIn", loggedIn);
+                                            setResult(Activity.RESULT_OK, i);
+                                            finish();
+                                        }
+                                        Toast.makeText(EditPasswordActivity.this, pesan, Toast.LENGTH_SHORT).show();
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
                                     }
+                                }
+                            },
 
-                                    Toast.makeText(EditPasswordActivity.this, pesan, Toast.LENGTH_SHORT).show();
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
+                            //untuk handle error
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    System.out.println(error.getMessage());
                                 }
                             }
-                        },
-
-                        //untuk handle error
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                System.out.println(error.getMessage());
-                            }
+                    ){
+                        @Nullable
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String, String> params = new HashMap<>();
+                            params.put("id",loggedIn.getId()+"");
+                            params.put("oldPass",edOld.getText().toString());
+                            params.put("newPass",edNew.getText().toString());
+                            System.out.println();
+                            return params;
                         }
-                ){
-                    @Nullable
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        Map<String, String> params = new HashMap<>();
-                        params.put("id",loggedIn.getId()+"");
-                        params.put("oldPass",edOld.getText().toString());
-                        params.put("newPass",edNew.getText().toString());
-                        System.out.println();
-                        return params;
-                    }
-                };
+                    };
 
-                RequestQueue requestQueue = Volley.newRequestQueue(this);
-                requestQueue.add(stringRequest);
-//            }else{
-//                Toast.makeText(getApplicationContext(), "Wrong old password, no change made", Toast.LENGTH_SHORT).show();
-//            }
-            loggedIn.setPassword(edNew.getText().toString());
-
-            Intent i = new Intent();
-            i.putExtra("loggedIn", loggedIn);
-            setResult(Activity.RESULT_OK, i);
-            finish();
+                    RequestQueue requestQueue = Volley.newRequestQueue(this);
+                    requestQueue.add(stringRequest);
+                }else {
+                    Toast.makeText(getApplicationContext(), "Confirm Password do not match", Toast.LENGTH_SHORT).show();
+                }
+            }else{
+                Toast.makeText(getApplicationContext(), "Wrong old password, no change made", Toast.LENGTH_SHORT).show();
+            }
         } else {
             Toast.makeText(getApplicationContext(), "Empty field!", Toast.LENGTH_SHORT).show();
         }

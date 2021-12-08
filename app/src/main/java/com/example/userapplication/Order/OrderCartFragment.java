@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
@@ -23,6 +25,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -114,7 +117,7 @@ public class OrderCartFragment extends Fragment implements LoadCartAsync.LoadCar
     CircularProgressButton doCheckin;
 
     //check-in
-    TextInputEditText Check_Name, Check_Phone, kodeCheckIn;
+    EditText Check_Name, Check_Phone, kodeCheckIn;
     AutoCompleteTextView spinnerCheckin;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -177,8 +180,7 @@ public class OrderCartFragment extends Fragment implements LoadCartAsync.LoadCar
         });
 
         //check-in
-//        Check_Name = view.findViewById(R.id.Check_Name);
-//        Check_Phone = view.findViewById(R.id.Check_Phone);
+
 //        kodeCheckIn = view.findViewById(R.id.kodeCheckIn);
 //        spinnerCheckin = view.findViewById(R.id.spinnerCheckin);
 //        doCheckin = view.findViewById(R.id.doCheckin);
@@ -211,18 +213,31 @@ public class OrderCartFragment extends Fragment implements LoadCartAsync.LoadCar
                         (LinearLayout)getView().findViewById(R.id.bottomContainer)
                 );
 
-//        EditText isiKode = bottomSheetView.findViewById(R.id.kodeCheckIn);
-//        spin = bottomSheetView.findViewById(R.id.spinnerCheckin);
-//        bottomSheetView.findViewById(R.id.doCheckin).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                checkIn(arrMeja.get(spin.getSelectedItemPosition()).getId()+"",user.getId()+"",isiKode.getText().toString());
-//            }
-//        });
+        EditText isiKode = bottomSheetView.findViewById(R.id.kodeCheckIn);
+        spin = bottomSheetView.findViewById(R.id.spinnerCheckin);
+        bottomSheetView.findViewById(R.id.doCheckin).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkIn(arrMeja.get(spin.getSelectedItemPosition()).getId()+"",user.getId()+"",isiKode.getText().toString());
+            }
+        });
+        bottomSheetView.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+
+        Check_Name = bottomSheetView.findViewById(R.id.Check_Name);
+        Check_Phone = bottomSheetView.findViewById(R.id.Check_Phone);
+        Check_Name.setText(user.getName());
+        Check_Phone.setText(user.getTelp());
+
+        ImageView imgName = bottomSheetView.findViewById(R.id.imgName);
+        ImageView imgPhone = bottomSheetView.findViewById(R.id.imgPhone);
+        ImageView imgCode = bottomSheetView.findViewById(R.id.imgCode);
+        imgName.setColorFilter(Color.rgb(0,0,0), PorterDuff.Mode.SRC_IN);
+        imgPhone.setColorFilter(Color.rgb(0,0,0), PorterDuff.Mode.SRC_IN);
+        imgCode.setColorFilter(Color.rgb(0,0,0), PorterDuff.Mode.SRC_IN);
     }
 
     private void callSheetDialog(){
-//        spin.setAdapter(spinAdapter);
+        spin.setAdapter(spinAdapter);
 
         bottomSheetDialog.setContentView(bottomSheetView);
         bottomSheetDialog.show();

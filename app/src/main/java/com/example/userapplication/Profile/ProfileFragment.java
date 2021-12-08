@@ -88,18 +88,17 @@ public class ProfileFragment extends Fragment {
         //btnEdit = view.findViewById(R.id.btn_profileedit);
         //btnPass = view.findViewById(R.id.btn_updpass);
 
-        btn_edit = view.findViewById(R.id.card_edit);
-        btn_reward = view.findViewById(R.id.card_reward);
-        btn_topup = view.findViewById(R.id.card_topup);
-        btn_pass = view.findViewById(R.id.img_edit_pass);
+        btn_edit = view.findViewById(R.id.btn_edit);
+        btn_reward = view.findViewById(R.id.btn_reward);
+        btn_topup = view.findViewById(R.id.btn_topup);
+        btn_pass = view.findViewById(R.id.btn_edit_pass);
+        btn_like = view.findViewById(R.id.btn_Liked);
         logout = view.findViewById(R.id.layout_logout);
-        btn_like = view.findViewById(R.id.card_like);
 
         name.setText(loggedIn.getName());
         email.setText(loggedIn.getEmail());
         cash.setText("Rp "+String.format("%,.2f", new Double(loggedIn.getSaldo())));
         phone.setText(loggedIn.getTelp());
-        //stamps.setText(loggedIn.getStamp()+" stamps");
 
         ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override

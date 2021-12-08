@@ -80,16 +80,15 @@ public class EditProfileActivity extends AppCompatActivity {
                                     String pesan  = jsonObject.getString("message");
 //                                    JSONObject user = jsonObject.getJSONObject("user");
                                     System.out.println(kode+" ========");
-                                    if (kode == 2){
-//                                        UserApp loggedIn = new UserApp(user.getInt("user_id"),
-//                                                user.getString("name"),user.getString("email"),
-//                                                user.getString("no_telp"),user.getString("password"),
-//                                                user.getInt("saldo"),user.getString("role"),
-//                                                user.getString("status"));
-//                                        Intent i = new Intent(LoginActivity.this, HomeActivity.class);
-//                                        i.putExtra("loggedIn",loggedIn);
-//                                        startActivity(i);
-//                                        finish();
+                                    if (kode == 1){
+                                        loggedIn.setName(profileName.getText().toString());
+                                        loggedIn.setEmail(profileEmail.getText().toString());
+                                        loggedIn.setTelp(profilePhone.getText().toString());
+
+                                        Intent i = new Intent();
+                                        i.putExtra("loggedIn",loggedIn);
+                                        setResult(Activity.RESULT_OK, i);
+                                        finish();
                                     }
 
                                     Toast.makeText(EditProfileActivity.this, pesan, Toast.LENGTH_SHORT).show();
@@ -122,16 +121,6 @@ public class EditProfileActivity extends AppCompatActivity {
 
                 RequestQueue requestQueue = Volley.newRequestQueue(this);
                 requestQueue.add(stringRequest);
-
-
-                loggedIn.setName(profileName.getText().toString());
-                loggedIn.setEmail(profileEmail.getText().toString());
-                loggedIn.setTelp(profilePhone.getText().toString());
-
-                Intent i = new Intent();
-                i.putExtra("loggedIn",loggedIn);
-                setResult(Activity.RESULT_OK, i);
-                finish();
             }else{
                 Toast.makeText(getApplicationContext(), "Password mismatch!", Toast.LENGTH_SHORT).show();
             }
