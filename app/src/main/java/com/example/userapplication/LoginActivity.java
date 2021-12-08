@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -33,6 +34,8 @@ import java.util.Map;
 public class LoginActivity extends AppCompatActivity {
 
     EditText edPhone, edPass;
+    long exitTime = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +57,17 @@ public class LoginActivity extends AppCompatActivity {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(getResources().getColor(R.color.red2));
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if ((exitTime+2000) > System.currentTimeMillis()){
+            super.onBackPressed();
+            return;
+        }else{
+            Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT).show();
+        }
+        exitTime = System.currentTimeMillis();
     }
 
     public void onLoginClick(View View){
@@ -88,6 +102,12 @@ public class LoginActivity extends AppCompatActivity {
                                             user.getString("role"),user.getString("status"),
                                             jsonObject.getString("meja"), jsonObject.getString("idMeja")
                                             );
+
+                                    SharedPreferences preferences = getSharedPreferences("loginUser", MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = preferences.edit();
+                                    editor.putString("remember", loggedIn.getId()+"");
+                                    editor.apply();
+
                                     Intent i = new Intent(LoginActivity.this, HomeActivity.class);
                                     i.putExtra("loggedIn",loggedIn);
                                     startActivity(i);

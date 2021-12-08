@@ -104,6 +104,17 @@ public class ClaimRewardActivity extends AppCompatActivity {
         alertDialogBuilder = new AlertDialog.Builder(ClaimRewardActivity.this);
     }
 
+    @Override
+    public void onBackPressed() {
+        if (sudah){
+            i.putExtra("done","done");
+            i.putExtra("customer", user);
+            i.putExtra("loggedIn", user);
+            setResult(Activity.RESULT_OK, i);
+            finish();
+        }
+    }
+
     private void showDialog(String message, Drawable drawable, String action, String idMenu, String stamp){
         alertDialogBuilder.setTitle("Alert!");
         alertDialogBuilder

@@ -164,7 +164,8 @@ public class ProfileFragment extends Fragment {
             public void onClick(View view) {
                 //logout
                 Intent i = new Intent(getContext(), LoginActivity.class);
-                launcher.launch(i);
+                startActivity(i);
+                if (onActionListener!=null) onActionListener.onFinish();
             }
         });
         btn_like.setOnClickListener(new View.OnClickListener() {
@@ -180,5 +181,6 @@ public class ProfileFragment extends Fragment {
 
     public interface OnActionListener{
         void onBack(UserApp user);
+        void onFinish();
     }
 }

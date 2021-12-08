@@ -12,6 +12,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -204,6 +205,15 @@ public class HomeActivity extends AppCompatActivity implements LoadCartAsync.Loa
                             loggedIn = user;
                             System.out.println(loggedIn.getStamp()+"a");
                             bottomNavigation.show(ID_PROFILE, true);
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            SharedPreferences preferences = getSharedPreferences("loginUser", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = preferences.edit();
+                            editor.putString("remember", "");
+                            editor.apply();
+                            finish();
                         }
                     });
                 }

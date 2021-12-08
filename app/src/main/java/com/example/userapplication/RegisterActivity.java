@@ -35,6 +35,7 @@ import java.util.Map;
 public class RegisterActivity extends AppCompatActivity {
 
     EditText edEmail, edPhone, edPass, edCPass;
+    long exitTime = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +79,17 @@ public class RegisterActivity extends AppCompatActivity {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(getResources().getColor(R.color.red2));
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if ((exitTime+2000) > System.currentTimeMillis()){
+            super.onBackPressed();
+            return;
+        }else{
+            Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT).show();
+        }
+        exitTime = System.currentTimeMillis();
     }
     public void onLoginClick(View view){
         startActivity(new Intent(this,LoginActivity.class));
