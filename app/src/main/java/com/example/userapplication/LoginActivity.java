@@ -92,9 +92,10 @@ public class LoginActivity extends AppCompatActivity {
                                 JSONObject jsonObject = new JSONObject(response);
                                 int kode = jsonObject.getInt("code");
                                 String pesan  = jsonObject.getString("message");
-                                JSONObject user = jsonObject.getJSONObject("user");
-                                System.out.println(kode+" ========");
-                                if (kode == 2){
+                                Toast.makeText(LoginActivity.this, pesan, Toast.LENGTH_SHORT).show();
+
+                                if (kode == 1){
+                                    JSONObject user = jsonObject.getJSONObject("user");
                                     UserApp loggedIn = new UserApp(user.getInt("user_id"),
                                             user.getString("name"),user.getString("email"),
                                             user.getString("no_telp"),user.getString("password"),
@@ -114,7 +115,6 @@ public class LoginActivity extends AppCompatActivity {
                                     finish();
                                 }
 
-                                Toast.makeText(LoginActivity.this, pesan, Toast.LENGTH_SHORT).show();
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -133,7 +133,7 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
                     Map<String, String> params = new HashMap<>();
-                    params.put("phone",edPhone.getText().toString());
+                    params.put("phone","0"+edPhone.getText().toString());
                     params.put("password",edPass.getText().toString());
                     params.put("role","1");
                     System.out.println();

@@ -54,7 +54,7 @@ public class OrderOngoingFragment extends Fragment{
     RecyclerView rv;
     OngoingAdapter ongoingAdapter;
     CircularProgressButton btnPay;
-    TextView subtotal;
+    TextView subtotal, jumOrder;
     UserApp user;
     OnActionListener onActionListener;
 
@@ -96,6 +96,8 @@ public class OrderOngoingFragment extends Fragment{
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        jumOrder = view.findViewById(R.id.jumOrder);
 
         rv = view.findViewById(R.id.rvOngoing);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -160,12 +162,17 @@ public class OrderOngoingFragment extends Fragment{
 
     private void hitungTotal(){
         int subtotals = 0;
+        int jumTotal = 0;
         for (int i = 0; i < arrOrder.size(); i++) {
             OrderMenu order = arrOrder.get(i);
-            if (order.getStatus().equals("Confirmed")) subtotals += Integer.parseInt(order.getHarga_menu())*order.getJumlah();
+            if (order.getStatus().equals("Confirmed")){
+                subtotals += Integer.parseInt(order.getHarga_menu())*order.getJumlah();
+                jumTotal++;
+            }
         }
 
         subtotal.setText(currency(subtotals+""));
+        jumOrder.setText(jumTotal+"");
     }
 
     private String currency(String angkaAwal){

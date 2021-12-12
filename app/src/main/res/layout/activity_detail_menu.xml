@@ -95,7 +95,7 @@
                 android:layout_height="22dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginBottom="25dp"
-                android:src="@drawable/liked"
+                android:src="@drawable/bill"
                 app:layout_constraintBottom_toTopOf="@+id/detail_jenis"
                 app:layout_constraintEnd_toStartOf="@+id/detail_jum_orders" />
 

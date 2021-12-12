@@ -173,6 +173,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/top_btn_bg"
                         android:orientation="vertical"
+                        android:layout_gravity="center"
                         app:cardCornerRadius="30dp">
 
                         <ImageView

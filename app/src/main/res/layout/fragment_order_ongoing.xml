@@ -39,11 +39,10 @@
                 android:id="@+id/rvOngoing"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginTop="5dp"
                 android:layout_weight="10"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView9" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/detail_cart"
@@ -52,6 +51,7 @@
                 android:layout_margin="20dp"
                 android:layout_marginStart="40dp"
                 android:layout_marginEnd="40dp"
+                android:layout_marginBottom="2dp"
                 app:cardBackgroundColor="@color/whiteTextColor"
                 app:cardCornerRadius="10dp"
                 app:layout_constraintEnd_toEndOf="parent"

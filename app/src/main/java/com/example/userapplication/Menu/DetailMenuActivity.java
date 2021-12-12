@@ -6,6 +6,7 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -67,6 +68,16 @@ public class DetailMenuActivity extends AppCompatActivity implements AddLikeAsyn
     int jum=1, subtotal;
     String nama, desc;
     boolean canAction;
+
+    OnUpdateCount onUpdateCount;
+
+    public OnUpdateCount getOnUpdateCount() {
+        return onUpdateCount;
+    }
+
+    public void setOnUpdateCount(OnUpdateCount onUpdateCount) {
+        this.onUpdateCount = onUpdateCount;
+    }
 
     RecyclerView rv_review;
     ReviewAdapter reviewAdapter;
@@ -234,6 +245,15 @@ public class DetailMenuActivity extends AppCompatActivity implements AddLikeAsyn
     }
 
     public void back(View v){
+        i.putExtra("backFromDetail", cartMenu.size()+"");
+        setResult(Activity.RESULT_OK, i);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        i.putExtra("backFromDetail", cartMenu.size()+"");
+        setResult(Activity.RESULT_OK, i);
         finish();
     }
 
@@ -403,6 +423,10 @@ public class DetailMenuActivity extends AppCompatActivity implements AddLikeAsyn
 //        for (int i = 0; i < listMenu.size(); i++) {
 //            System.out.println(listMenu.get(i).getGambarID());
 //        }
+    }
+
+    public interface OnUpdateCount{
+        void onUpdateCount(String total);
     }
 }
 

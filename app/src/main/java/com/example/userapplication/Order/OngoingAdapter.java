@@ -51,7 +51,8 @@ public class OngoingAdapter  extends RecyclerView.Adapter<OngoingAdapter.ViewHol
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         OrderMenu o = arrOrder.get(position);
         holder.nama.setText(o.getNama_menu());
-        holder.harga.setText(o.getJumlah()+" x "+currency(o.getHarga_menu()));
+        holder.jumOrder.setText(o.getJumlah()+" X");
+        holder.harga.setText(currency(o.getHarga_menu()));
         holder.status.setText(o.getStatus());
         Glide.with(activity).load(o.getGambar()).into(holder.img);
 

@@ -83,6 +83,16 @@ public class OrderCartFragment extends Fragment implements LoadCartAsync.LoadCar
 
     Context context;
 
+    OnUpdateCount onUpdateCount;
+
+    public OnUpdateCount getOnUpdateCount() {
+        return onUpdateCount;
+    }
+
+    public void setOnUpdateCount(OnUpdateCount onUpdateCount) {
+        this.onUpdateCount = onUpdateCount;
+    }
+
     public OrderCartFragment(Context context, String url) {
         // Required empty public constructor
         this.context = context;
@@ -317,6 +327,7 @@ public class OrderCartFragment extends Fragment implements LoadCartAsync.LoadCar
                             int kode = jsonObject.getInt("code");
                             if (kode!=1)
                                 Toast.makeText(getContext(), pesan, Toast.LENGTH_SHORT).show();
+                            if (onUpdateCount!=null) onUpdateCount.onUpdate(arrOrder.size()+"");
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -416,12 +427,17 @@ public class OrderCartFragment extends Fragment implements LoadCartAsync.LoadCar
 
     private void hitungTotal(){
         int subtotals = 0;
+        int jumTotal = 0;
         for (int i = 0; i < arrOrder.size(); i++) {
             OrderMenu order = arrOrder.get(i);
-            if (order.isConfirm()) subtotals += Integer.parseInt(order.getHarga_menu())*order.getJumlah();
+            if (order.isConfirm()){
+                subtotals += Integer.parseInt(order.getHarga_menu())*order.getJumlah();
+                jumTotal++;
+            }
         }
 
         subtotal.setText(currency(subtotals+""));
+        jumOrder.setText(jumTotal+"");
     }
 
     private String currency(String angkaAwal){
@@ -459,6 +475,7 @@ public class OrderCartFragment extends Fragment implements LoadCartAsync.LoadCar
     @Override
     public void postExecuteDelete() {
         hitungTotal();
+        if (onUpdateCount!=null) onUpdateCount.onUpdate(arrOrder.size()+"");
     }
 
     private void getAvailableTable(){
@@ -510,6 +527,10 @@ public class OrderCartFragment extends Fragment implements LoadCartAsync.LoadCar
 
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(stringRequest);
+    }
+
+    public interface OnUpdateCount{
+        void onUpdate(String total);
     }
 }
 

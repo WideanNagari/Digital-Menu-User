@@ -164,7 +164,7 @@ public class HomeFragment extends Fragment {
                 Intent i = new Intent(getContext(), DetailMenuActivity.class);
                 i.putExtra("menu",m);
                 i.putExtra("user",user);
-                startActivity(i);
+                activityResultLauncher.launch(i);
             }
         });
 
@@ -179,7 +179,7 @@ public class HomeFragment extends Fragment {
                 Intent i = new Intent(getContext(), DetailMenuActivity.class);
                 i.putExtra("menu",m);
                 i.putExtra("user",user);
-                startActivity(i);
+                activityResultLauncher.launch(i);
             }
         });
 
@@ -194,7 +194,7 @@ public class HomeFragment extends Fragment {
                 Intent i = new Intent(getContext(), DetailMenuActivity.class);
                 i.putExtra("menu",m);
                 i.putExtra("user",user);
-                startActivity(i);
+                activityResultLauncher.launch(i);
             }
         });
 
@@ -230,6 +230,10 @@ public class HomeFragment extends Fragment {
                         if (data.hasExtra("done")){
                             if (onActionListener!=null) onActionListener.onBack(user);
                         }
+                        if (data.hasExtra("backFromDetail")){
+                            String total = data.getStringExtra("backFromDetail");
+                            if (onActionListener!=null) onActionListener.onUpdate(total);
+                        }
                     }
                 }
             }
@@ -238,6 +242,7 @@ public class HomeFragment extends Fragment {
     public interface OnActionListener{
         void onBack(UserApp user);
         void onReady(HomeFragment homeFragment);
+        void onUpdate(String total);
     }
 
     private void showDialog(String message, Drawable drawable, String action, String idMenu, String stamp){

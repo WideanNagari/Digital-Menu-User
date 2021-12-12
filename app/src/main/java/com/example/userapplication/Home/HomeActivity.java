@@ -187,6 +187,11 @@ public class HomeActivity extends AppCompatActivity implements LoadCartAsync.Loa
                             homeFragment.setListRecommended(recommend);
                             homeFragment.setListAgain(again);
                         }
+
+                        @Override
+                        public void onUpdate(String total) {
+                            bottomNavigation.setCount(ID_ORDER, total); //yg kasih notif
+                        }
                     });
                 }else if (fragment instanceof OrderFragment){
                     OrderFragment orderFragment = (OrderFragment) fragment;
@@ -194,7 +199,12 @@ public class HomeActivity extends AppCompatActivity implements LoadCartAsync.Loa
                         @Override
                         public void onBack(UserApp user) {
                             loggedIn = user;
-                            bottomNavigation.show(ID_HOME, true);
+                            getAgain();
+                        }
+
+                        @Override
+                        public void onUpdate(String total) {
+                            bottomNavigation.setCount(ID_ORDER, total); //yg kasih notif
                         }
                     });
                 }else if (fragment instanceof ProfileFragment){
@@ -203,7 +213,6 @@ public class HomeActivity extends AppCompatActivity implements LoadCartAsync.Loa
                         @Override
                         public void onBack(UserApp user) {
                             loggedIn = user;
-                            System.out.println(loggedIn.getStamp()+"a");
                             bottomNavigation.show(ID_PROFILE, true);
                         }
 
@@ -214,6 +223,14 @@ public class HomeActivity extends AppCompatActivity implements LoadCartAsync.Loa
                             editor.putString("remember", "");
                             editor.apply();
                             finish();
+                        }
+                    });
+                }else if (fragment instanceof SearchFragment){
+                    SearchFragment searchFragment = (SearchFragment) fragment;
+                    searchFragment.setOnActionListener(new SearchFragment.OnActionListener() {
+                        @Override
+                        public void onUpdate(String total) {
+                            bottomNavigation.setCount(ID_ORDER, total); //yg kasih notif
                         }
                     });
                 }

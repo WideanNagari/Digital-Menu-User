@@ -108,26 +108,28 @@ public class RegisterActivity extends AppCompatActivity {
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-                                System.out.println(response);
+//                                System.out.println(response);
                                 try {
                                     JSONObject jsonObject = new JSONObject(response);
                                     int kode = jsonObject.getInt("code");
                                     String pesan  = jsonObject.getString("message");
 //                                    JSONObject user = jsonObject.getJSONObject("user");
-                                    System.out.println(kode+" ========");
-                                    if (kode == 2){
-//                                        UserApp loggedIn = new UserApp(user.getInt("user_id"),
-//                                                user.getString("name"),user.getString("email"),
-//                                                user.getString("no_telp"),user.getString("password"),
-//                                                user.getInt("saldo"),user.getString("role"),
-//                                                user.getString("status"));
-//                                        Intent i = new Intent(RegisterActivity.this, HomeActivity.class);
-//                                        i.putExtra("loggedIn",loggedIn);
-//                                        startActivity(i);
-//                                        finish();
+                                    Toast.makeText(RegisterActivity.this, pesan, Toast.LENGTH_SHORT).show();
+                                    if (kode == 1){
+                                        startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
+                                        overridePendingTransition(R.anim.slide_in_left,android.R.anim.slide_out_right);
+                                        finish();
+        //                                        UserApp loggedIn = new UserApp(user.getInt("user_id"),
+        //                                                user.getString("name"),user.getString("email"),
+        //                                                user.getString("no_telp"),user.getString("password"),
+        //                                                user.getInt("saldo"),user.getString("role"),
+        //                                                user.getString("status"));
+        //                                        Intent i = new Intent(RegisterActivity.this, HomeActivity.class);
+        //                                        i.putExtra("loggedIn",loggedIn);
+        //                                        startActivity(i);
+        //                                        finish();
                                     }
 
-                                    Toast.makeText(RegisterActivity.this, pesan, Toast.LENGTH_SHORT).show();
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -147,7 +149,7 @@ public class RegisterActivity extends AppCompatActivity {
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String, String> params = new HashMap<>();
                         params.put("email",edEmail.getText().toString());
-                        params.put("phone",edPhone.getText().toString());
+                        params.put("phone","0"+edPhone.getText().toString());
                         params.put("password",edPass.getText().toString());
                         params.put("role","1");
                         System.out.println();

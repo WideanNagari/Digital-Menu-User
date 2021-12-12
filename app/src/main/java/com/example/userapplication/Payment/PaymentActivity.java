@@ -96,7 +96,7 @@ public class PaymentActivity extends AppCompatActivity {
         pay_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //kembali ke halaman sebelummnya
+                finish();
             }
         });
 
@@ -226,9 +226,7 @@ public class PaymentActivity extends AppCompatActivity {
                 public void onClick (DialogInterface dialogInterface,int j){
                     maxx = arrOrder.size();
                     addHJual(user.getId()+"",usePromo,arrOrder.size()+"", disc+"", subtotals+"",totals/20000);
-                    for (int i = 0; i < arrOrder.size(); i++) {
-                        addDJual(arrOrder.get(i).getId(),arrOrder.get(i).getJumlah()+"", arrOrder.get(i).getReward_status()+"");
-                    }
+
                 }
             }).setNegativeButton("Back", new DialogInterface.OnClickListener() {
                 @Override
@@ -259,6 +257,10 @@ public class PaymentActivity extends AppCompatActivity {
                             user.setSaldo(jsonObject.getInt("saldo"));
                             if(jsonObject.getString("checkin")!=null)
                                 user.setCheckIn(jsonObject.getString("checkin"));
+
+                            for (int i = 0; i < arrOrder.size(); i++) {
+                                addDJual(arrOrder.get(i).getId(),arrOrder.get(i).getJumlah()+"", arrOrder.get(i).getReward_status()+"");
+                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

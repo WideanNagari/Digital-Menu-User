@@ -129,11 +129,21 @@ public class OrderFragment extends Fragment  {
                         }
                     });
                 }
+                else if (fragment instanceof OrderCartFragment) {
+                    OrderCartFragment orderOngoingFragment = (OrderCartFragment) fragment;
+                    orderOngoingFragment.setOnUpdateCount(new OrderCartFragment.OnUpdateCount() {
+                        @Override
+                        public void onUpdate(String total) {
+                            if (onActionListener!=null) onActionListener.onUpdate(total);
+                        }
+                    });
+                }
             }
         });
     }
 
     public interface OnActionListener{
         void onBack(UserApp user);
+        void onUpdate(String total);
     }
 }

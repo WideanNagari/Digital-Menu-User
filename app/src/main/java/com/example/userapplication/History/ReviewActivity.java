@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -30,12 +31,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
+
 public class ReviewActivity extends AppCompatActivity {
 
     ArrayList<Review> arrReview;
     RecyclerView rv;
     ReviewAdapter reviewAdapter;
-    Button back, submit;
+    ImageView back;
+    CircularProgressButton submit;
     String hjual;
     UserApp user;
     Intent i;
