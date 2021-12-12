@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Foodies User</string>
+    <string name="app_name">Foodies</string>
     <!--ini connection punya widean,-->
     <!--yang lain kalo beda jangan ngehapus ini, remark trus bikin baru dibawah aja-->
     <!--    <string name="url">http://192.168.1.14:8000/api/</string>-->
