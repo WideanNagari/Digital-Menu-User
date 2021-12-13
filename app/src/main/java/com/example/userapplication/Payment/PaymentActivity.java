@@ -44,9 +44,6 @@ import java.util.Map;
 import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
 
 public class PaymentActivity extends AppCompatActivity {
-
-    //Spinner promo;
-    String[] spinItem;
     ArrayList<Promo> arrPromo;
     ArrayList<OrderMenu> arrOrder;
     Intent i;
@@ -168,41 +165,23 @@ public class PaymentActivity extends AppCompatActivity {
 
         adapterItems = new ArrayAdapter<String>(this, R.layout.list_dropdown, items);
         promo.setAdapter(adapterItems);
-//
-//        spinItem = new String[arrPromo.size()];
-//        for (int i = 0; i < arrPromo.size(); i++) {
-//            Promo promo = arrPromo.get(i);
-//            spinItem[i] = promo.getNama_promo();
-//        }
-//        ArrayAdapter<String> spinAdapter = new ArrayAdapter<String>(
-//                PaymentActivity.this,
-//                android.R.layout.simple_spinner_item,
-//                spinItem
-//        );
-//
-//        spinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        promo.setAdapter(spinAdapter);
+        System.out.println("masuk");
 
-        promo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        promo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Promo promo = arrPromo.get(i);
-                infoPromo.setText("Potongan "+promo.getBesar_promo()+"% maks. "+currency(promo.getMax_promo()+"")
-                        +" dengan minimal pembelian "+currency(promo.getMin_spent()+"")+")");
-                if (promo.getMin_spent()>totals){
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Promo promo2 = arrPromo.get(i);
+                infoPromo.setText("Potongan "+promo2.getBesar_promo()+"% maks. "+currency(promo2.getMax_promo()+"")
+                        +" dengan minimal pembelian "+currency(promo2.getMin_spent()+"")+")");
+                if (promo2.getMin_spent()>totals){
                     promoAlert.setVisibility(View.VISIBLE);
                 }else{
-                    usePromo = promo.getId()+"";
+                    usePromo = promo2.getId()+"";
                     promoAlert.setVisibility(View.GONE);
-                    diskon = (totals*promo.getBesar_promo())/100;
-                    max = promo.getMax_promo();
+                    diskon = (totals*promo2.getBesar_promo())/100;
+                    max = promo2.getMax_promo();
                     hitungTotal();
                 }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
             }
         });
     }
@@ -255,6 +234,7 @@ public class PaymentActivity extends AppCompatActivity {
 //                            String pesan  = jsonObject.getString("message");
 //                            int kode = jsonObject.getInt("code");
                             user.setSaldo(jsonObject.getInt("saldo"));
+                            user.setStamp(user.getStamp()+stamp);
                             if(jsonObject.getString("checkin")!=null)
                                 user.setCheckIn(jsonObject.getString("checkin"));
 

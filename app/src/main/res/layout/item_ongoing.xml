@@ -30,7 +30,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:text="Nama Makanan"
             android:textColor="#091020"
             android:textSize="15sp"
@@ -42,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="5dp"
             android:text="Rp 20.000"
             android:textColor="#FF6813"
             android:textSize="16sp"
@@ -54,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="5dp"
             android:layout_marginEnd="10dp"
             android:text="4 x"
             android:textColor="#091020"
@@ -62,6 +62,20 @@
             app:layout_constraintEnd_toStartOf="@+id/hargaMenuOngoing"
             app:layout_constraintStart_toEndOf="@+id/imgMenuOngoing"
             app:layout_constraintTop_toBottomOf="@+id/namaMenuOngoing" />
+
+        <TextView
+            android:id="@+id/rewardGa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:text="Reward"
+            android:textColor="#091020"
+            android:textSize="16sp"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@+id/imgMenuOngoing"
+            app:layout_constraintTop_toBottomOf="@+id/jumOrder" />
 
         <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
             android:id="@+id/statusMenu"

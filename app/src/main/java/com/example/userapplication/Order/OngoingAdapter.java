@@ -51,6 +51,11 @@ public class OngoingAdapter  extends RecyclerView.Adapter<OngoingAdapter.ViewHol
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         OrderMenu o = arrOrder.get(position);
         holder.nama.setText(o.getNama_menu());
+        if (o.getReward_status()==1){
+            holder.statusReward.setVisibility(View.VISIBLE);
+        }else{
+            holder.statusReward.setVisibility(View.GONE);
+        }
         holder.jumOrder.setText(o.getJumlah()+" X");
         holder.harga.setText(currency(o.getHarga_menu()));
         holder.status.setText(o.getStatus());
@@ -69,7 +74,7 @@ public class OngoingAdapter  extends RecyclerView.Adapter<OngoingAdapter.ViewHol
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView img;
-        TextView nama, harga, jumOrder;
+        TextView nama, harga, jumOrder, statusReward;
         CircularProgressButton status;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -78,6 +83,7 @@ public class OngoingAdapter  extends RecyclerView.Adapter<OngoingAdapter.ViewHol
             harga = itemView.findViewById(R.id.hargaMenuOngoing);
             jumOrder = itemView.findViewById(R.id.jumOrder);
             status = itemView.findViewById(R.id.statusMenu);
+            statusReward = itemView.findViewById(R.id.rewardGa);
         }
     }
 
